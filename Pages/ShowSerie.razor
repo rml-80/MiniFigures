@@ -53,7 +53,7 @@ else
     private async Task IncrementMF(int number)
     {
         SingleMF = await Mini.GetOneMiniFigure(serieToShow, number);
-        if (SingleMF.CountSealed == 0 && SingleMF.CountOpened == 1)
+        if (SingleMF.CountSealed == 0 && SingleMF.CountOpened == 0 || SingleMF.Displayed == true)
         {
             SingleMF.CountSealed++;
         }
