@@ -1,0 +1,59 @@
+﻿@page "/{serieToShow}"
+@using MiniFigures.Models
+@using MiniFigures.Data
+@inject IMiniFigureService Mini
+@inject NavigationManager NavigationManager
+
+<h3>@serieToShow</h3>
+@if (MF == null)
+{
+    <h4>Loading.......</h4>
+}
+else
+{
+    <div class="card-deck" style="margin-right:auto; margin-left:auto">
+
+        @foreach (var figure in MF)
+        {
+            <div class="card-body" style="min-width:219px; max-width:220px">
+                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" />
+                <h4 class="card-title">@figure.Name</h4>
+                <p style="margin:0px">In display: @figure.Displayed</p>
+                <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
+                <p style="margin:0px">Ownd sealed: @figure.CountSealed</p>
+                <button style="font-size:0.7rem" @onclick="(() => ShowOne(figure.Number))">more information</button>
+            </div>
+        }
+    </div>
+
+
+}
+@code {
+    [Parameter]
+    public string serieToShow { get; set; }
+    List<MiniFigure> MF;
+    public int number { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        SendCollectionName(serieToShow);
+
+    }
+
+    public void SendCollectionName(string collectionName)
+    {
+        MF = Mini.GetMiniFigures(collectionName);
+    }
+    private void ShowOne(int number)
+    {
+        var figure = number.ToString();
+        NavigationManager.NavigateTo($"/{serieToShow}/{figure}");
+    }
+    private void IncrementMF()
+    {
+        if (true)
+        {
+
+        }
+    }
+}

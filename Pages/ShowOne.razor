@@ -1,0 +1,28 @@
+﻿@page "/{serieToShow}/{number:int}"
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject NavigationManager NavigationManager
+@inject IMiniFigureService Mini
+
+<div class="card-deck" style="margin-right:auto; margin-left:auto">
+    <div class="card-body" style="min-width:419px; max-width:420px">
+        <img src="@MF.ImgURL" style="max-width:400px;height:400px" alt="Picture of @MF.Name" />
+        <h4 class="card-title">@MF.Name</h4>
+        <p style="margin:0px">In display: @MF.Displayed</p>
+        <p style="margin:0px">Ownd opened: @MF.CountOpened</p>
+        <p style="margin:0px">Ownd sealed: @MF.CountSealed</p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int number { get; set; }
+    [Parameter]
+    public string serieToShow { get; set; }
+
+    protected MiniFigure MF = new MiniFigure();
+    protected override async Task OnInitializedAsync()
+    {
+        MF = await Mini.GetOneMiniFigure(serieToShow, number);
+    }
+}

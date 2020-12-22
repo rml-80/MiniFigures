@@ -1,0 +1,31 @@
+﻿@page "/addnew"
+
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject IMiniFigureService MiniFigureService
+@inject NavigationManager NavigationManager
+<h3>AddMiniFigure</h3>
+<div>
+    <label for="collectionName">In witch serie: </label>
+    <input form="collectionName" @bind="@collectionName" />
+    <label for="Number">Number: </label>
+    <input form="Number" @bind="@miniFigure.Number" />
+    <label for="Name">Name: </label>
+    <input form="Name" @bind="@miniFigure.Name" />
+    <label for="ImgURL">URL to image: </label>
+    <input form="ImgURL" @bind="@miniFigure.ImgURL" />
+    <input type="button" @onclick="@AddNewFigure" value="Save" />
+</div>
+@code {
+    MiniFigure miniFigure = new MiniFigure();
+    string collectionName;
+    protected async Task AddNewFigure()
+    {
+        miniFigure.CountOpened = 0;
+        miniFigure.CountSealed = 0;
+        miniFigure.Displayed = false;
+
+        await MiniFigureService.AddFigure(miniFigure, collectionName);
+        NavigationManager.NavigateTo("/{serieToShow}");
+    }
+}
