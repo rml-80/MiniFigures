@@ -75,5 +75,20 @@ namespace MiniFigures.Data
                 return false;
             }
         }
+
+        public async Task<bool> EditFigure(int number, MiniFigure miniFigure, string collectionName)
+        {
+            try
+            {
+                _miniFigure = _database.GetCollection<MiniFigure>(collectionName);
+                await _miniFigure.ReplaceOneAsync(n => n.Number == number, miniFigure) ;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
+

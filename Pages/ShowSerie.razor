@@ -16,7 +16,7 @@ else
         @foreach (var figure in MF)
         {
             <div class="card-body" style="min-width:219px; max-width:220px">
-                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" />
+                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))"/>
                 <h4 class="card-title">@figure.Name</h4>
                 <p style="margin:0px">In display: @figure.Displayed</p>
                 <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
@@ -33,6 +33,7 @@ else
     public string serieToShow { get; set; }
     List<MiniFigure> MF;
     public int number { get; set; }
+    protected MiniFigure SingleMF = new MiniFigure();
 
     protected override void OnParametersSet()
     {
@@ -49,11 +50,23 @@ else
         var figure = number.ToString();
         NavigationManager.NavigateTo($"/{serieToShow}/{figure}");
     }
-    private void IncrementMF()
+    private async Task IncrementMF(int number)
     {
-        if (true)
+        SingleMF = await Mini.GetOneMiniFigure(serieToShow, number);
+        if (SingleMF.CountSealed == 0 && SingleMF.CountOpened == 1)
         {
-
+            SingleMF.CountSealed++;
         }
+        else if (SingleMF.CountSealed == 1 && SingleMF.CountOpened == 0)
+        {
+            SingleMF.CountSealed = 0;
+            SingleMF.CountOpened++;
+        }
+        else if (SingleMF.CountOpened == 1)
+        {
+            SingleMF.Displayed = true;
+        }
+        await Mini.EditFigure(SingleMF.Number, SingleMF, serieToShow);
+        SendCollectionName(serieToShow);
     }
 }
