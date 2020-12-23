@@ -1,0 +1,111 @@
+[{
+  "_id": {
+    "$oid": "5fda3a771f6c462f7907f4b4"
+  },
+  "Name": "Test 1",
+  "CountSealed": 3,
+  "CountOpened": 1,
+  "CountTotal": 0,
+  "Number": 1,
+  "Displayed": true,
+  "ImgURL": "images/Series1/8683-01.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb0371a2f9b83465321b8f"
+  },
+  "Name": "Test 2",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 2,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-02.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb169ca2f9b83465321b90"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 3,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-03.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb16b6a2f9b83465321b91"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 4,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-04.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb16c4a2f9b83465321b92"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 5,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-05.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb16cfa2f9b83465321b93"
+  },
+  "Name": "Test",
+  "CountSealed": 1,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 6,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-06.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb193ba2f9b83465321b94"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 7,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-07.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb1945a2f9b83465321b95"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 8,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-08.jpg"
+},{
+  "_id": {
+    "$oid": "5fdb1952a2f9b83465321b96"
+  },
+  "Name": "Test",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 9,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-09.jpg"
+},{
+  "_id": {
+    "$oid": "5fde6f004c38836abcc991a5"
+  },
+  "Name": "Test 12",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 12,
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-12.jpg"
+}]

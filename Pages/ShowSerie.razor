@@ -11,17 +11,17 @@
 }
 else
 {
-    <div class="card-deck" style="margin-right:auto; margin-left:auto">
+    <div class="card-deck" style="margin-right:auto; margin-left:auto;">
 
         @foreach (var figure in MF)
         {
-            <div class="card-body" style="min-width:219px; max-width:220px">
-                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))"/>
+            <div class="card-body" style="min-width: 219px; max-width: 220px; border: solid 1px; margin:5px">
+                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                 <h4 class="card-title">@figure.Name</h4>
                 <p style="margin:0px">In display: @figure.Displayed</p>
                 <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
                 <p style="margin:0px">Ownd sealed: @figure.CountSealed</p>
-                <button style="font-size:0.7rem" @onclick="(() => ShowOne(figure.Number))">more information</button>
+                <div style="text-align:right"><a class="oi oi-info" @onclick="(() => ShowOne(figure.Number))"></a></div>
             </div>
         }
     </div>
