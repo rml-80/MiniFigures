@@ -3,8 +3,8 @@
     "$oid": "5fddc852a96602cf812227cd"
   },
   "Name": "Test 21",
-  "CountSealed": 1,
-  "CountOpened": 1,
+  "CountSealed": 0,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 1,
   "Displayed": false,
@@ -14,7 +14,7 @@
     "$oid": "5fddc852a96602cf812227ce"
   },
   "Name": "Test 12",
-  "CountSealed": 1,
+  "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 2,
@@ -26,7 +26,7 @@
   },
   "Name": "Test",
   "CountSealed": 0,
-  "CountOpened": 1,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 3,
   "Displayed": false,
@@ -37,10 +37,10 @@
   },
   "Name": "Test",
   "CountSealed": 0,
-  "CountOpened": 1,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 4,
-  "Displayed": true,
+  "Displayed": false,
   "ImgURL": "images/Series1/8683-04.jpg"
 },{
   "_id": {
@@ -51,8 +51,8 @@
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 5,
-  "ImgURL": "images/Series1/8683-05.jpg",
-  "Displayed": false
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-05.jpg"
 },{
   "_id": {
     "$oid": "5fddc852a96602cf812227d2"
@@ -62,18 +62,18 @@
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 6,
-  "ImgURL": "images/Series1/8683-06.jpg",
-  "Displayed": false
+  "Displayed": false,
+  "ImgURL": "images/Series1/8683-06.jpg"
 },{
   "_id": {
     "$oid": "5fddc852a96602cf812227d3"
   },
   "Name": "Test",
   "CountSealed": 0,
-  "CountOpened": 1,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 7,
-  "Displayed": true,
+  "Displayed": false,
   "ImgURL": "images/Series1/8683-07.jpg"
 },{
   "_id": {
@@ -81,10 +81,10 @@
   },
   "Name": "Test",
   "CountSealed": 0,
-  "CountOpened": 1,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 8,
-  "Displayed": true,
+  "Displayed": false,
   "ImgURL": "images/Series1/8683-08.jpg"
 },{
   "_id": {
@@ -92,9 +92,9 @@
   },
   "Name": "Test",
   "CountSealed": 0,
-  "CountOpened": 1,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 9,
-  "Displayed": true,
+  "Displayed": false,
   "ImgURL": "images/Series1/8683-09.jpg"
 }]

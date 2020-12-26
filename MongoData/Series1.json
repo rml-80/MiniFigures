@@ -2,12 +2,12 @@
   "_id": {
     "$oid": "5fda3a771f6c462f7907f4b4"
   },
-  "Name": "Test 1",
-  "CountSealed": 3,
-  "CountOpened": 1,
+  "Name": "Indian",
+  "CountSealed": 0,
+  "CountOpened": 0,
   "CountTotal": 0,
   "Number": 1,
-  "Displayed": true,
+  "Displayed": false,
   "ImgURL": "images/Series1/8683-01.jpg"
 },{
   "_id": {
@@ -18,7 +18,7 @@
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 2,
-  "Displayed": false,
+  "Displayed": true,
   "ImgURL": "images/Series1/8683-02.jpg"
 },{
   "_id": {
@@ -58,11 +58,11 @@
     "$oid": "5fdb16cfa2f9b83465321b93"
   },
   "Name": "Test",
-  "CountSealed": 1,
+  "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 6,
-  "Displayed": false,
+  "Displayed": true,
   "ImgURL": "images/Series1/8683-06.jpg"
 },{
   "_id": {
