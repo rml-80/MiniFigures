@@ -2,30 +2,34 @@
 @using MiniFigures.Models
 @using MiniFigures.Data
 @inject IMiniFigureService Mini
+@inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
 <h3>@serieToShow</h3>
+
 @if (MF == null)
 {
     <h4>Loading.......</h4>
 }
 else
 {
+    <h4>You own @owned of @MF.Count</h4>
     <div class="card-deck" style="margin-right:auto; margin-left:auto;">
 
         @foreach (var figure in MF)
         {
-            <div class="card-body" style="min-width: 219px; max-width: 220px; border: solid 1px; margin:5px">
-                <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
-                <h4 class="card-title">@figure.Name</h4>
-                <p style="margin:0px">In display: @figure.Displayed</p>
-                <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
-                <p style="margin:0px">Ownd sealed: @figure.CountSealed</p>
-                <div style="text-align:right"><a class="oi oi-info" @onclick="(() => ShowOne(figure.Number))"></a></div>
+            <div class="card-body" style="background-color:@Color; align-content: center; min-width: 239px; max-width: 240px; padding:10px; margin:5px; border-radius:15px">
+                <div class="card-body" style="background-color:white; min-width: 219px; max-width: 220px; border-radius: 15px">
+                    <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+                    <h4 class="card-title">@figure.Name</h4>
+                    <p style="margin:0px">In display: @figure.Displayed</p>
+                    <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
+                    <p style="margin:0px">Ownd sealed: @figure.CountSealed</p>
+                    <div style="text-align:right;color:@Color"><a class="fas fa-info-circle fa-2x" @onclick="(() => ShowOne(figure.Number))"></a></div>
+                </div>
             </div>
         }
     </div>
-
 
 }
 @code {
@@ -34,14 +38,18 @@ else
     List<MiniFigure> MF;
     public int number { get; set; }
     protected MiniFigure SingleMF = new MiniFigure();
+    public Series series { get; set; }
+    public string Color { get; set; }
+    public int owned { get; set; }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        SendCollectionName(serieToShow);
-
+        await SendCollectionName(serieToShow);
+        series = await SeriesService.GetOneSerie(serieToShow);
+        Color = series.SeriesColor;
+        Owned();
     }
-
-    public void SendCollectionName(string collectionName)
+    public async Task SendCollectionName(string collectionName)
     {
         MF = Mini.GetMiniFigures(collectionName);
     }
@@ -56,6 +64,7 @@ else
         if (SingleMF.CountSealed == 0 && SingleMF.CountOpened == 0 || SingleMF.Displayed == true)
         {
             SingleMF.CountSealed++;
+            owned++;
         }
         else if (SingleMF.CountSealed == 1 && SingleMF.CountOpened == 0)
         {
@@ -66,7 +75,19 @@ else
         {
             SingleMF.Displayed = true;
         }
+
         await Mini.EditFigure(SingleMF.Number, SingleMF, serieToShow);
-        SendCollectionName(serieToShow);
+        await SendCollectionName(serieToShow);
+    }
+    private void Owned()
+    {
+        owned = 0;
+        foreach (var figure in MF)
+        {
+            if (figure.CountSealed > 0 || figure.CountOpened > 0)
+            {
+                owned++;
+            }
+        }
     }
 }
