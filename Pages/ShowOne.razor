@@ -3,14 +3,47 @@
 @using MiniFigures.Models
 @inject NavigationManager NavigationManager
 @inject IMiniFigureService Mini
+@inject ISeriesService SeriesService
 
-<div class="card-deck" style="margin-right:auto; margin-left:auto">
-    <div class="card-body" style="min-width:419px; max-width:420px">
-        <img src="@MF.ImgURL" style="max-width:400px;height:400px" alt="Picture of @MF.Name" />
-        <div><h4 class="card-title">@MF.Name</h4><a href="" class="oi oi-pencil"></a></div>
-        <span>In display: @MF.Displayed</span><br />
-        <span>Ownd opened: @MF.CountOpened</span><a href="" class="oi oi-plus" style="border:solid; border-width:1px"></a><a href="" class="oi oi-minus"></a><br />
-        <span>Ownd sealed: @MF.CountSealed</span><a href="" class="oi oi-plus" style="border:solid; border-width:1px"></a><a href="" class="oi oi-minus"></a><br />
+<div class="card-deck" style="text-align:center; margin-right:auto; margin-left:auto">
+    <div class="card-body" style="background-color:@Color; align-content: center; min-width: 478px; max-width: 480px; padding:20px; margin:10px; border-radius:30px">
+        <div class="card-body" style="background-color:white; min-width: 438px; max-width: 440px; border-radius: 30px">
+            <img src="@MF.ImgURL" style="max-width:400px;height:400px" alt="Picture of @MF.Name" />
+            <table style="margin-left:auto; margin-right:auto; margin-bottom:20px; width:90%">
+                <tr>
+                    <td colspan="2" style="text-align:left">
+                        @if (Opa != 100)
+                        {
+                            <h4>@MF.Name</h4>
+                        }
+                        else
+                        {
+                            <input form="Name" class="form-control" @bind="@MF.Name" />
+                        }
+                    </td>
+                    <td style="opacity:@Opa"><p class="fas fa-edit"></p></td>
+                </tr>
+                <tr>
+                    <td style="width:40%; text-align:left">In display: </td>
+                    <td style="width:45%">@MF.Displayed</td>
+                    <td style="opacity:@Opa; width:15%"><button @onclick="() => changeDisplayed(MF.Number)">@displayButton</button></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Owned opened: </td>
+                    <td>@MF.CountOpened</td>
+                    <td style="opacity:@Opa"> <p class="fas fa-plus-square" @onclick="() => IncrementOpen(MF.Number)"></p><p class="fas fa-minus-square" @onclick="() => DecrementOpen(MF.Number)"></p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">Owned sealed: </td>
+                    <td>@MF.CountSealed</td>
+                    <td style="opacity:@Opa"> <p class="fas fa-plus-square" @onclick="() => IncrementSealed(MF.Number)"></p><p class="fas fa-minus-square" @onclick="() => DecrementSealed(MF.Number)"></p></td>
+                </tr>
+            </table>
+
+            <button style="opacity:@Opa" @onclick="() => resetMF(number)">Reset</button>
+            <button @onclick="() => editMF(number)" class="fas fa-edit"></button>
+            <button style="opacity:@Opa" @onclick="() => cancel()">Cancel</button>
+        </div>
     </div>
 </div>
 
@@ -19,10 +52,99 @@
     public int number { get; set; }
     [Parameter]
     public string serieToShow { get; set; }
-
+    protected MiniFigure SingleMF = new MiniFigure();
+    public string displayButton { get; set; }
+    public Series series { get; set; }
+    public string Color { get; set; }
+    public int Opa = 0;
     protected MiniFigure MF = new MiniFigure();
     protected override async Task OnInitializedAsync()
     {
         MF = await Mini.GetOneMiniFigure(serieToShow, number);
+        series = await SeriesService.GetOneSerie(serieToShow);
+        Color = series.SeriesColor;
+        await checkDisplayed(number);
+    }
+
+    private async Task editName(int number)
+    {
+        await Mini.EditFigure(MF.Number, MF, serieToShow);
+
+    }
+    private async Task IncrementOpen(int number)
+    {
+
+        MF.CountOpened++;
+
+        await editName(number);
+    }
+    private async Task DecrementOpen(int number)
+    {
+        if (MF.CountOpened != 0)
+        {
+            MF.CountOpened--;
+        }
+        await editName(number);
+
+    }
+    private async Task IncrementSealed(int number)
+    {
+        MF.CountSealed++;
+        await editName(number);
+    }
+    private async Task DecrementSealed(int number)
+    {
+        if (MF.CountSealed != 0)
+        {
+            MF.CountSealed--;
+        }
+        await editName(number);
+
+    }
+    private async Task checkDisplayed(int number)
+    {
+        if (MF.Displayed)
+        {
+            displayButton = "false";
+        }
+        else
+        {
+            displayButton = "true";
+
+        }
+        await editName(number);
+
+    }
+    private async Task changeDisplayed(int number)
+    {
+        if (MF.Displayed)
+        {
+            MF.Displayed = false;
+            displayButton = "true";
+        }
+        else
+        {
+            MF.Displayed = true;
+            displayButton = "false";
+        }
+        await editName(number);
+
+    }
+    private async Task resetMF(int number)
+    {
+        MF.Displayed = false;
+        MF.CountOpened = 0;
+        MF.CountSealed = 0;
+        await editName(number);
+
+    }
+    private async Task editMF(int number)
+    {
+        Opa = 100;
+
+    }
+    protected void cancel()
+    {
+        Opa = 0;
     }
 }

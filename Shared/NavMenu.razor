@@ -1,5 +1,8 @@
 ﻿@using MiniFigures.Data
+@using MiniFigures.Pages
 @inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+
 @inject NavigationManager NavigationManager
 
 
@@ -14,24 +17,29 @@
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span class="fas fa-home mr-2" aria-hidden="true"></span>Home
             </NavLink>
         </li>
         @foreach (var serie in series)
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="@serie">
-                    <span class="oi oi-list" aria-hidden="true"></span> @serie
+                    <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie
                 </NavLink>
             </li>
         }
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/addnew">
+                <span class="fas fa-plus-circle mr-2" aria-hidden="true"></span>Add new
+            </NavLink>
+        </li>
     </ul>
 </div>
 
 
 @code {
     private bool collapseNavMenu = true;
-
+    private string serieToShow;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()

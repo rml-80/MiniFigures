@@ -36,6 +36,7 @@ namespace MiniFigures
             services.AddSingleton<IMongoDBSettings>(sp => sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
 
             services.AddScoped<IMiniFigureService, MiniFigureService>();
+            services.AddScoped<ISeriesService, SeriesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

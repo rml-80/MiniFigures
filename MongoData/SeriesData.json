@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "5fe3676c4bc17b51782e989f"
+  },
+  "Name": "Serie1",
+  "NumberOfFigures": 16,
+  "SeriesColor": "#F8CF37"
+},{
+  "_id": {
+    "$oid": "5fe3676c4bc17b51782e98a0"
+  },
+  "Name": "Serie2",
+  "NumberOfFigures": 16,
+  "SeriesColor": "#285FAF"
+}]
