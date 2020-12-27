@@ -5,46 +5,64 @@
 @inject IMiniFigureService Mini
 @inject ISeriesService SeriesService
 
-<div class="card-deck" style="text-align:center; margin-right:auto; margin-left:auto">
-    <div class="card-body" style="background-color:@Color; align-content: center; min-width: 478px; max-width: 480px; padding:20px; margin:10px; border-radius:30px">
-        <div class="card-body" style="background-color:white; min-width: 438px; max-width: 440px; border-radius: 30px">
-            <img src="@MF.ImgURL" style="max-width:400px;height:400px" alt="Picture of @MF.Name" />
-            <table style="margin-left:auto; margin-right:auto; margin-bottom:20px; width:90%">
-                <tr>
-                    <td colspan="2" style="text-align:left">
-                        @if (Opa != 100)
-                        {
-                            <h4>@MF.Name</h4>
-                        }
-                        else
-                        {
-                            <input form="Name" class="form-control" @bind="@MF.Name" />
-                        }
-                    </td>
-                    <td style="opacity:@Opa"><p class="fas fa-edit"></p></td>
-                </tr>
-                <tr>
-                    <td style="width:40%; text-align:left">In display: </td>
-                    <td style="width:45%">@MF.Displayed</td>
-                    <td style="opacity:@Opa; width:15%"><button @onclick="() => changeDisplayed(MF.Number)">@displayButton</button></td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">Owned opened: </td>
-                    <td>@MF.CountOpened</td>
-                    <td style="opacity:@Opa"> <p class="fas fa-plus-square" @onclick="() => IncrementOpen(MF.Number)"></p><p class="fas fa-minus-square" @onclick="() => DecrementOpen(MF.Number)"></p></td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">Owned sealed: </td>
-                    <td>@MF.CountSealed</td>
-                    <td style="opacity:@Opa"> <p class="fas fa-plus-square" @onclick="() => IncrementSealed(MF.Number)"></p><p class="fas fa-minus-square" @onclick="() => DecrementSealed(MF.Number)"></p></td>
-                </tr>
-            </table>
-
-            <button style="opacity:@Opa" @onclick="() => resetMF(number)">Reset</button>
-            <button @onclick="() => editMF(number)" class="fas fa-edit"></button>
-            <button style="opacity:@Opa" @onclick="() => cancel()">Cancel</button>
-        </div>
-    </div>
+<div class="card-deck">
+    <div class="card-body" style="background-color:@Color; max-width: 630px; height:880px ;padding:30px; margin:10px; border-radius:30px">
+                <div class="card-body" style="background-color:white; text-align: center;width: 570px; height: 820px; border-radius: 30px">
+                    <img src="@figure.ImgURL" style="max-width:460px;height:460px" alt="Picture of @figure.Name" />
+                    @if (edit)
+                    {
+                <input for="Name" class="form-control" @bind="@figure.Name" style="font-size:2rem" />
+                    <table style="font-size:1.5rem">
+                        <tr>
+                            <td style="text-align:right; width:40%">Number:</td>
+                            <td style="width:30%; text-align:center"><input for="Name" class="form-control" @bind="@figure.Number" style="width:80px; font-size:1.5rem; margin:auto;text-align:center" /></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; width:40%">In display:</td>
+                            <td style="width:30%">True | False</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd openend:</td>
+                            <td><a class="fas fa-plus-square"></a> | @figure.CountOpened | <a class="fas fa-minus-square"></a></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd sealed:</td>
+                            <td><a class="fas fa-plus-square"></a> | @figure.CountSealed | <a class="fas fa-minus-square"></a></td>
+                        </tr>                        <tr>
+                            <td style="text-align:right">Image:</td>
+                            <td> <input for="Name" class="form-control" @bind="@figure.ImgURL" style="font-size:1.5rem" /></td>
+                        </tr>
+                    </table>
+                    <button @onclick="cancel">Cancel</button>
+                    }
+                    else
+                    {
+                    <h2 class="card-title">@figure.Name</h2>
+                    <table style="font-size:1.5rem">
+                        <tr>
+                            <td style="text-align:right; width:40%">Number:</td>
+                            <td style="width:30%">@figure.Number</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; width:40%">In display:</td>
+                            <td style="width:30%">@figure.Displayed</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd openend:</td>
+                            <td>@figure.CountOpened</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd sealed:</td>
+                            <td>@figure.CountSealed</td>
+                        </tr>                        <tr>
+                            <td style="text-align:right">Image:</td>
+                            <td>@figure.ImgURL</td>
+                        </tr>
+                    </table>
+                    }
+                    <div style="text-align:right;color:@Color"><a class="fas fa-edit fa-2x" @onclick="() => editfigure(figure.Number)" ></a></div>
+                </div>
+            </div>
 </div>
 
 @code {
@@ -52,15 +70,15 @@
     public int number { get; set; }
     [Parameter]
     public string serieToShow { get; set; }
-    protected MiniFigure SingleMF = new MiniFigure();
+    protected MiniFigure Singlefigure = new MiniFigure();
     public string displayButton { get; set; }
     public Series series { get; set; }
     public string Color { get; set; }
-    public int Opa = 0;
-    protected MiniFigure MF = new MiniFigure();
+    private bool edit = false;
+    protected MiniFigure figure = new MiniFigure();
     protected override async Task OnInitializedAsync()
     {
-        MF = await Mini.GetOneMiniFigure(serieToShow, number);
+        figure = await Mini.GetOneMiniFigure(serieToShow, number);
         series = await SeriesService.GetOneSerie(serieToShow);
         Color = series.SeriesColor;
         await checkDisplayed(number);
@@ -68,42 +86,42 @@
 
     private async Task editName(int number)
     {
-        await Mini.EditFigure(MF.Number, MF, serieToShow);
+        await Mini.EditFigure(figure.Number, figure, serieToShow);
 
     }
     private async Task IncrementOpen(int number)
     {
 
-        MF.CountOpened++;
+        figure.CountOpened++;
 
         await editName(number);
     }
     private async Task DecrementOpen(int number)
     {
-        if (MF.CountOpened != 0)
+        if (figure.CountOpened != 0)
         {
-            MF.CountOpened--;
+            figure.CountOpened--;
         }
         await editName(number);
 
     }
     private async Task IncrementSealed(int number)
     {
-        MF.CountSealed++;
+        figure.CountSealed++;
         await editName(number);
     }
     private async Task DecrementSealed(int number)
     {
-        if (MF.CountSealed != 0)
+        if (figure.CountSealed != 0)
         {
-            MF.CountSealed--;
+            figure.CountSealed--;
         }
         await editName(number);
 
     }
     private async Task checkDisplayed(int number)
     {
-        if (MF.Displayed)
+        if (figure.Displayed)
         {
             displayButton = "false";
         }
@@ -117,34 +135,33 @@
     }
     private async Task changeDisplayed(int number)
     {
-        if (MF.Displayed)
+        if (figure.Displayed)
         {
-            MF.Displayed = false;
+            figure.Displayed = false;
             displayButton = "true";
         }
         else
         {
-            MF.Displayed = true;
+            figure.Displayed = true;
             displayButton = "false";
         }
         await editName(number);
 
     }
-    private async Task resetMF(int number)
+    private async Task resetfigure(int number)
     {
-        MF.Displayed = false;
-        MF.CountOpened = 0;
-        MF.CountSealed = 0;
+        figure.Displayed = false;
+        figure.CountOpened = 0;
+        figure.CountSealed = 0;
         await editName(number);
 
     }
-    private async Task editMF(int number)
+    private async Task editfigure(int number)
     {
-        Opa = 100;
-
+        edit = true;
     }
     protected void cancel()
     {
-        Opa = 0;
+        edit = false;
     }
 }

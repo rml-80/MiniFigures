@@ -18,13 +18,24 @@ else
 
         @foreach (var figure in MF)
         {
-            <div class="card-body" style="background-color:@Color; align-content: center; min-width: 239px; max-width: 240px; padding:10px; margin:5px; border-radius:15px">
-                <div class="card-body" style="background-color:white; min-width: 219px; max-width: 220px; border-radius: 15px">
-                    <img src="@figure.ImgURL" style="max-width:200px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+            <div class="card-body" style="background-color:@Color; max-width: 315px; height:440px ;padding:15px; margin:5px; border-radius:15px">
+                <div class="card-body" style="background-color:white; text-align: center;width: 285px; height: 410px; border-radius: 15px">
+                    <img src="@figure.ImgURL" style="max-width:230px;height:230px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                     <h4 class="card-title">@figure.Name</h4>
-                    <p style="margin:0px">In display: @figure.Displayed</p>
-                    <p style="margin:0px">Ownd opened: @figure.CountOpened</p>
-                    <p style="margin:0px">Ownd sealed: @figure.CountSealed</p>
+                    <table>
+                        <tr>
+                            <td style="text-align:right; width:60%">In display:</td>
+                            <td style="width:40%">@figure.Displayed</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd openend:</td>
+                            <td>@figure.CountOpened</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right">Ownd sealed:</td>
+                            <td>@figure.CountSealed</td>
+                        </tr>
+                    </table>
                     <div style="text-align:right;color:@Color"><a class="fas fa-info-circle fa-2x" @onclick="(() => ShowOne(figure.Number))"></a></div>
                 </div>
             </div>
