@@ -1,0 +1,10 @@
+﻿//TODO
+
+Change Serie name on top of pages
+Image URL :
+	hardcode images/
+	{serieToShow}/
+		filename from db.
+true | false changing color
+fix add new page
+add information about serie in hidden section on series page

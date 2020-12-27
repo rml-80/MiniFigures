@@ -18,11 +18,11 @@ else
 
         @foreach (var figure in MF)
         {
-            <div class="card-body" style="background-color:@Color; max-width: 315px; height:440px ;padding:15px; margin:5px; border-radius:15px">
-                <div class="card-body" style="background-color:white; text-align: center;width: 285px; height: 410px; border-radius: 15px">
-                    <img src="@figure.ImgURL" style="max-width:230px;height:230px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+            <div class="card-body" style="background-color:@Color; max-width: 265px; height:390px ;padding:15px; margin:5px auto 5px auto; border-radius:15px">
+                <div class="card-body" style="background-color:white; text-align: center;width: 235px; height: 360px; border-radius: 10px">
+                    <img src="@figure.ImgURL" style="max-width:210px;height:210px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                     <h4 class="card-title">@figure.Name</h4>
-                    <table>
+                    <table style="margin-bottom:10px">
                         <tr>
                             <td style="text-align:right; width:60%">In display:</td>
                             <td style="width:40%">@figure.Displayed</td>
