@@ -5,27 +5,35 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<h3>@serieToShow</h3>
+<div style="text-align:center"><h3>@serieToShow</h3></div>
 
 @if (MF == null)
 {
     <h4>Loading.......</h4>
 }
+else if (MF.Count == 0)
+{
+    <div style="text-align:center"><h4>No Figures in collection</h4></div>
+}
 else
 {
+    <div style="display:inline">
+        <div>Number: @series.Number</div>
+        <div>Number of figures: @series.NumberOfFigures</div>
+        <div>Series color: @series.SeriesColor</div>
+    </div>
     <h4>You own @owned of @MF.Count</h4>
     <div class="card-deck" style="margin-right:auto; margin-left:auto;">
-
         @foreach (var figure in MF)
         {
             <div class="card-body" style="background-color:@Color; max-width: 265px; height:390px ;padding:15px; margin:5px auto 5px auto; border-radius:15px">
                 <div class="card-body" style="background-color:white; text-align: center;width: 235px; height: 360px; border-radius: 10px">
-                    <img src="@figure.ImgURL" style="max-width:210px;height:210px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+                    <img src="@figure.ImgURL" style="max-width:210px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                     <h4 class="card-title">@figure.Name</h4>
-                    <table style="margin-bottom:10px">
+                    <table style="margin-bottom:10px; line-height:1">
                         <tr>
                             <td style="text-align:right; width:60%">In display:</td>
-                            <td style="width:40%">@figure.Displayed</td>
+                            <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
                         </tr>
                         <tr>
                             <td style="text-align:right">Ownd openend:</td>
@@ -41,7 +49,6 @@ else
             </div>
         }
     </div>
-
 }
 @code {
     [Parameter]
@@ -51,6 +58,8 @@ else
     protected MiniFigure SingleMF = new MiniFigure();
     public Series series { get; set; }
     public string Color { get; set; }
+    public string Icon { get; set; }
+    public string iconColor { get; set; }
     public int owned { get; set; }
 
     protected override async Task OnParametersSetAsync()
@@ -100,5 +109,19 @@ else
                 owned++;
             }
         }
+    }
+    private string changeIcon(bool test)
+    {
+        if (test)
+        {
+            Icon = "fas fa-check";
+            iconColor = "color:green";
+        }
+        else
+        {
+            Icon = "fas fa-times";
+            iconColor = "color:red";
+        }
+        return Icon;
     }
 }

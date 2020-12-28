@@ -1,10 +1,14 @@
 ﻿//TODO
 
-Change Serie name on top of pages
+Change Serie name on top of pages need to change in db!
 Image URL :
 	hardcode images/
 	{serieToShow}/
 		filename from db.
-true | false changing color
+true | false changing to underlined if true on edit page
 fix add new page
 add information about serie in hidden section on series page
+fix dropdown for series choice add page
+Remove Home from navMeny
+Index page
+	Image for each serie as a card horizontal

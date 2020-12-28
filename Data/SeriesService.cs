@@ -17,9 +17,17 @@ namespace MiniFigures.Data
             _series = database.GetCollection<Series>(settings.CollectionName);
         }
 
-        public Task<bool> AddSerie(Series series)
+        public async Task<bool> AddSerie(Series series)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _series.InsertOneAsync(series);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Task<bool> EditSerie(string ID, Series series)
@@ -41,9 +49,10 @@ namespace MiniFigures.Data
             }
         }
 
-        public Task<List<string>> GetSeries()
+        public List<Series> GetSeries()
         {
-            throw new NotImplementedException();
+            return _series.Find(series => true).ToList();
         }
+
     }
 }

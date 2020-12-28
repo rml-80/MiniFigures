@@ -13,7 +13,7 @@ namespace MiniFigures.Data
         private IMongoCollection<MiniFigure> _miniFigure;
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _database;
-        public List<string> series = new List<string>();
+        //public List<string> series = new List<string>();
         public MiniFigureService(IMongoDBSettings settings)
         {
             _client = new MongoClient(settings.ConnectionString);
@@ -24,7 +24,7 @@ namespace MiniFigures.Data
         {
             try
             {
-                List<string> series = await (new MongoDB.Driver.MongoClient()).GetDatabase("MiniFigures").ListCollectionNames().ToListAsync();
+                List<string> series = await (new MongoClient()).GetDatabase("MiniFigures").ListCollectionNames().ToListAsync();
                 series.Reverse();
                 return series;
                 //series = await _database.ListCollectionNames().ToListAsync();

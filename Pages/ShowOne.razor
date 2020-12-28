@@ -5,40 +5,40 @@
 @inject IMiniFigureService Mini
 @inject ISeriesService SeriesService
 
-<div style="text-align:center; color:@Color">
+<div style="text-align:center">
     <div class="card-body" style="margin: auto; background-color: @Color; max-width: 430px; height: 680px; padding: 20px;  border-radius: 20px">
         <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:5px">
             <div style="margin-bottom:5px;font-size:1.5rem;text-align:left;color:@Color">@serieToShow</div>
             <img src="@figure.ImgURL" style="max-width:100%" alt="Picture of @figure.Name" />
             @if (edit)
             {
-                <input for="Name" class="form-control" @bind="@figure.Name" style="font-size: 2rem; text-align: center; height: 3rem" />
-                <table style="font-size:1.5rem">
+                <input for="Name" class="form-control" @bind="@figure.Name" style="font-size: 1.5rem; text-align: center; height: 2rem" />
+                <table style="font-size:1rem">
                     <tr>
                         <td style="text-align:right">Number:</td>
-                        <td style="text-align:center"><input for="Number" class="form-control" @bind="@figure.Number" style="width:80px; font-size:1.5rem; margin:auto;text-align:center;height: 3rem" /></td>
+                        <td style="text-align:center"><input for="Number" class="form-control" @bind="@figure.Number" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">In display:</td>
+                        <td style="text-align:right;height: 2rem">In display:</td>
                         <td>True | False</td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;width:40%;height: 3rem">Ownd openend:</td>
+                        <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
                         <td><a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Color"></a> @figure.CountOpened <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Color"></a></td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">Ownd sealed:</td>
+                        <td style="text-align:right;height: 2rem">Ownd sealed:</td>
                         <td><a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Color"></a> @figure.CountSealed <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Color"></a></td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">Image:</td>
-                        <td> <input for="Name" class="form-control" @bind="@figure.ImgURL" style="font-size:1.5rem" /></td>
+                        <td style="text-align:right;height: 2rem">Image:</td>
+                        <td> <input for="Name" class="form-control" @bind="@figure.ImgURL" style="font-size:1rem" /></td>
                     </tr>
                 </table>
                 <table style="width:100%">
                     <tr>
                         <td style="width:33%">
-                            <a style="color:white; background-color:@Color; padding: 4px; border-radius: 3px ; font-size:1rem; font-weight:bold" @onclick="resetfigure">Reset MiniFigure</a>
+                            <a style="color:white; background-color:@Color; padding: 4px; border-radius: 3px ; font-size:0.7rem; font-weight:bold" @onclick="resetfigure">Reset MiniFigure</a>
                         </td>
                         <td style="width:33%">
                             <a class="fas fa-window-close fa-2x" style="color:@Color" @onclick="cancel"></a>
@@ -51,27 +51,29 @@
             }
             else
             {
-                <p style="font-size: 2rem;text-align: center;height:3rem; margin:0px">@figure.Name</p>
-                <table style="font-size:1.5rem">
+                <p style="font-size: 1.5rem;text-align: center;height:2rem; margin:0px">@figure.Name</p>
+                <table style="font-size:1rem">
                     <tr>
-                        <td style="text-align:right;height: 3rem">Number:</td>
-                        <td style="text-align:center"><p style="width:80px; font-size:1.5rem; margin:auto;text-align:center;height: 3rem">@figure.Number</p></td>
+                        <td style="text-align:right;height: 2rem">Number:</td>
+                        <td style="text-align:center"><p style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem">@figure.Number</p></td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">In display:</td>
-                        <td>@figure.Displayed</td>
+                        <td style="text-align:right;height: 2rem">In display:</td>
+                        @*<td>@figure.Displayed</td>*@
+                        <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
+
                     </tr>
                     <tr>
-                        <td style="text-align:right;width:40%;height: 3rem">Ownd openend:</td>
+                        <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
                         <td>@figure.CountOpened</td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">Ownd sealed:</td>
+                        <td style="text-align:right;height: 2rem">Ownd sealed:</td>
                         <td>@figure.CountSealed</td>
                     </tr>
                     <tr>
-                        <td style="text-align:right;height: 3rem">Image:</td>
-                        <td style="font-size:1.5rem; white-space:nowrap">@figure.ImgURL</td>
+                        <td style="text-align:right;height: 2rem">Image:</td>
+                        <td style="font-size:1rem; white-space:nowrap">@figure.ImgURL</td>
                     </tr>
                 </table>
                 <div style="text-align:right;color:@Color"><a class="fas fa-edit fa-2x" @onclick="editfigure"></a></div>
@@ -91,6 +93,9 @@
     public string Color { get; set; }
     private bool edit = false;
     protected MiniFigure figure = new MiniFigure();
+    public string Icon { get; set; }
+    public string iconColor { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         figure = await Mini.GetOneMiniFigure(serieToShow, number);
@@ -109,7 +114,7 @@
     {
         if (figure.CountOpened != 0)
         {
-           figure.CountOpened--;
+            figure.CountOpened--;
         }
     }
     private void IncrementSealed()
@@ -166,4 +171,19 @@
     {
         edit = false;
     }
+    private string changeIcon(bool test)
+    {
+        if (test)
+        {
+            Icon = "fas fa-check fa-2x";
+            iconColor = "color:green";
+        }
+        else
+        {
+            Icon = "fas fa-times fa-2x";
+            iconColor = "color:red";
+        }
+        return Icon;
+    }
+
 }

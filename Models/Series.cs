@@ -13,6 +13,7 @@ namespace MiniFigures.Models
             [BsonRepresentation(BsonType.ObjectId)]
             public string Id { get; set; }
             public string Name { get; set; }
+            public string Number { get; set; }
             public int NumberOfFigures { get; set; }
             public string SeriesColor { get; set; }
     }

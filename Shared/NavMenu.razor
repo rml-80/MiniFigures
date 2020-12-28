@@ -1,5 +1,5 @@
 ﻿@using MiniFigures.Data
-@using MiniFigures.Pages
+@using MiniFigures.Models
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
@@ -23,8 +23,8 @@
         @foreach (var serie in series)
         {
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@serie">
-                    <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie
+                <NavLink class="nav-link" href="@serie.Name">
+                    <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie.Name
                 </NavLink>
             </li>
         }
@@ -46,11 +46,14 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-    List<string> series;
+    public static List<Series> series = new List<Series>();
 
     protected override async Task OnInitializedAsync()
     {
-        series = await MiniFigureService.GetSeries();
+        GetList();
     }
-    
+    protected void GetList()
+    {
+        series = SeriesService.GetSeries();
+    }
 }

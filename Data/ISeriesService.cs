@@ -8,7 +8,7 @@ namespace MiniFigures.Data
 {
     public interface ISeriesService
     {
-        Task<List<string>> GetSeries();
+        List<Series> GetSeries();
         Task<Series> GetOneSerie(string SerieName);
         Task<bool> AddSerie(Series series);
         Task<bool> EditSerie(string ID, Series series);
