@@ -10,13 +10,52 @@ namespace MiniFigures.Data
     public class SeriesService : ISeriesService
     {
         private IMongoCollection<Series> _series;
+        private readonly IMongoClient _client;
+        private readonly IMongoDatabase _database;
         public SeriesService(IMongoDBSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            _series = database.GetCollection<Series>(settings.CollectionName);
+            _client = new MongoClient(settings.ConnectionString);
+            _database = _client.GetDatabase(settings.DatabaseName);
+            _series = _database.GetCollection<Series>(settings.CollectionName);
         }
 
+        public async Task<bool> CreateNewCollection(string name)
+        {
+            try
+            {
+                await _database.CreateCollectionAsync(name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public async Task<bool> RenameCollection(string oldName, string newName)
+        {
+            try
+            {
+                await _database.RenameCollectionAsync(oldName, newName);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteCollection(string name)
+        {
+            try
+            {
+                await _database.DropCollectionAsync(name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public async Task<bool> AddSerie(Series series)
         {
             try
@@ -30,18 +69,24 @@ namespace MiniFigures.Data
             }
         }
 
-        public Task<bool> EditSerie(string ID, Series series)
+        public async Task<bool> EditSerie(string ID, Series series)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _series.ReplaceOneAsync(s => s.Id == ID, series);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<Series> GetOneSerie(string SerieName)
         {
             try
             {
-                FilterDefinition<Series> filterSeries = Builders<Series>.Filter.Eq("Name", SerieName);
-                return await _series.Find(filterSeries).FirstOrDefaultAsync();
-                //return await _series.Find(s => s.Name == SerieName).FirstOrDefaultAsync();
+                return await _series.Find(s => s.Name == SerieName).SortBy(n => n.Number).FirstOrDefaultAsync();
             }
             catch
             {
@@ -54,5 +99,17 @@ namespace MiniFigures.Data
             return _series.Find(series => true).ToList();
         }
 
+        public async Task<bool> DeleteSerie(string name)
+        {
+            try
+            {
+                await _series.DeleteOneAsync(i => i.Name == name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

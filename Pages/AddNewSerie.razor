@@ -1,0 +1,72 @@
+﻿@page "/addnew/serie"
+
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
+
+<h3 style="text-align:center">Add Serie</h3>
+<div>
+    <div style="text-align:center">
+        <div class="card-body" style="margin: auto; background-color: @Color; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
+            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
+
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="Number">Number: </label>
+                    </div>
+                    <div>
+                        <input form="Number" @bind="@series.Number" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="Name">Name: </label>
+                    </div>
+                    <div>
+                        <input form="Name" @bind="@series.Name" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="NumberOfFiguers">Number of figures: </label>
+                    </div>
+                    <div>
+                        <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="SeriesColor">Color code: </label>
+                    </div>
+                    <div>
+                        <input form="SeriesColor" @onchange="@ColorChange"/>
+                    </div>
+                </div>
+                <div><input type="button" @onclick="@AddSerie" value="Save" /></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    MiniFigure miniFigure = new MiniFigure();
+    Series series = new Series();
+    string collectionName;
+    public string Color { get; set; } = "lightgrey";
+    protected async Task AddSerie()
+    {
+        await SeriesService.AddSerie(series);
+        await SeriesService.CreateNewCollection(series.Name);
+        NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");
+
+    }
+    void ColorChange(ChangeEventArgs args)
+    {
+        Color = (string)args.Value;
+        series.SeriesColor = Color;
+    }
+
+}

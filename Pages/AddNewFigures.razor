@@ -1,0 +1,72 @@
+﻿@page "/addnew/figures/{serie}"
+
+@using MiniFigures.Data
+@using MiniFigures.Models
+
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
+
+<h3 style="text-align:center">Add Figure</h3>
+<div>
+    <div style="text-align:center">
+        <div class="card-body" style="margin: auto; background-color: @Color; max-width: 265px; height: 390px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
+            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
+                <div>
+                    <label for="collectionName">In witch serie: </label>
+                    <input form="collectionName" @bind="@collectionName" />
+                </div>
+                <div style="margin:10px">
+                    <div>
+                        <label for="Number">Number: </label>
+                    </div>
+                    <div>
+                        <input form="Number" style="text-align:center" @bind="@miniFigure.Number" />
+                    </div>
+                </div>
+                <div style="margin:10px">
+                    <div>
+                        <label for="Name">Name: </label>
+                    </div>
+                    <div>
+                        <input form="Name" style="text-align:center" @bind="@miniFigure.Name" />
+                    </div>
+                </div>
+                <div style="margin:10px">
+                    <div>
+                        <label for="ImgURL">Image URL: </label>
+                    </div>
+                    <div>
+                        <input form="ImgURL"style="text-align:center" @bind="@miniFigure.ImgURL" />
+                    </div>
+                </div>
+                <div><input type="button" @onclick="@AddNewFigure" value="Save" /></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    MiniFigure miniFigure = new MiniFigure();
+    Series series = new Series();
+    string collectionName;
+    [Parameter]
+    public string serie { get; set; }
+    public string Color { get; set; } = "lightgrey";
+    protected override async Task OnInitializedAsync()
+    {
+        series = await SeriesService.GetOneSerie(serie);
+        Color = series.SeriesColor;
+    }
+
+    protected async Task AddNewFigure()
+    {
+        miniFigure.CountOpened = 0;
+        miniFigure.CountSealed = 0;
+        miniFigure.Displayed = false;
+
+        await MiniFigureService.AddFigure(miniFigure, collectionName);
+        NavigationManager.NavigateTo($"/{collectionName}", true);
+    }
+}

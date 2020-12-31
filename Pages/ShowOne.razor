@@ -59,7 +59,6 @@
                     </tr>
                     <tr>
                         <td style="text-align:right;height: 2rem">In display:</td>
-                        @*<td>@figure.Displayed</td>*@
                         <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
 
                     </tr>
@@ -104,7 +103,7 @@
     }
     private async Task editName(int number)
     {
-        await Mini.EditFigure(figure.Number, figure, serieToShow);
+        await Mini.EditFigure(figure.ID, figure, serieToShow);
     }
     private void IncrementOpen()
     {

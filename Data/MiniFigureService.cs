@@ -40,7 +40,7 @@ namespace MiniFigures.Data
             try
             {
                 _miniFigure = _database.GetCollection<MiniFigure>(collectionName);
-                return _miniFigure.Find(minifigure => true).ToList();
+                return _miniFigure.Find(minifigure => true).SortBy(n => n.Number).ToList();
             }
             catch
             {
@@ -76,12 +76,12 @@ namespace MiniFigures.Data
             }
         }
 
-        public async Task<bool> EditFigure(int number, MiniFigure miniFigure, string collectionName)
+        public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
         {
             try
             {
                 _miniFigure = _database.GetCollection<MiniFigure>(collectionName);
-                await _miniFigure.ReplaceOneAsync(n => n.Number == number, miniFigure) ;
+                await _miniFigure.ReplaceOneAsync(n => n.ID == Id, miniFigure) ;
                 return true;
             }
             catch

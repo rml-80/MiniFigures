@@ -1,0 +1,51 @@
+﻿@page "/{serieToShow}/edit"
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
+<h3>EditSerie</h3>
+<table style="font-size:1rem">
+    <tr>
+        <td style="text-align:right">Name:</td>
+        <td style="text-align:center"><input for="Name" class="form-control" @bind="@series.Name" style="font-size: 1.5rem; text-align: center; height: 2rem" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right">Number:</td>
+        <td style="text-align:center"><input for="Number" class="form-control" @bind="@series.Number" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right;height: 2rem">In display:</td>
+        <td style="text-align:center"><input for="NumberOfFigures" class="form-control" @bind="@series.NumberOfFigures" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
+    </tr>
+    <tr>
+        <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
+        <td style="text-align:center"><input for="SeriesColor" class="form-control" @bind="@series.SeriesColor" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
+    </tr>
+</table>
+<button @onclick="() => saveSerie(series)" >Save</button>
+<button @onclick="() => deleteSerie(series.Name)" >Delete</button>
+
+@code {
+
+    [Parameter]
+    public string serieToShow { get; set; }
+
+    protected Series series = new Series();
+
+    protected override async Task OnInitializedAsync()
+    {
+        series = await SeriesService.GetOneSerie(serieToShow);
+    }
+    void saveSerie(Series serie)
+    {
+        SeriesService.EditSerie(series.Id, series);
+        SeriesService.RenameCollection(serieToShow, series.Name);
+        NavigationManager.NavigateTo("/", true);
+    }
+    void deleteSerie(string name)
+    {
+        SeriesService.DeleteCollection(name);
+        SeriesService.DeleteSerie(name);
+        NavigationManager.NavigateTo("/", true);
+    }
+}

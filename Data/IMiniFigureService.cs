@@ -12,6 +12,6 @@ namespace MiniFigures.Data
         List<MiniFigure> GetMiniFigures(string collectionName);
         Task<MiniFigure> GetOneMiniFigure(string collectionName, int number);
         Task<bool> AddFigure(MiniFigure miniFigure, string collectionName);
-        Task<bool> EditFigure(int number, MiniFigure miniFigure, string collectionName);
+        Task<bool> EditFigure(string ID, MiniFigure miniFigure, string collectionName);
     }
 }

@@ -12,3 +12,5 @@ fix dropdown for series choice add page
 Remove Home from navMeny
 Index page
 	Image for each serie as a card horizontal
+deleting figures in db
+Check if collection or figure exist
