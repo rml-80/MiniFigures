@@ -13,8 +13,15 @@
         <div class="card-body" style="margin: auto; background-color: @Color; max-width: 265px; height: 390px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
             <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
                 <div>
-                    <label for="collectionName">In witch serie: </label>
-                    <input form="collectionName" @bind="@collectionName" />
+                    @*<label for="collectionName">In witch serie: </label>*@
+                    @*<input form="collectionName" style="margin-bottom:10px" @bind="@collectionName" />*@
+                    <select style="width:80%; height:2rem" @onchange="@SerieClicked">
+                        <option value="@collectionName">@collectionName</option>
+                        @foreach (var serie in SerieList)
+                        {
+                            <option value="@serie.Name">@serie.Name</option>
+                        }
+                    </select>
                 </div>
                 <div style="margin:10px">
                     <div>
@@ -37,7 +44,7 @@
                         <label for="ImgURL">Image URL: </label>
                     </div>
                     <div>
-                        <input form="ImgURL"style="text-align:center" @bind="@miniFigure.ImgURL" />
+                        <input form="ImgURL" style="text-align:center" @bind="@miniFigure.ImgURL" />
                     </div>
                 </div>
                 <div><input type="button" @onclick="@AddNewFigure" value="Save" /></div>
@@ -48,25 +55,49 @@
 </div>
 
 @code {
+    [Parameter]
+    public string serie { get; set; }
     MiniFigure miniFigure = new MiniFigure();
     Series series = new Series();
     string collectionName;
-    [Parameter]
-    public string serie { get; set; }
     public string Color { get; set; } = "lightgrey";
+    List<Series> SerieList = new List<Series>();
+    List<MiniFigure> MF = new List<MiniFigure>();
+
+
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serie);
         Color = series.SeriesColor;
+        collectionName = serie;
+        SerieList = await SeriesService.GetSeries();
+        MF = MiniFigureService.GetMiniFigures(collectionName);
     }
 
     protected async Task AddNewFigure()
     {
-        miniFigure.CountOpened = 0;
-        miniFigure.CountSealed = 0;
-        miniFigure.Displayed = false;
+        List<int> oList = new List<int>();
+        foreach (var item in MF)
+        {
+            oList.Add(item.Number);
+        }
+        bool b = oList.Contains(miniFigure.Number);
+        if (b)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            miniFigure.CountOpened = 0;
+            miniFigure.CountSealed = 0;
+            miniFigure.Displayed = false;
 
-        await MiniFigureService.AddFigure(miniFigure, collectionName);
-        NavigationManager.NavigateTo($"/{collectionName}", true);
+            await MiniFigureService.AddFigure(miniFigure, collectionName);
+            NavigationManager.NavigateTo($"/{collectionName}", true);
+        }
+    }
+    protected void SerieClicked(ChangeEventArgs args)
+    {
+        collectionName = (string)args.Value;
     }
 }

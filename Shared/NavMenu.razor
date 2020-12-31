@@ -15,11 +15,6 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="fas fa-home mr-2" aria-hidden="true"></span>Home
-            </NavLink>
-        </li>
         @foreach (var serie in series)
         {
             <li class="nav-item px-3">
@@ -50,10 +45,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        GetList();
+        await GetList();
     }
-    protected void GetList()
+    protected async Task<List<Series>> GetList()
     {
-        series = SeriesService.GetSeries();
+        series = await SeriesService.GetSeries();
+        return series;
     }
 }

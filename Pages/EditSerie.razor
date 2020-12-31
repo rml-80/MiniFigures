@@ -3,27 +3,51 @@
 @using MiniFigures.Models
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-<h3>EditSerie</h3>
-<table style="font-size:1rem">
-    <tr>
-        <td style="text-align:right">Name:</td>
-        <td style="text-align:center"><input for="Name" class="form-control" @bind="@series.Name" style="font-size: 1.5rem; text-align: center; height: 2rem" /></td>
-    </tr>
-    <tr>
-        <td style="text-align:right">Number:</td>
-        <td style="text-align:center"><input for="Number" class="form-control" @bind="@series.Number" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
-    </tr>
-    <tr>
-        <td style="text-align:right;height: 2rem">In display:</td>
-        <td style="text-align:center"><input for="NumberOfFigures" class="form-control" @bind="@series.NumberOfFigures" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
-    </tr>
-    <tr>
-        <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
-        <td style="text-align:center"><input for="SeriesColor" class="form-control" @bind="@series.SeriesColor" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
-    </tr>
-</table>
-<button @onclick="() => saveSerie(series)" >Save</button>
-<button @onclick="() => deleteSerie(series.Name)" >Delete</button>
+<h3 style="text-align:center">Edit Serie</h3>
+<div>
+    <div style="text-align:center">
+        <div class="card-body" style="margin: auto; background-color: @Color; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
+            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
+
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="Number">Number: </label>
+                    </div>
+                    <div>
+                        <input form="Number" @bind="@series.Number" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="Name">Name: </label>
+                    </div>
+                    <div>
+                        <input form="Name" @bind="@series.Name" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="NumberOfFiguers">Number of figures: </label>
+                    </div>
+                    <div>
+                        <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
+                        <label for="SeriesColor">Color code: </label>
+                    </div>
+                    <div>
+                        <input form="SeriesColor" placeholder="@series.SeriesColor" @onchange="@ColorChange" />
+                    </div>
+                </div>
+                <div><input type="button" @onclick="() => saveSerie(series)" value="Save" />
+                <input type="button" @onclick="() => deleteSerie(series.Name)" value="Delete" /></div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
 
@@ -31,10 +55,11 @@
     public string serieToShow { get; set; }
 
     protected Series series = new Series();
-
+    public string Color { get; set; }
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serieToShow);
+        Color = series.SeriesColor;
     }
     void saveSerie(Series serie)
     {
@@ -47,5 +72,10 @@
         SeriesService.DeleteCollection(name);
         SeriesService.DeleteSerie(name);
         NavigationManager.NavigateTo("/", true);
+    }
+    void ColorChange(ChangeEventArgs args)
+    {
+        Color = (string)args.Value;
+        series.SeriesColor = Color;
     }
 }

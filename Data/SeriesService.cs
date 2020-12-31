@@ -94,9 +94,9 @@ namespace MiniFigures.Data
             }
         }
 
-        public List<Series> GetSeries()
+        public async Task<List<Series>> GetSeries()
         {
-            return _series.Find(series => true).ToList();
+            return await _series.Find(series => true).ToListAsync();
         }
 
         public async Task<bool> DeleteSerie(string name)

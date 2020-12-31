@@ -6,11 +6,9 @@ Image URL :
 	{serieToShow}/
 		filename from db.
 true | false changing to underlined if true on edit page
-fix add new page
-add information about serie in hidden section on series page
 fix dropdown for series choice add page
-Remove Home from navMeny
 Index page
 	Image for each serie as a card horizontal
 deleting figures in db
 Check if collection or figure exist
+add "add new figure" to edit series page
