@@ -6,14 +6,7 @@ Image URL :
 	{serieToShow}/
 		filename from db.
 
-Index page
-	Image for each serie as a card horizontal
-		change name of collection image
+change name of collection image
 
-send id instead of name to save
-if exists in edit figure page
-Check if collection exist
-cancel button edit series page
-add promts on delete
 back to list , previous and next on showOne page
-change serie info to table
+Must give name on series add

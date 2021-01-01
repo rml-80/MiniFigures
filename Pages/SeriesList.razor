@@ -1,0 +1,30 @@
+﻿@using MiniFigures.Models
+@using MiniFigures.Data
+@inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
+<h3>SeriesList</h3>
+<div class="card-deck">
+    @foreach (var item in seriesList)
+    {
+        <div class="card-body" style="margin: auto; background-color: @item.SeriesColor; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
+            <div class="card-body" style="text-align:center; width: 100%; height: 100%; border-radius: 10px; padding:initial">
+                <img src="@item.SeriePicture" @onclick="() => goTo(item.Name)" style="max-height:100%" alt="Serie @item.Name" />
+            </div>
+        </div>
+    }
+
+</div>
+
+
+@code {
+    List<Series> seriesList = new List<Series>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        seriesList = await SeriesService.GetSeries();
+    }
+    void goTo(string serie)
+    {
+        NavigationManager.NavigateTo($"/{serie}");
+    }
+}

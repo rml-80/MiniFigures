@@ -44,7 +44,7 @@ namespace MiniFigures.Data
             }
         }
 
-        public async Task<bool> DeleteCollection(string name)
+        public async Task<bool> DeleteCollection(string name)   //using name for deleting both collection in db and info in SeriesData
         {
             try
             {

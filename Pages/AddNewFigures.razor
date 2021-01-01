@@ -47,6 +47,8 @@
                 </div>
                 <div><input type="button" @onclick="@AddNewFigure" value="Save" /></div>
                 <br />
+                <input type="button" @onclick="cancel" value="Cancel" />
+                <br />
                 <div style="display:@ShowWarningNumber; color:red">
                     Minifigure with Number: @miniFigure.Number <br />already exists!
                 </div>
@@ -107,5 +109,9 @@
                 break;
             }
         }
+    }
+    void cancel()
+    {
+        NavigationManager.NavigateTo($"/{collectionName}");
     }
 }

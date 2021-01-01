@@ -22,17 +22,33 @@
 }
 else if (MF.Count == 0)
 {
+<br />
     <div style="text-align:center"><h4>No Figures in collection</h4></div>
+    <br />
+    <div style="text-align:center"><input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
+    </div>
 }
 else
 {
     <div style="display:@HideShow; font-size:1.25rem">
         <div style="margin: -5px auto 0px auto;padding:10px ;width: 98%; border:solid 4px @Color; border-bottom-left-radius:10px;border-bottom-right-radius:10px">
-            <div style="float:right"><button @onclick="ToEdit">Edit</button></div>
-            <div>Number: @series.Number</div>
-            <div>Number of figures: @series.NumberOfFigures</div>
-            <div style="float:right"><button @onclick="ToAdd">Add figure</button></div>
-            <div>Series color: @series.SeriesColor</div>
+            <table style="width:100%">
+                <tr>
+                    <td style="width:10%">Number:</td>
+                    <td>@series.Number</td>
+                    <td style="text-align:right"><input type="button" @onclick="ToEdit" value="Edit" /></td>
+                </tr>
+                <tr>
+                    <td>Number of figures:</td>
+                    <td>@series.NumberOfFigures</td>
+                    <td style="text-align:right"><input type="button" @onclick="ToAdd" value="Add figure" /></td>
+                </tr>
+                <tr>
+                    <td>Series color:</td>
+                    <td>@series.SeriesColor</td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </div>
     <h4 style="margin-top:10px">You own @owned of @series.NumberOfFigures</h4>
@@ -90,7 +106,6 @@ else
         series = await SeriesService.GetOneSerie(serieToShow);
         Color = series.SeriesColor;
         Owned();
-        serieToShow = series.Name;
         HideShow = "none";
         InfoIcon = "fas fa-chevron-down fa-2x";
     }

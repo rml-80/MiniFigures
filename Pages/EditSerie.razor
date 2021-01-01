@@ -7,7 +7,7 @@
 <div>
     <div style="text-align:center">
         <div class="card-body" style="margin: auto; background-color: @Color; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
-            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
+            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px">
 
                 <div class="row" style="margin:10px">
                     <div style="width:40%;text-align:right">
@@ -35,6 +35,14 @@
                 </div>
                 <div class="row" style="margin:10px">
                     <div style="width:40%;text-align:right">
+                        <label for="SeriePicture">Path to picture: </label>
+                    </div>
+                    <div>
+                        <input form="SeriePicture" @bind="@series.SeriePicture" />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px">
+                    <div style="width:40%;text-align:right">
                         <label for="SeriesColor">Color code: </label>
                     </div>
                     <div>
@@ -42,7 +50,15 @@
                     </div>
                 </div>
                 <div><input type="button" @onclick="() => saveSerie(series)" value="Save" />
-                <input type="button" @onclick="() => deleteSerie(series.Name)" value="Delete" /></div>
+                <input type="button" @onclick="cancel" value="Cancel" />
+                <input type="button" @onclick="deletePromptShow" value="Delete" />
+                <div style="display:@deletePrompt; color:red">
+                    <p>Sure you want to DELETE this serie?</p>
+                    <input type="button" @onclick="() => deleteSerie(series.Name)" value="YES" />
+                    <input type="button" @onclick="deletePromptShow" value="NO" />
+
+                </div>
+                </div>
 
             </div>
         </div>
@@ -53,7 +69,7 @@
 
     [Parameter]
     public string serieToShow { get; set; }
-
+    public string deletePrompt { get; set; } = "none";
     protected Series series = new Series();
     public string Color { get; set; }
     protected override async Task OnInitializedAsync()
@@ -77,5 +93,20 @@
     {
         Color = (string)args.Value;
         series.SeriesColor = Color;
+    }
+    void cancel()
+    {
+        NavigationManager.NavigateTo($"/{serieToShow}");
+    }
+    void deletePromptShow()
+    {
+        if (deletePrompt == "none")
+        {
+            deletePrompt = "inline";
+        }
+        else
+        {
+            deletePrompt = "none";
+        }
     }
 }

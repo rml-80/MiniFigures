@@ -16,7 +16,7 @@
                 <table style="font-size:1rem">
                     <tr>
                         <td style="text-align:right">Number:</td>
-                        <td style="text-align:center"><input for="Number" class="form-control" @bind="@figure.Number" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
+                        <td style="text-align:center"><input for="Number" class="form-control" @onchange="@checkNumber" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
                     </tr>
                     <tr>
                         <td style="text-align:right;height: 2rem">In display:</td>
@@ -48,38 +48,47 @@
                         </td>
                     </tr>
                 </table>
-                <button @onclick="() => deleteFigure(figure.ID)">Delete</button>
-            }
-            else
-            {
-                <p style="font-size: 1.5rem;text-align: center;height:2rem; margin:0px">@figure.Name</p>
-                <table style="font-size:1rem">
-                    <tr>
-                        <td style="text-align:right;height: 2rem">Number:</td>
-                        <td style="text-align:center"><p style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem">@figure.Number</p></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:right;height: 2rem">In display:</td>
-                        <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
+                <input type="button" @onclick="deletePromptShow" value="Delete">
+                <div style="display:@deletePrompt; color:red">
+                    <p>Sure you want to DELETE this serie?</p>
+                    <input type="button" @onclick="() => deleteFigure(figure.ID)" value="YES" />
+                    <input type="button" @onclick="deletePromptShow" value="NO" />
+                </div>
+                    }
+                    else
+                    {
+                    <p style="font-size: 1.5rem;text-align: center;height:2rem; margin:0px">@figure.Name</p>
+                    <table style="font-size:1rem">
+                        <tr>
+                            <td style="text-align:right;height: 2rem">Number:</td>
+                            <td style="text-align:center"><p style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem">@figure.Number</p></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;height: 2rem">In display:</td>
+                            <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
 
-                    </tr>
-                    <tr>
-                        <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
-                        <td>@figure.CountOpened</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:right;height: 2rem">Ownd sealed:</td>
-                        <td>@figure.CountSealed</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:right;height: 2rem">Image:</td>
-                        <td style="font-size:1rem; white-space:nowrap">@figure.ImgURL</td>
-                    </tr>
-                </table>
-                <div style="text-align:right;color:@Color"><a class="fas fa-edit fa-2x" @onclick="editfigure"></a></div>
-            }
-        </div>
-    </div>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
+                            <td>@figure.CountOpened</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;height: 2rem">Ownd sealed:</td>
+                            <td>@figure.CountSealed</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;height: 2rem">Image:</td>
+                            <td style="font-size:1rem; white-space:nowrap">@figure.ImgURL</td>
+                        </tr>
+                    </table>
+                    <div style="text-align:right;color:@Color"><a class="fas fa-edit fa-2x" @onclick="editfigure"></a></div>
+                    }
+                    <br />
+                    <div style="display:@ShowWarningForNumber; color:red">
+                        Minifigure with Number: @currentNumber <br />already exists!
+                    </div>
+                </div>
+            </div>
 </div>
 
 @code {
@@ -87,7 +96,6 @@
     public int number { get; set; }
     [Parameter]
     public string serieToShow { get; set; }
-    protected MiniFigure Singlefigure = new MiniFigure();
     public string displayButton { get; set; }
     public Series series { get; set; }
     public string Color { get; set; }
@@ -97,6 +105,13 @@
     public string iconColor { get; set; }
     public string isTrue { get; set; }
     public string isFalse { get; set; }
+    public bool Existing { get; set; }
+    List<MiniFigure> MF = new List<MiniFigure>();
+    public string ShowWarningForNumber { get; set; } = "none";
+    public int? currentNumber { get; set; }
+    public string deletePrompt { get; set; } = "none";
+
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -104,6 +119,8 @@
         series = await SeriesService.GetOneSerie(serieToShow);
         Color = series.SeriesColor;
         trueOrFalse();
+        MF = Mini.GetMiniFigures(serieToShow);
+
     }
     private async Task editName(int number)
     {
@@ -155,6 +172,7 @@
     {
         await editName(number);
         edit = false;
+
     }
     private void editfigure()
     {
@@ -214,4 +232,53 @@
         changeDisplayed();
 
     }
+    void isExist(int number)
+    {
+        foreach (var fig in MF)
+        {
+            if (number == fig.Number)
+            {
+                Existing = true;
+                break;
+            }
+            else
+            {
+                Existing = false;
+            }
+        }
+    }
+    void checkNumber(ChangeEventArgs args)
+    {
+        if (args != null)
+        {
+            currentNumber = Convert.ToInt32(args.Value);
+            isExist(Convert.ToInt32(args.Value));
+
+            if (Existing)
+            {
+                ShowWarningForNumber = "inline";
+                Existing = false;
+            }
+            else
+            {
+                ShowWarningForNumber = "none";
+                figure.Number = Convert.ToInt32(args.Value);
+                currentNumber = null;
+            }
+        }
+    }
+
+    void deletePromptShow()
+    {
+        if (deletePrompt == "none")
+        {
+            deletePrompt = "inline";
+        }
+        else
+        {
+            deletePrompt = "none";
+        }
+    }
+
+
 }
