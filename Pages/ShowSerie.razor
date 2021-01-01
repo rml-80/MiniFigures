@@ -28,10 +28,10 @@ else
 {
     <div style="display:@HideShow; font-size:1.25rem">
         <div style="margin: -5px auto 0px auto;padding:10px ;width: 98%; border:solid 4px @Color; border-bottom-left-radius:10px;border-bottom-right-radius:10px">
+            <div style="float:right"><button @onclick="ToEdit">Edit</button></div>
             <div>Number: @series.Number</div>
-            <div style="float:right; text-align:right"><button @onclick="() => ToEdit()">Edit</button></div>
-
             <div>Number of figures: @series.NumberOfFigures</div>
+            <div style="float:right"><button @onclick="ToAdd">Add figure</button></div>
             <div>Series color: @series.SeriesColor</div>
         </div>
     </div>
@@ -90,6 +90,7 @@ else
         series = await SeriesService.GetOneSerie(serieToShow);
         Color = series.SeriesColor;
         Owned();
+        serieToShow = series.Name;
         HideShow = "none";
         InfoIcon = "fas fa-chevron-down fa-2x";
     }
@@ -99,8 +100,7 @@ else
     }
     private void ShowOne(int number)
     {
-        var figure = number.ToString();
-        NavigationManager.NavigateTo($"/{serieToShow}/{figure}");
+        NavigationManager.NavigateTo($"/{serieToShow}/{number}");
     }
     private async Task IncrementMF(int number)
     {
@@ -152,6 +152,10 @@ else
     void ToEdit()
     {
         NavigationManager.NavigateTo($"/{serieToShow}/edit");
+    }
+    void ToAdd()
+    {
+        NavigationManager.NavigateTo($"/addnew/figures/{serieToShow}");
     }
     void ToggleInfo()
     {

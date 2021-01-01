@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:right;height: 2rem">In display:</td>
-                        <td>True | False</td>
+                        <td><button style="@isTrue" @onclick="changeTrueFalse">True</button> | <button style="@isFalse" @onclick=" changeTrueFalse">False</button></td>
                     </tr>
                     <tr>
                         <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
@@ -48,6 +48,7 @@
                         </td>
                     </tr>
                 </table>
+                <button @onclick="() => deleteFigure(figure.ID)">Delete</button>
             }
             else
             {
@@ -94,12 +95,15 @@
     protected MiniFigure figure = new MiniFigure();
     public string Icon { get; set; }
     public string iconColor { get; set; }
+    public string isTrue { get; set; }
+    public string isFalse { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         figure = await Mini.GetOneMiniFigure(serieToShow, number);
         series = await SeriesService.GetOneSerie(serieToShow);
         Color = series.SeriesColor;
+        trueOrFalse();
     }
     private async Task editName(int number)
     {
@@ -127,17 +131,7 @@
             figure.CountSealed--;
         }
     }
-    private void checkDisplayed()
-    {
-        if (figure.Displayed)
-        {
-            displayButton = "false";
-        }
-        else
-        {
-            displayButton = "true";
-        }
-    }
+
     private void changeDisplayed()
     {
         if (figure.Displayed)
@@ -184,5 +178,40 @@
         }
         return Icon;
     }
+    void deleteFigure(string id)
+    {
+        Mini.DeleteFigure(id);
+        NavigationManager.NavigateTo($"/{serieToShow}");
+    }
 
+    void trueOrFalse()
+    {
+        if (figure.Displayed)
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+
+        }
+        else
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+
+    }
+    void changeTrueFalse()
+    {
+        if (figure.Displayed)
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+        else
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+        }
+        changeDisplayed();
+
+    }
 }

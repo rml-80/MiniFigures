@@ -89,6 +89,18 @@ namespace MiniFigures.Data
                 return false;
             }
         }
+        public async Task<bool> DeleteFigure(string id)
+        {
+            try
+            {
+                await _miniFigure.DeleteOneAsync(i => i.ID == id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
 

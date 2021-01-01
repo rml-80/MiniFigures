@@ -29,7 +29,6 @@ namespace MiniFigures
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddServerSideBlazor(o => o.DetailedErrors = true);
 
             services.Configure<MongoDBSettings>(Configuration.GetSection(nameof(MongoDBSettings)));

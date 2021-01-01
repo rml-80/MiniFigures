@@ -13,8 +13,6 @@
         <div class="card-body" style="margin: auto; background-color: @Color; max-width: 265px; height: 390px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
             <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
                 <div>
-                    @*<label for="collectionName">In witch serie: </label>*@
-                    @*<input form="collectionName" style="margin-bottom:10px" @bind="@collectionName" />*@
                     <select style="width:80%; height:2rem" @onchange="@SerieClicked">
                         <option value="@collectionName">@collectionName</option>
                         @foreach (var serie in SerieList)
@@ -48,7 +46,10 @@
                     </div>
                 </div>
                 <div><input type="button" @onclick="@AddNewFigure" value="Save" /></div>
-
+                <br />
+                <div style="display:@ShowWarningNumber; color:red">
+                    Minifigure with Number: @miniFigure.Number <br />already exists!
+                </div>
             </div>
         </div>
     </div>
@@ -63,7 +64,8 @@
     public string Color { get; set; } = "lightgrey";
     List<Series> SerieList = new List<Series>();
     List<MiniFigure> MF = new List<MiniFigure>();
-
+    public bool Existing { get; set; }
+    public string ShowWarningNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,15 +78,10 @@
 
     protected async Task AddNewFigure()
     {
-        List<int> oList = new List<int>();
-        foreach (var item in MF)
+        isExist();
+        if (Existing)
         {
-            oList.Add(item.Number);
-        }
-        bool b = oList.Contains(miniFigure.Number);
-        if (b)
-        {
-            NavigationManager.NavigateTo("/");
+            ShowWarningNumber = "inline";
         }
         else
         {
@@ -99,5 +96,16 @@
     protected void SerieClicked(ChangeEventArgs args)
     {
         collectionName = (string)args.Value;
+    }
+    void isExist()
+    {
+        foreach (var figure in MF)
+        {
+            if (figure.Number == miniFigure.Number)
+            {
+                Existing = true;
+                break;
+            }
+        }
     }
 }

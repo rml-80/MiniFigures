@@ -1,14 +1,19 @@
 ﻿//TODO
 
-Change Serie name on top of pages need to change in db!
+
 Image URL :
 	hardcode images/
 	{serieToShow}/
 		filename from db.
-true | false changing to underlined if true on edit page
-fix dropdown for series choice add page
+
 Index page
 	Image for each serie as a card horizontal
-deleting figures in db
-Check if collection or figure exist
-add "add new figure" to edit series page
+		change name of collection image
+
+send id instead of name to save
+if exists in edit figure page
+Check if collection exist
+cancel button edit series page
+add promts on delete
+back to list , previous and next on showOne page
+change serie info to table
