@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 
-<div class="top-row pl-4 navbar navbar-dark">
+<div class="top-row pl-4 navbar navbar-dark" style="margin-bottom: 2rem">
     <a href="" style="font-size:2rem;color:black;text-decoration:none" >MiniFigures</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -17,8 +17,8 @@
     <ul class="nav flex-column">
         @foreach (var serie in series)
         {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@serie.Name">
+            <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
+                <NavLink class="nav-link" href="@serie.Name" >
                     <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie.DisplayName
                 </NavLink>
             </li>

@@ -9,7 +9,7 @@
     <div style="width:5%">
     </div>
     <div style="width:90%">
-        <h3>@serieToShow.Replace("_", " ") </h3>
+        <h3 >@serieToShow.Replace("_", " ") </h3>
     </div>
     <div style="width:5%;text-align:center">
         <a @onclick="() => ToggleInfo()"><i class="@InfoIcon"></i></a>
@@ -22,26 +22,32 @@
 }
 else if (MF.Count == 0)
 {
-<br />
+    <br />
     <div style="text-align:center"><h4>No Figures in collection</h4></div>
     <br />
-    <div style="text-align:center"><input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
+    <div style="text-align:center">
+        <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
     </div>
 }
 else
 {
     <div style="display:@HideShow; font-size:1.25rem">
         <div style="margin: -5px auto 0px auto;padding:10px ;width: 98%; border:solid 4px @Color; border-bottom-left-radius:10px;border-bottom-right-radius:10px">
-            <table style="width:100%">
+            <table style="width:100%; ">
                 <tr>
                     <td style="width:10%">Number:</td>
-                    <td>@series.Number</td>
+                    <td style="width:12rem">@series.Number</td>
                     <td style="text-align:right"><input type="button" @onclick="ToEdit" value="Edit" /></td>
                 </tr>
                 <tr>
                     <td>Number of figures:</td>
                     <td>@series.NumberOfFigures</td>
-                    <td style="text-align:right"><input type="button" @onclick="ToAdd" value="Add figure" /></td>
+                    <td style="text-align:right">
+                        @if (MF.Count != series.NumberOfFigures)
+                        {
+                        <p style="margin:0">@MF.Count of @series.NumberOfFigures are added to the serie <input type="button" @onclick="ToAdd" value="Add figure" /></p>
+                        }
+                    </td>
                 </tr>
                 <tr>
                     <td>Series color:</td>
@@ -51,7 +57,13 @@ else
             </table>
         </div>
     </div>
-    <h4 style="margin-top:10px">You own @owned of @series.NumberOfFigures</h4>
+    <h4 style="margin-top:10px">
+        You own @owned of @series.NumberOfFigures
+        @if (owned == series.NumberOfFigures)
+        {
+            <i class="fas fa-star" style="color:@series.SeriesColor" />
+        }
+    </h4>
     <div class="card-deck">
         @foreach (var figure in MF)
         {
@@ -117,6 +129,7 @@ else
     {
         NavigationManager.NavigateTo($"/{serieToShow}/{number}");
     }
+
     private async Task IncrementMF(int number)
     {
         SingleMF = await Mini.GetOneMiniFigure(serieToShow, number);

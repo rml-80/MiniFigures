@@ -60,6 +60,7 @@ namespace MiniFigures.Data
         {
             try
             {
+                series.Name = series.DisplayName.Replace(" ", "_");
                 await _series.InsertOneAsync(series);
                 return true;
             }
@@ -73,6 +74,7 @@ namespace MiniFigures.Data
         {
             try
             {
+                series.Name = series.DisplayName.Replace(" ", "_");
                 await _series.ReplaceOneAsync(s => s.Id == ID, series);
                 return true;
             }

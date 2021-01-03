@@ -25,7 +25,7 @@
                         <label for="Name">Name: </label>
                     </div>
                     <div>
-                        <input form="Name" @bind="@series.Name" />
+                        <input form="Name" @bind="@series.DisplayName" />
                     </div>
                 </div>
                 <div class="row" style="margin:10px">
@@ -86,9 +86,9 @@
         {
             if (ShowWarningForNumber == "none")
             {
-                if (series.Name == null)
+                if (series.DisplayName == null)
                 {
-                    series.Name = "Rename serie";
+                    series.DisplayName = "Rename serie";
                 }
                 await SeriesService.AddSerie(series);
                 await SeriesService.CreateNewCollection(series.Name);
