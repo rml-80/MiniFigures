@@ -86,6 +86,10 @@
         {
             if (ShowWarningForNumber == "none")
             {
+                if (series.Name == null)
+                {
+                    series.Name = "Rename serie";
+                }
                 await SeriesService.AddSerie(series);
                 await SeriesService.CreateNewCollection(series.Name);
                 NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");

@@ -1,12 +1,4 @@
 ﻿//TODO
 
 
-Image URL :
-	hardcode images/
-	{serieToShow}/
-		filename from db.
-
-change name of collection image
-
-back to list , previous and next on showOne page
-Must give name on series add
+name for navmenu put a displayName in db?
