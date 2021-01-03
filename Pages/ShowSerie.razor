@@ -9,7 +9,7 @@
     <div style="width:5%">
     </div>
     <div style="width:90%">
-        <h3>@serieToShow</h3>
+        <h3>@serieToShow.Replace("_", " ") </h3>
     </div>
     <div style="width:5%;text-align:center">
         <a @onclick="() => ToggleInfo()"><i class="@InfoIcon"></i></a>
@@ -58,7 +58,7 @@ else
             <div class="card-body" style="background-color:@Color; max-width: 265px; height:390px ;padding:15px; margin:5px auto 5px auto; border-radius:15px">
                 <div class="card-body" style="background-color:white; text-align: center;width: 235px; height: 360px; border-radius: 10px; padding-top:10px">
                     <div style="text-align:left;font-weight:bolder;color:@Color">@figure.Number</div>
-                    <img src="@figure.ImgURL" style="max-width:210px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+                    <img src="/images/@serieToShow/@figure.ImgURL" style="max-width:210px;height:200px" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                     <h4 class="card-title">@figure.Name</h4>
                     <table style="margin-bottom:10px; line-height:1">
                         <tr>

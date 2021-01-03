@@ -8,8 +8,8 @@
 <div style="text-align:center">
     <div class="card-body" style="margin: auto; background-color: @Color; max-width: 430px; height: 680px; padding: 20px;  border-radius: 20px">
         <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:5px">
-            <div style="margin-bottom:5px;font-size:1.5rem;text-align:left;color:@Color">@serieToShow</div>
-            <img src="@figure.ImgURL" style="max-width:100%" alt="Picture of @figure.Name" />
+            <div style="margin-bottom:5px;font-size:1.5rem;text-align:left;color:@Color">@serieToShow.Replace("_"," ")</div>
+            <img src="/images/@serieToShow/@figure.ImgURL" style="max-width:100%" alt="Picture of @figure.Name" />
             @if (edit)
             {
                 <input for="Name" class="form-control" @bind="@figure.Name" style="font-size: 1.5rem; text-align: center; height: 2rem" />

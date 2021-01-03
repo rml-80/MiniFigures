@@ -96,7 +96,7 @@ namespace MiniFigures.Data
 
         public async Task<List<Series>> GetSeries()
         {
-            return await _series.Find(series => true).ToListAsync();
+            return await _series.Find(series => true).SortBy(n => n.Number).ToListAsync();
         }
 
         public async Task<bool> DeleteSerie(string name)
