@@ -6,12 +6,19 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-
+@if (MF.Count == series.NumberOfFigures)
+{
+    <h3>No more figures to add</h3>
+}
+else
+{
 <h3 style="text-align:center">Add Figure</h3>
 <div>
     <div style="text-align:center">
         <div class="card-body" style="margin: auto; background-color: @Color; max-width: 265px; height: 390px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
             <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px; padding-top:10%">
+                <div>Figures To add: @(series.NumberOfFigures - MF.Count) </div>
+                <br />
                 <div>
                     <select style="width:80%; height:2rem" @onchange="@SerieClicked">
                         <option value="@collectionName">@collectionName</option>
@@ -26,7 +33,7 @@
                         <label for="Number">Number: </label>
                     </div>
                     <div>
-                        <input form="Number" style="text-align:center" @bind="@miniFigure.Number" />
+                        <input tabindex="1" form="Number" style="text-align:center" @onchange="isExist" />
                     </div>
                 </div>
                 <div style="margin:10px">
@@ -34,29 +41,22 @@
                         <label for="Name">Name: </label>
                     </div>
                     <div>
-                        <input form="Name" style="text-align:center" @bind="@miniFigure.Name" />
+                        <input tabindex="2" form="Name" autocomplete="off" style="text-align:center" @bind="@miniFigure.Name" />
                     </div>
                 </div>
-                <div style="margin:10px">
-                    <div>
-                        <label for="ImgURL">Image URL: </label>
-                    </div>
-                    <div>
-                        <input form="ImgURL" style="text-align:center" @bind="@miniFigure.ImgURL" />
-                    </div>
-                </div>
-                <div><input type="button" @onclick="@AddNewFigure" value="Save" /></div>
+
+                <div><input tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" /></div>
                 <br />
                 <input type="button" @onclick="cancel" value="Cancel" />
                 <br />
-                <div style="display:@ShowWarningNumber; color:red">
+                <div style="display:@ShowWarningForNumber; color:red">
                     Minifigure with Number: @miniFigure.Number <br />already exists!
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+}
 @code {
     [Parameter]
     public string serie { get; set; }
@@ -67,7 +67,8 @@
     List<Series> SerieList = new List<Series>();
     List<MiniFigure> MF = new List<MiniFigure>();
     public bool Existing { get; set; }
-    public string ShowWarningNumber { get; set; } = "none";
+    public string Pic { get; set; }
+    public string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,36 +81,68 @@
 
     protected async Task AddNewFigure()
     {
-        isExist();
+
         if (Existing)
         {
-            ShowWarningNumber = "inline";
+            ShowWarningForNumber = "inline";
         }
         else
         {
+            Pic = miniFigure.Number.ToString();
+            if (Pic.Length > 1)
+            {
+                miniFigure.Image = $"{series.Number}-{Pic}.jpg";
+            }
+            else
+            {
+                miniFigure.Image = $"{series.Number}-0{Pic}.jpg";
+            }
             miniFigure.CountOpened = 0;
             miniFigure.CountSealed = 0;
             miniFigure.Displayed = false;
 
             await MiniFigureService.AddFigure(miniFigure, collectionName);
-            NavigationManager.NavigateTo($"/{collectionName}", true);
+            //NavigationManager.NavigateTo($"/{collectionName}", true);
+            NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
         }
     }
     protected void SerieClicked(ChangeEventArgs args)
     {
         collectionName = (string)args.Value;
     }
-    void isExist()
+    void isExist(ChangeEventArgs args)
     {
         foreach (var figure in MF)
         {
-            if (figure.Number == miniFigure.Number)
+            if (figure.Number == Convert.ToInt32(args.Value))
             {
                 Existing = true;
                 break;
             }
         }
+        miniFigure.Number = Convert.ToInt32(args.Value);
     }
+    //void checkNumber(ChangeEventArgs args)
+    //{
+    //    if (args != null)
+    //    {
+    //        currentNumber = (string)args.Value;
+    //        isExist(currentNumber);
+
+    //        if (Existing)
+    //        {
+    //            ShowWarningForNumber = "inline";
+    //            Existing = false;
+    //        }
+    //        else
+    //        {
+    //            ShowWarningForNumber = "none";
+    //            series.Number = (string)args.Value;
+    //            currentNumber = null;
+    //            canSave = true;
+    //        }
+    //    }
+    //}
     void cancel()
     {
         NavigationManager.NavigateTo($"/{collectionName}");

@@ -1,129 +1,129 @@
 [{
-  "Name": "Tribal Hunter",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 1,
-  "Displayed": false,
-  "Image": "8683-01.jpg"
-},{
-  "Name": "Cheerleader",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 2,
-  "Displayed": false,
-  "Image": "8683-02.jpg"
-},{
-  "Name": "Caveman",
+  "Name": "Circus Ringmaster",
   "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 3,
   "Displayed": false,
-  "Image": "8683-03.jpg"
+  "Image": "8684-03.jpg"
 },{
-  "Name": "Circus Clown",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 4,
-  "Displayed": false,
-  "Image": "8683-04.jpg"
-},{
-  "Name": "Cowboy",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 16,
-  "Displayed": false,
-  "Image": "8683-16.jpg"
-},{
-  "Name": "Deep Sea Diver",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 15,
-  "Displayed": false,
-  "Image": "8683-15.jpg"
-},{
-  "Name": "Demolition Dummy",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 8,
-  "Displayed": false,
-  "Image": "8683-08.jpg"
-},{
-  "Name": "Forestman",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 14,
-  "Displayed": false,
-  "Image": "8683-14.jpg"
-},{
-  "Name": "Magician",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 9,
-  "Displayed": false,
-  "Image": "8683-09.jpg"
-},{
-  "Name": "Ninja",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 12,
-  "Displayed": false,
-  "Image": "8683-12.jpg"
-},{
-  "Name": "Nurse",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 11,
-  "Displayed": false,
-  "Image": "8683-11.jpg"
-},{
-  "Name": "Robot",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 7,
-  "Displayed": false,
-  "Image": "8683-07.jpg"
-},{
-  "Name": "Skater",
-  "CountSealed": 0,
-  "CountOpened": 0,
-  "CountTotal": 0,
-  "Number": 6,
-  "Displayed": false,
-  "Image": "8683-06.jpg"
-},{
-  "Name": "Spaceman",
+  "Name": "Disco Dude",
   "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 13,
   "Displayed": false,
-  "Image": "8683-13.jpg"
+  "Image": "8684-13.jpg"
 },{
-  "Name": "Super Wrestler",
+  "Name": "Explorer",
   "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
-  "Number": 10,
+  "Number": 7,
   "Displayed": false,
-  "Image": "8683-10.jpg"
+  "Image": "8684-07.jpg"
 },{
-  "Name": "Zombie",
+  "Name": "Karate Master",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 7,
+  "Displayed": false,
+  "Image": "8684-07.jpg"
+},{
+  "Name": "Lifeguard",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 8,
+  "Displayed": false,
+  "Image": "8684-08.jpg"
+},{
+  "Name": "Maraca Man",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 1,
+  "Displayed": false,
+  "Image": "8684-01.jpg"
+},{
+  "Name": "Mime, Beret",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 9,
+  "Displayed": false,
+  "Image": "8684-09.jpg"
+},{
+  "Name": "Pharaoh",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 16,
+  "Displayed": false,
+  "Image": "8684-16.jpg"
+},{
+  "Name": "Pop Star",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 11,
+  "Displayed": false,
+  "Image": "8684-11.jpg"
+},{
+  "Name": "Skier",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 12,
+  "Displayed": false,
+  "Image": "8684-12.jpg"
+},{
+  "Name": "Spartan Warrior",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 2,
+  "Displayed": false,
+  "Image": "8684-02.jpg"
+},{
+  "Name": "Surfer",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 15,
+  "Displayed": false,
+  "Image": "8684-15.jpg"
+},{
+  "Name": "Traffic Cop",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 6,
+  "Displayed": false,
+  "Image": "8684-06.jpg"
+},{
+  "Name": "Vampire",
   "CountSealed": 0,
   "CountOpened": 0,
   "CountTotal": 0,
   "Number": 5,
   "Displayed": false,
-  "Image": "8683-05.jpg"
+  "Image": "8684-05.jpg"
+},{
+  "Name": "WeightLifter",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 10,
+  "Displayed": false,
+  "Image": "8684-10.jpg"
+},{
+  "Name": "Witch",
+  "CountSealed": 0,
+  "CountOpened": 0,
+  "CountTotal": 0,
+  "Number": 4,
+  "Displayed": false,
+  "Image": "8684-04.jpg"
 }]

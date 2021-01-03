@@ -1,48 +1,11 @@
-﻿@inject NavigationManager NavigationManager
-
-
-<div class="row" style="text-align:center; background-color:@Color; border-radius:15px;height:4rem; padding-top:inherit; margin-left:auto; margin-right:auto ">
-    <div style="width:5%">
-    </div>
-    <div style="width:90%">
-        <h3>@serieToShow.Replace("_", " ") </h3>
-    </div>
-    <div style="width:5%;text-align:center">
-        <a @onclick="() => ToggleInfo()"><i class="@InfoIcon"></i></a>
+﻿<div class="row" style="border-radius:15px;height:4rem; padding-top:inherit; margin-left:auto; margin-right:auto ">
+    <div style="text-align:center;margin-left:auto; margin-right:auto">
+        <h5>There is ___ Series to Collect | You have ___ complete series</h5>
+        <h5>With a total of ___ figures | You have ___ figures </h5>
     </div>
 </div>
 
 
 @code {
-    [Parameter]
-    public string serieToShow { get; set; }
-    public string Color { get; set; }
-    public string Icon { get; set; }
-    public string iconColor { get; set; }
-    public int owned { get; set; }
-    public string HideShow { get; set; } = "none";
-    public string InfoIcon { get; set; } = "fas fa-chevron-down fa-2x";
-
-    void ToEdit()
-    {
-        NavigationManager.NavigateTo($"/{serieToShow}/edit");
-    }
-    void ToAdd()
-    {
-        NavigationManager.NavigateTo($"/addnew/figures/{serieToShow}");
-    }
-    void ToggleInfo()
-    {
-        if (HideShow == "none")
-        {
-            HideShow = "inline";
-            InfoIcon = "fas fa-chevron-up fa-2x";
-        }
-        else
-        {
-            HideShow = "none";
-            InfoIcon = "fas fa-chevron-down fa-2x";
-        }
-    }
 
 }

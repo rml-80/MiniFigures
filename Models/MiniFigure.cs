@@ -18,7 +18,7 @@ namespace MiniFigures.Models
         public int CountTotal { get; set; }
         public int Number { get; set; }
         public bool Displayed { get; set; }
-        public string ImgURL { get; set; }
+        public string Image { get; set; }
 
     }
 }

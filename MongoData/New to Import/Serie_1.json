@@ -1,4 +1,7 @@
 [{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b89"
+  },
   "Name": "Tribal Hunter",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -7,6 +10,9 @@
   "Displayed": false,
   "Image": "8683-01.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8a"
+  },
   "Name": "Cheerleader",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -15,6 +21,9 @@
   "Displayed": false,
   "Image": "8683-02.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8b"
+  },
   "Name": "Caveman",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -23,6 +32,9 @@
   "Displayed": false,
   "Image": "8683-03.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8c"
+  },
   "Name": "Circus Clown",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -31,6 +43,9 @@
   "Displayed": false,
   "Image": "8683-04.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8d"
+  },
   "Name": "Cowboy",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -39,6 +54,9 @@
   "Displayed": false,
   "Image": "8683-16.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8e"
+  },
   "Name": "Deep Sea Diver",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -47,6 +65,9 @@
   "Displayed": false,
   "Image": "8683-15.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b8f"
+  },
   "Name": "Demolition Dummy",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -55,6 +76,9 @@
   "Displayed": false,
   "Image": "8683-08.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b90"
+  },
   "Name": "Forestman",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -63,6 +87,9 @@
   "Displayed": false,
   "Image": "8683-14.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b91"
+  },
   "Name": "Magician",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -71,6 +98,9 @@
   "Displayed": false,
   "Image": "8683-09.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b92"
+  },
   "Name": "Ninja",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -79,6 +109,9 @@
   "Displayed": false,
   "Image": "8683-12.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b93"
+  },
   "Name": "Nurse",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -87,6 +120,9 @@
   "Displayed": false,
   "Image": "8683-11.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b94"
+  },
   "Name": "Robot",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -95,6 +131,9 @@
   "Displayed": false,
   "Image": "8683-07.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b95"
+  },
   "Name": "Skater",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -103,6 +142,9 @@
   "Displayed": false,
   "Image": "8683-06.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b96"
+  },
   "Name": "Spaceman",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -111,6 +153,9 @@
   "Displayed": false,
   "Image": "8683-13.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b97"
+  },
   "Name": "Super Wrestler",
   "CountSealed": 0,
   "CountOpened": 0,
@@ -119,6 +164,9 @@
   "Displayed": false,
   "Image": "8683-10.jpg"
 },{
+  "_id": {
+    "$oid": "5ff1d1fc9791d7ff151c2b98"
+  },
   "Name": "Zombie",
   "CountSealed": 0,
   "CountOpened": 0,
