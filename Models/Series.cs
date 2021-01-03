@@ -17,5 +17,6 @@ namespace MiniFigures.Models
             public int NumberOfFigures { get; set; }
             public string SeriesColor { get; set; }
             public string SeriePicture { get; set; }
+            public string DisplayName { get; set; }
     }
 }

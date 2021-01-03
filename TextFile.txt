@@ -1,4 +1,7 @@
 ﻿//TODO
 
 
-name for navmenu put a displayName in db?
+Remove Add figure button when all figures are added
+create a header component with serie info
+background color on navmenu
+add icon when owning all figures in a serie
