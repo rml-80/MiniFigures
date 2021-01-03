@@ -78,10 +78,8 @@ else
         SerieList = await SeriesService.GetSeries();
         MF = MiniFigureService.GetMiniFigures(collectionName);
     }
-
     protected async Task AddNewFigure()
     {
-
         if (Existing)
         {
             ShowWarningForNumber = "inline";
@@ -122,27 +120,6 @@ else
         }
         miniFigure.Number = Convert.ToInt32(args.Value);
     }
-    //void checkNumber(ChangeEventArgs args)
-    //{
-    //    if (args != null)
-    //    {
-    //        currentNumber = (string)args.Value;
-    //        isExist(currentNumber);
-
-    //        if (Existing)
-    //        {
-    //            ShowWarningForNumber = "inline";
-    //            Existing = false;
-    //        }
-    //        else
-    //        {
-    //            ShowWarningForNumber = "none";
-    //            series.Number = (string)args.Value;
-    //            currentNumber = null;
-    //            canSave = true;
-    //        }
-    //    }
-    //}
     void cancel()
     {
         NavigationManager.NavigateTo($"/{collectionName}");

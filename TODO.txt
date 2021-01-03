@@ -5,3 +5,5 @@ create a header component with serie info
 Popup on delete
 
 text color on dark background "Header"
+
+clean up and move css

@@ -79,7 +79,6 @@
     {
         seriesList = await SeriesService.GetSeries();
     }
-
     protected async Task AddSerie()
     {
         if (canSave)
@@ -137,10 +136,8 @@
             }
         }
     }
-
     void cancel()
     {
         NavigationManager.NavigateTo("/");
     }
-
 }
