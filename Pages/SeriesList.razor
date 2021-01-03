@@ -4,13 +4,12 @@
 @inject NavigationManager NavigationManager
 
 <br />
-<div class="card-deck" style="margin:auto">
+<div class="card-deck" style="justify-content:center">
     @foreach (var item in seriesList)
     {
-        <div class="card-body" style="background-color: @item.SeriesColor; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
-            <div class="card-body" style="text-align:center; width: 100%; height: 100%; border-radius: 10px; padding:initial">
-                <img src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" style="max-height:100%" alt="@item.Name" />
-            </div>
+
+        <div class="card-body" style="background-color: @item.SeriesColor; max-width: 21rem; height: 15rem; padding:15px; margin:1.5rem; border-radius:15px">
+            <img src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" style="max-height:100%" alt="@item.Name" />
         </div>
     }
 </div>
