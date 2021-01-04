@@ -5,11 +5,13 @@
 @inject IMiniFigureService Mini
 @inject ISeriesService SeriesService
 
-<div style="text-align:center">
-    <i class="fas fa-times fa-2x" style="float:right" @onclick="close" />
-    <table style="margin-left: auto; margin-right:auto">
+<link rel="stylesheet" href="css/card-vertical-large.css" />
+
+<div class="txtCenter">
+    <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
+    <table>
         <tr>
-            <td style="text-align:right;color:@Color">
+            <td class="arrowPrevious" style="color:@Color">
                 @if (figure.Number > 1)
                 {
                     <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(figure.Number - 1)" />
@@ -17,93 +19,92 @@
                 else
                 {
                     <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
-
                 }
             </td>
             <td>
-                <div class="card-body" style="border: @Color solid 1rem; border-radius: 1rem; width:28rem; height:45rem; padding-top:5px">
-                    <div style="margin-bottom:5px;font-size:1.5rem;text-align:left;color:@Color">@serieToShow.Replace("_", " ")</div>
-                    <img src="/images/@serieToShow/@figure.Image" style="height:60%;max-width:100%" alt="Picture of @figure.Name" />
-                    @if (edit)
+                <div class="OwnCard-cvl" style="border-color:@Color">
+                    <div class="txtLeft" style="color:@Color">@serieToShow.Replace("_", " ")</div>
+                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
+                    @if (!edit)
                     {
-                        <input for="Name" class="form-control" @bind="@figure.Name" style="font-size: 1.5rem; text-align: center; height: 2rem" />
-                        <table style="font-size:1rem">
+                        <p>@figure.Name</p>
+                        <table class="tblCard">
                             <tr>
-                                <td style="text-align:right">Number:</td>
-                                <td style="text-align:center"><input for="Number" class="form-control" placeholder="@figure.Number" @onchange="@checkNumber" style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem" /></td>
+                                <td class="lbl-Card">Number:</td>
+                                <td>@figure.Number</td>
                             </tr>
                             <tr>
-                                <td style="text-align:right;height: 2rem">In display:</td>
-                                <td><button style="@isTrue" @onclick="changeTrueFalse">True</button> | <button style="@isFalse" @onclick=" changeTrueFalse">False</button></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
-                                <td><a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Color"></a> @figure.CountOpened <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Color"></a></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:right;height: 2rem">Ownd sealed:</td>
-                                <td><a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Color"></a> @figure.CountSealed <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Color"></a></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:right;height: 2rem">Image:</td>
-                                <td> <input for="Name" class="form-control" @bind="@figure.Image" style="font-size:1rem" /></td>
-                            </tr>
-                        </table>
-                        <table style="width:100%">
-                            <tr>
-                                <td style="width:33%">
-                                    <a style="color:white; background-color:@Color; padding: 4px; border-radius: 3px ; font-size:0.7rem; font-weight:bold" @onclick="resetfigure">Reset MiniFigure</a>
-                                </td>
-                                <td style="width:33%">
-                                    <a class="fas fa-window-close fa-2x" style="color:@Color" @onclick="cancel"></a>
-                                </td>
-                                <td style="width:33%">
-                                    <a class="fas fa-save fa-2x" style="color:@Color" @onclick="() => Save(figure.Number)"></a>
-                                </td>
-                            </tr>
-                        </table>
-                        <input type="button" @onclick="deletePromptShow" value="Delete">
-                        <div style="display:@deletePrompt; color:red">
-                            <p>Sure you want to DELETE this serie?</p>
-                            <input type="button" @onclick="() => deleteFigure(figure.ID)" value="YES" />
-                            <input type="button" @onclick="deletePromptShow" value="NO" />
-                        </div>
-                    }
-                    else
-                    {
-                        <p style="font-size: 1.5rem;text-align: center;height:2rem; margin:0px">@figure.Name</p>
-                        <table style="font-size:1rem">
-                            <tr>
-                                <td style="text-align:right;height: 2rem">Number:</td>
-                                <td style="text-align:center"><p style="width:80px; font-size:1rem; margin:auto;text-align:center;height: 2rem">@figure.Number</p></td>
-                            </tr>
-                            <tr>
-                                <td style="text-align:right;height: 2rem">In display:</td>
-                                <td style="width:40%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
+                                <td class="lbl-Card">In display:</td>
+                                <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
 
                             </tr>
                             <tr>
-                                <td style="text-align:right;width:40%;height: 2rem">Ownd openend:</td>
+                                <td class="lbl-Card">Ownd openend:</td>
                                 <td>@figure.CountOpened</td>
                             </tr>
                             <tr>
-                                <td style="text-align:right;height: 2rem">Ownd sealed:</td>
+                                <td class="lbl-Card">Ownd sealed:</td>
                                 <td>@figure.CountSealed</td>
                             </tr>
                             <tr>
-                                <td style="text-align:right;height: 2rem">Image:</td>
-                                <td style="font-size:1rem; white-space:nowrap">@figure.Image</td>
+                                <td class="lbl-Card">Image:</td>
+                                <td>@figure.Image</td>
                             </tr>
                         </table>
-                        <div style="text-align:right;color:@Color"><a class="fas fa-edit fa-2x" @onclick="editfigure"></a></div>
+                        <a class="fas fa-edit fa-2x editbutton" style="color:@Color" @onclick="editfigure"></a>
                     }
-                    <br />
-                    <div style="display:@ShowWarningForNumber; color:red">
-                        Minifigure with Number: @currentNumber <br />already exists!
-                    </div>
+                    else
+                    {
+                        <input for="Name" class="form-control p txtCenter" @bind="@figure.Name" />
+                        <table class="tblCard">
+                            <tr>
+                                <td class="lbl-Card">Number:</td>
+                                <td><input for="Number" class="form-control infotable txtCenter" placeholder="@figure.Number" @onchange="@checkNumber" /></td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-Card">In display:</td>
+                                <td>
+                                <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="True"/>
+                                <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="False"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-Card">Ownd openend:</td>
+                                <td>
+                                    <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Color" />
+
+                                    @figure.CountOpened
+                                    <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Color" />
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-Card">Ownd sealed:</td>
+                                <td>
+                                    <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Color" />
+                                    @figure.CountSealed
+                                    <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Color" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lbl-Card">Image:</td>
+                                <td> <input for="Name" class="form-control infotable txtCenter" @bind="@figure.Image" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="txtRight">
+                                    <i class="fas fa-save fa-2x" style="color:@Color" @onclick="() => Save(figure.Number)"></i>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <input class="deleteBtn" type="button" @onclick="deletePromptShow" value="Delete">
+                            <input class="resetBtn" type="button" @onclick="resetfigure" value="Reset" />
+                            <input class="resetBtn" type="button" @onclick="cancel" value="Cancel" />
+                        </div>
+                    }
                 </div>
             </td>
-            <td style="text-align: left; color: @Color">
+            <td class="txtLeft" style="color: @Color">
                 @if (figure.Number != MF.Count)
                 {
                     <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(figure.Number + 1)" />
@@ -115,6 +116,14 @@
             </td>
         </tr>
     </table>
+    <div style="display:@ShowWarningForNumber; color:red">
+        Minifigure with Number: @currentNumber <br />already exists!
+    </div>
+    <div style="display:@deletePrompt; color:red; text-align:center ">
+        <div>Sure you want to DELETE this serie?</div>
+        <input type="button" @onclick="() => deleteFigure(figure.ID)" value="YES" />
+        <input type="button" @onclick="deletePromptShow" value="NO" />
+    </div>
 </div>
 
 @code {
@@ -209,12 +218,12 @@
     {
         if (test)
         {
-            Icon = "fas fa-check fa-2x";
+            Icon = "fas fa-check";
             iconColor = "color:green";
         }
         else
         {
-            Icon = "fas fa-times fa-2x";
+            Icon = "fas fa-times";
             iconColor = "color:red";
         }
         return Icon;

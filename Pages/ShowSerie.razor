@@ -5,15 +5,13 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<div class="row" style="text-align:center; background-color:@Color; border-radius:15px;height:4rem; padding-top:inherit; margin-left:auto; margin-right:auto ">
-    <div style="width:5%">
-    </div>
-    <div style="width:90%">
-        <h3 >@serieToShow.Replace("_", " ") </h3>
-    </div>
-    <div style="width:5%;text-align:center">
-        <a @onclick="() => ToggleInfo()"><i class="@InfoIcon"></i></a>
-    </div>
+<link rel="stylesheet" href="css/card-vertical-small.css" />
+
+<div class="headerCenter" style="background-color:@Color">
+    <h3>
+        @serieToShow.Replace("_", " ")
+        <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
+    </h3>
 </div>
 
 @if (MF == null)
@@ -21,72 +19,67 @@
     <h4>Loading.......</h4>
 }
 else if (MF.Count == 0)
-{
-    <br />
-    <div style="text-align:center"><h4>No Figures in collection</h4></div>
-    <br />
-    <div style="text-align:center">
+{ <div class="headerCenter">
+        <h4 class="marginBig">No Figures in collection</h4>
         <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
     </div>
 }
 else
 {
-    <div style="display:@HideShow; font-size:1.25rem">
-        <div style="margin: -5px auto 0px auto;padding:10px ;width: 98%; border:solid 4px @Color; border-bottom-left-radius:10px;border-bottom-right-radius:10px">
-            <table style="width:100%; ">
-                <tr>
-                    <td style="width:10%">Number:</td>
-                    <td style="width:12rem">@series.Number</td>
-                    <td style="text-align:right"><input type="button" @onclick="ToEdit" value="Edit" /></td>
-                </tr>
-                <tr>
-                    <td>Number of figures:</td>
-                    <td>@series.NumberOfFigures</td>
-                    <td style="text-align:right">
-                        @if (MF.Count != series.NumberOfFigures)
-                        {
-                        <p style="margin:0">@MF.Count of @series.NumberOfFigures are added to the serie <input type="button" @onclick="ToAdd" value="Add figure" /></p>
-                        }
-                    </td>
-                </tr>
-                <tr>
-                    <td>Series color:</td>
-                    <td>@series.SeriesColor</td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+    <div class="infoBlock" style="display:@HideShow;border-color:@Color">
+        <table class="biggerText">
+            <tr>
+                <td class="infoRow">Number:</td>
+                <td class="infoRow txtCenter">@series.Number</td>
+                <td class="txtRight"><input type="button" @onclick="ToEdit" value="Edit" /></td>
+            </tr>
+            <tr>
+                <td class="infoRow">Number of figures:</td>
+                <td class="infoRow txtCenter">@series.NumberOfFigures</td>
+                <td class="txtRight">
+                    @if (MF.Count != series.NumberOfFigures)
+                    {
+                        <p>@MF.Count of @series.NumberOfFigures are added to the serie <input type="button" @onclick="ToAdd" value="Add figure" /></p>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="infoRow">Series color:</td>
+                <td class="infoRow txtCenter">@series.SeriesColor</td>
+                <td></td>
+            </tr>
+        </table>
     </div>
-    <h4 style="margin-top:10px">
+    <h4>
         You own @owned of @series.NumberOfFigures
         @if (owned == series.NumberOfFigures)
         {
             <i class="fas fa-star" style="color:@series.SeriesColor" />
         }
     </h4>
-    <div class="card-deck"style="justify-content:center">
+    <div class="card-deck">
         @foreach (var figure in MF)
         {
-                <div class="card-body" style="text-align: center;min-width:16rem;max-width: 16rem; height: 26rem; border-radius: 1rem; padding-top:10px;border: @Color solid 1rem;margin:1rem">
-                    <div style="text-align:left;font-weight:bolder;color:@Color">@figure.Number</div>
-                    <img src="/images/@serieToShow/@figure.Image" style="max-width: 100%; height: 60%" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
-                    <h5 class="card-title">@figure.Name</h5>
-                    <table style="margin-bottom:10px; line-height:1">
-                        <tr>
-                            <td style="text-align:right; width:70%">In display:</td>
-                            <td style="width:30%"><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:right">Ownd openend:</td>
-                            <td>@figure.CountOpened</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align:right">Ownd sealed:</td>
-                            <td>@figure.CountSealed</td>
-                        </tr>
-                    </table>
-                    <div style="text-align:right;color:@Color"><a class="fas fa-info-circle fa-2x" @onclick="(() => ShowOne(figure.Number))"></a></div>
-                </div>
+            <div class="ownCard" style="border-color:@Color">
+                <div class="txtLeftBold" style="color:@Color">@figure.Number</div>
+                <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+                <h5>@figure.Name</h5>
+                <table>
+                    <tr>
+                        <td class="lbl-Cardtbl">In display:</td>
+                        <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
+                    </tr>
+                    <tr>
+                        <td class="lbl-Cardtbl">Ownd openend:</td>
+                        <td>@figure.CountOpened</td>
+                    </tr>
+                    <tr>
+                        <td class="lbl-Cardtbl">Ownd sealed:</td>
+                        <td>@figure.CountSealed</td>
+                    </tr>
+                </table>
+                <a class="fas fa-info-circle fa-2x infoBtn" style="color:@Color" @onclick="(() => ShowOne(figure.Number))" />
+            </div>
         }
     </div>
 }
@@ -102,7 +95,7 @@ else
     public string iconColor { get; set; }
     public int owned { get; set; }
     public string HideShow { get; set; } = "none";
-    public string InfoIcon { get; set; } = "fas fa-chevron-down fa-2x";
+    public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
     protected override async Task OnInitializedAsync()
     {
@@ -116,7 +109,7 @@ else
         Color = series.SeriesColor;
         Owned();
         HideShow = "none";
-        InfoIcon = "fas fa-chevron-down fa-2x";
+        InfoIcon = "fas fa-chevron-down";
     }
     public async Task SendCollectionName(string collectionName)
     {
@@ -186,13 +179,13 @@ else
     {
         if (HideShow == "none")
         {
-            HideShow = "inline";
-            InfoIcon = "fas fa-chevron-up fa-2x";
+            HideShow = "block";
+            InfoIcon = "fas fa-chevron-up";
         }
         else
         {
             HideShow = "none";
-            InfoIcon = "fas fa-chevron-down fa-2x";
+            InfoIcon = "fas fa-chevron-down";
         }
     }
 

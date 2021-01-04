@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\card-horizontal-small.css" />
+    <Content Remove="wwwroot\css\card-vertical-large.css" />
+    <Content Remove="wwwroot\css\card-vertical-small.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\card-vertical-large.css" />
+    <None Include="wwwroot\css\card-vertical-small.css" />
+    <None Include="wwwroot\css\card-horizontal-small.css" />
+    <None Include="wwwroot\css\card-horizontal-large.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.11.5" />
   </ItemGroup>
 

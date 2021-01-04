@@ -3,64 +3,65 @@
 @using MiniFigures.Models
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-<h3 style="text-align:center">Edit Serie</h3>
-<div>
-    <div style="text-align:center">
-        <div class="card-body" style="margin: auto; background-color: @Color; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
-            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px">
 
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="Number">Number: </label>
-                    </div>
-                    <div>
-                        <input form="Number" @bind="@series.Number" />
-                    </div>
+<link rel="stylesheet" href="css/card-horizontal-large.css" />
+
+<h3>Edit Serie</h3>
+<div>
+    <div class="center-chl">
+        <div class="OwnCard-chl" style="border-color:@Color">
+            <div class="row">
+                <div class="label-chl">
+                    <label for="Number">Number: </label>
                 </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="Name">Name: </label>
-                    </div>
-                    <div>
-                        <input form="Name" @bind="@series.Name" />
-                    </div>
+                <div>
+                    <input form="Number" @bind="@series.Number" />
                 </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="NumberOfFiguers">Number of figures: </label>
-                    </div>
-                    <div>
-                        <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
-                    </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="Name">Name: </label>
                 </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="SeriePicture">Path to picture: </label>
-                    </div>
-                    <div>
-                        <input form="SeriePicture" @bind="@series.SeriePicture" />
-                    </div>
+                <div>
+                    <input form="Name" @bind="@series.DisplayName" />
                 </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="SeriesColor">Color code: </label>
-                    </div>
-                    <div>
-                        <input form="SeriesColor" placeholder="@series.SeriesColor" @onchange="@ColorChange" />
-                    </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
-                <div><input type="button" @onclick="() => saveSerie(series)" value="Save" />
+                <div>
+                    <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="SeriePicture">Path to picture: </label>
+                </div>
+                <div>
+                    <input form="SeriePicture" @bind="@series.SeriePicture" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="SeriesColor">Color code: </label>
+                </div>
+                <div>
+                    <input form="SeriesColor" placeholder="@series.SeriesColor" @onchange="@ColorChange" />
+                </div>
+            </div>
+            <div class="buttonsrow-chl">
+                <input type="button" @onclick="() => saveSerie(series)" value="Save" />
                 <input type="button" @onclick="cancel" value="Cancel" />
                 <input type="button" @onclick="deletePromptShow" value="Delete" />
-                <div style="display:@deletePrompt; color:red">
-                    <p>Sure you want to DELETE this serie?</p>
-                    <input type="button" @onclick="() => deleteSerie(series.Name)" value="YES" />
-                    <input type="button" @onclick="deletePromptShow" value="NO" />
-
-                </div>
-                </div>
-
             </div>
+
+        </div>
+        <div style="display:@deletePrompt; color:red">
+            <p>Sure you want to DELETE this serie?</p>
+            <input type="button" @onclick="() => deleteSerie(series.Name)" value="YES" />
+            <input type="button" @onclick="deletePromptShow" value="NO" />
+
         </div>
     </div>
 </div>

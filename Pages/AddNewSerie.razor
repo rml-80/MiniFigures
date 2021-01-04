@@ -6,60 +6,59 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<h3 style="text-align:center">Add Serie</h3>
+<link rel="stylesheet" href="css/card-horizontal-large.css" />
+
+<h3>Add Serie</h3>
 <div>
     <div style="text-align:center">
-        <div class="card-body" style="margin: auto; background-color: @Color; max-width: 390px; height: 265px; padding:15px; margin:5px auto 5px auto; border-radius:15px">
-            <div class="card-body" style="background-color:white; width: 100%; height: 100%; border-radius: 10px">
+        <div class="OwnCard-chl" style="border-color:@Color">
 
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="Number">Number: </label>
-                    </div>
-                    <div>
-                        <input form="Number" @onchange="@checkNumber" />
-                    </div>
-                </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="Name">Name: </label>
-                    </div>
-                    <div>
-                        <input form="Name" @bind="@series.DisplayName" />
-                    </div>
-                </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="NumberOfFiguers">Number of figures: </label>
-                    </div>
-                    <div>
-                        <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
-                    </div>
-                </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="SeriePicture">Path to picture: </label>
-                    </div>
-                    <div>
-                        <input form="SeriePicture" @bind="@series.SeriePicture" />
-                    </div>
-                </div>
-                <div class="row" style="margin:10px">
-                    <div style="width:40%;text-align:right">
-                        <label for="SeriesColor">Color code: </label>
-                    </div>
-                    <div>
-                        <input form="SeriesColor" @onchange="@ColorChange"/>
-                    </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="Number">Number: </label>
                 </div>
                 <div>
-                <input type="button"  @onclick="@AddSerie" value="Save" />
-                <input type="button" @onclick="@cancel" value="Cancel" />
-
+                    <input form="Number" @onchange="@checkNumber" />
                 </div>
-<div style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</div>
-
             </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="Name">Name: </label>
+                </div>
+                <div>
+                    <input form="Name" @bind="@series.DisplayName" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="NumberOfFiguers">Number of figures: </label>
+                </div>
+                <div>
+                    <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="SeriePicture">Path to picture: </label>
+                </div>
+                <div>
+                    <input form="SeriePicture" @bind="@series.SeriePicture" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="label-chl">
+                    <label for="SeriesColor">Color code: </label>
+                </div>
+                <div>
+                    <input form="SeriesColor" @onchange="@ColorChange" />
+                </div>
+            </div>
+            <div class="buttonsrow-chl">
+                <input type="button" @onclick="@AddSerie" value="Save" />
+                <input type="button" @onclick="@cancel" value="Cancel" />
+            </div>
+            <div style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</div>
+
         </div>
     </div>
 </div>

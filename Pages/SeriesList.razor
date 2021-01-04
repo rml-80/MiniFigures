@@ -3,13 +3,13 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<br />
-<div class="card-deck" style="justify-content:center">
+<link rel="stylesheet" href="css/card-horizontal-small.css" />
+
+<div class="card-deck">
     @foreach (var item in seriesList)
     {
-
-        <div class="card-body" style="background-color: @item.SeriesColor; max-width: 21rem; height: 15rem; padding:15px; margin:1.5rem; border-radius:15px">
-            <img src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" style="max-height:100%" alt="@item.Name" />
+        <div class="OwnCard-chs" style="border-color: @item.SeriesColor; background-color:@item.SeriesColor">
+            <img src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" alt="@item.Name" />
         </div>
     }
 </div>
