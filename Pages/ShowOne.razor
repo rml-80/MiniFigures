@@ -2,271 +2,226 @@
 @using MiniFigures.Data
 @using MiniFigures.Models
 @inject NavigationManager NavigationManager
-@inject IMiniFigureService Mini
+@inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
 <link rel="stylesheet" href="css/ShowOne.css" />
-
-<div class="txtCenter">
-    <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
-    <table>
-        <tr>
-            <td class="arrowPrevious" style="color:@Color">
-                @if (figure.Number > 1)
-                {
-                    <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(figure.Number - 1)" />
-                }
-                else
-                {
-                    <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
-                }
-            </td>
-            <td>
-                <div class="card" style="border-color:@Color">
-                    <div class="txtLeft" style="color:@Color">@serieToShow.Replace("_", " ")</div>
-                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
-                    @if (!edit)
+@if (series == null)
+{
+    <h2>Loading......</h2>
+}
+else
+{
+    <div class="txtCenter">
+        <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
+        <table>
+            <tr>
+                <td class="arrowPrevious" style="color:@series.SeriesColor">
+                    @if (OneMF.Number > 1)
                     {
-                        <p>@figure.Name</p>
-                        <table class="cardTabel">
-                            <tr>
-                                <td class="label">Number:</td>
-                                <td>@figure.Number</td>
-                            </tr>
-                            <tr>
-                                <td class="label">In display:</td>
-                                <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
-
-                            </tr>
-                            <tr>
-                                <td class="label">Ownd openend:</td>
-                                <td>@figure.CountOpened</td>
-                            </tr>
-                            <tr>
-                                <td class="label">Ownd sealed:</td>
-                                <td>@figure.CountSealed</td>
-                            </tr>
-                            <tr>
-                                <td class="label">Image:</td>
-                                <td>@figure.Image</td>
-                            </tr>
-                        </table>
-                        <a class="fas fa-edit fa-2x editbutton" style="color:@Color" @onclick="editfigure"></a>
+                        <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMF.Number - 1)" />
                     }
                     else
                     {
-                        <input for="Name" class="form-control p txtCenter" @bind="@figure.Name" />
-                        <table class="cardTabel">
-                            <tr>
-                                <td class="label">Number:</td>
-                                <td><input for="Number" class="form-control infotable txtCenter" placeholder="@figure.Number" @onchange="@checkNumber" /></td>
-                            </tr>
-                            <tr>
-                                <td class="label">In display:</td>
-                                <td>
-                                <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="True"/>
-                                <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="False"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">Ownd openend:</td>
-                                <td>
-                                    <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Color" />
-
-                                    @figure.CountOpened
-                                    <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Color" />
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">Ownd sealed:</td>
-                                <td>
-                                    <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Color" />
-                                    @figure.CountSealed
-                                    <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Color" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label">Image:</td>
-                                <td> <input for="Name" class="form-control infotable txtCenter" @bind="@figure.Image" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="txtRight">
-                                    <i class="fas fa-save fa-2x" style="color:@Color" @onclick="() => Save(figure.Number)"></i>
-                                </td>
-                            </tr>
-                        </table>
-                        <div>
-                            <input class="deleteBtn" type="button" @onclick="deletePromptShow" value="Delete">
-                            <input class="resetBtn" type="button" @onclick="resetfigure" value="Reset" />
-                            <input class="resetBtn" type="button" @onclick="cancel" value="Cancel" />
-                        </div>
+                        <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
                     }
-                </div>
-            </td>
-            <td class="txtLeft" style="color: @Color">
-                @if (figure.Number != MF.Count)
-                {
-                    <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(figure.Number + 1)" />
-                }
-                else
-                {
-                    <a class="fas fa-chevron-right fa-5x" style="opacity:0.3" />
-                }
-            </td>
-        </tr>
-    </table>
-    <div style="display:@ShowWarningForNumber; color:red">
-        Minifigure with Number: @currentNumber <br />already exists!
-    </div>
-    <div style="display:@deletePrompt; color:red; text-align:center ">
-        <div>Sure you want to DELETE this serie?</div>
-        <input type="button" @onclick="() => deleteFigure(figure.ID)" value="YES" />
-        <input type="button" @onclick="deletePromptShow" value="NO" />
-    </div>
-</div>
+                </td>
+                <td>
+                    <div class="card" style="border-color:@series.SeriesColor">
+                        <div class="txtLeft" style="color:@series.SeriesColor">@series.DisplayName</div>
+                        <img src="/images/@serieToShow/@OneMF.Image" alt="Picture of @OneMF.Name" />
+                        @if (!edit)
+                        {
+                            <p>@OneMF.Name</p>
+                            <table class="cardTabel">
+                                <tr>
+                                    <td class="label">Number:</td>
+                                    <td>@OneMF.Number</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">In display:</td>
+                                    <td><i class=@changeIcon(OneMF.Displayed) style=@OnDisplayIconColor></i></td>
 
+                                </tr>
+                                <tr>
+                                    <td class="label">Ownd openend:</td>
+                                    <td>@OneMF.CountOpened</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Ownd sealed:</td>
+                                    <td>@OneMF.CountSealed</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Image:</td>
+                                    <td>@OneMF.Image</td>
+                                </tr>
+                            </table>
+                            <a class="fas fa-edit fa-2x editbutton" style="color:@series.SeriesColor" @onclick="editfigure"></a>
+                        }
+                        else
+                        {
+                            <input for="Name" class="form-control p txtCenter" @bind="@OneMF.Name" />
+                            <table class="cardTabel">
+                                <tr>
+                                    <td class="label">Number:</td>
+                                    <td><input for="Number" class="form-control infotable txtCenter" placeholder="@OneMF.Number" @onchange="@checkNumber" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">In display:</td>
+                                    <td>
+                                        <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="True" />
+                                        <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="False" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Ownd openend:</td>
+                                    <td>
+                                        <a class="fas fa-minus-square" @onclick="DecrementOpen"
+                                           style="color:@series.SeriesColor" />
+
+                                        @OneMF.CountOpened
+                                        <a class="fas fa-plus-square" @onclick="IncrementOpen"
+                                           style="color:@series.SeriesColor" />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Ownd sealed:</td>
+                                    <td>
+                                        <a class="fas fa-minus-square" @onclick="DecrementSealed"
+                                           style="color:@series.SeriesColor" />
+                                        @OneMF.CountSealed
+                                        <a class="fas fa-plus-square" @onclick="IncrementSealed"
+                                           style="color:@series.SeriesColor" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Image:</td>
+                                    <td>
+                                        <input for="Name" class="form-control infotable txtCenter" @bind="@OneMF.Image" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="txtRight">
+                                        <i class="fas fa-save fa-2x" style="color:@series.SeriesColor" @onclick="() => Save(OneMF.Number)"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div>
+                                <input class="deleteBtn" type="button" @onclick="deletePromptShow" value="Delete">
+                                <input class="resetBtn" type="button" @onclick="resetfigure" value="Reset" />
+                                <input class="resetBtn" type="button" @onclick="cancel" value="Cancel" />
+                            </div>
+                        }
+                    </div>
+                </td>
+                <td class="txtLeft" style="color: @series.SeriesColor">
+                    @if (OneMF.Number != ListOfMF.Count)
+                    {
+                        <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMF.Number + 1)" />
+                    }
+                    else
+                    {
+                        <a class="fas fa-chevron-right fa-5x" style="opacity:0.3" />
+                    }
+                </td>
+            </tr>
+        </table>
+        <div style="display:@ShowWarningForNumber; color:red">
+            Minifigure with Number: @currentNumber <br />already exists!
+        </div>
+        <div style="display:@deletePrompt; color:red; text-align:center ">
+            <div>Sure you want to DELETE this serie?</div>
+            <input type="button" @onclick="() => deleteFigure(OneMF.ID)" value="YES" />
+            <input type="button" @onclick="deletePromptShow" value="NO" />
+        </div>
+    </div>
+}
 @code {
     [Parameter]
     public int number { get; set; }
     [Parameter]
     public string serieToShow { get; set; }
-    public string displayButton { get; set; }
-    public Series series { get; set; }
-    public string Color { get; set; }
-    private bool edit = false;
-    protected MiniFigure figure = new MiniFigure();
-    public string Icon { get; set; }
-    public string iconColor { get; set; }
-    public string isTrue { get; set; }
-    public string isFalse { get; set; }
-    public bool Existing { get; set; }
-    List<MiniFigure> MF = new List<MiniFigure>();
-    public string ShowWarningForNumber { get; set; } = "none";
-    public int? currentNumber { get; set; }
-    public string deletePrompt { get; set; } = "none";
+
+    protected Series series { get; set; }
+    protected MiniFigure OneMF = new MiniFigure();
+
+    List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
+    protected bool edit = false;
+    protected bool Existing { get; set; }
+
+    protected int? currentNumber { get; set; }
+
+    protected string deletePrompt { get; set; } = "none";
+    protected string displayButton { get; set; }
+    protected string isFalse { get; set; }
+    protected string isTrue { get; set; }
+    protected string OnDisplayIcon { get; set; }
+    protected string OnDisplayIconColor { get; set; }
+    protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnParametersSetAsync()
     {
-        figure = await Mini.GetOneMiniFigure(serieToShow, number);
+        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
         series = await SeriesService.GetOneSerie(serieToShow);
-        Color = series.SeriesColor;
         trueOrFalse();
-        MF = Mini.GetMiniFigures(serieToShow);
+        ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
     }
-    private async Task editName(int number)
-    {
-        await Mini.EditFigure(figure.ID, figure, serieToShow);
-    }
+
+    //calculations
     private void IncrementOpen()
     {
-        figure.CountOpened++;
+        OneMF.CountOpened++;
     }
     private void DecrementOpen()
     {
-        if (figure.CountOpened != 0)
+        if (OneMF.CountOpened != 0)
         {
-            figure.CountOpened--;
+            OneMF.CountOpened--;
         }
     }
     private void IncrementSealed()
     {
-        figure.CountSealed++;
+        OneMF.CountSealed++;
     }
     private void DecrementSealed()
     {
-        if (figure.CountSealed != 0)
+        if (OneMF.CountSealed != 0)
         {
-            figure.CountSealed--;
+            OneMF.CountSealed--;
         }
     }
-
-    private void changeDisplayed()
-    {
-        if (figure.Displayed)
-        {
-            figure.Displayed = false;
-            displayButton = "true";
-        }
-        else
-        {
-            figure.Displayed = true;
-            displayButton = "false";
-        }
-    }
-    private void resetfigure()
-    {
-        figure.Displayed = false;
-        figure.CountOpened = 0;
-        figure.CountSealed = 0;
-    }
-    private async Task Save(int number)
-    {
-        await editName(number);
-        edit = false;
-
-    }
-    private void editfigure()
-    {
-        edit = true;
-    }
+    // db methods
     protected void cancel()
     {
         edit = false;
     }
-    private string changeIcon(bool test)
-    {
-        if (test)
-        {
-            Icon = "fas fa-check";
-            iconColor = "color:green";
-        }
-        else
-        {
-            Icon = "fas fa-times";
-            iconColor = "color:red";
-        }
-        return Icon;
-    }
     void deleteFigure(string id)
     {
-        Mini.DeleteFigure(id);
+        MiniFigureService.DeleteFigure(id);
         NavigationManager.NavigateTo($"/{serieToShow}");
     }
-
-    void trueOrFalse()
+    private void resetfigure()
     {
-        if (figure.Displayed)
-        {
-            isTrue = "color:green";
-            isFalse = "color: grey";
-
-        }
-        else
-        {
-            isTrue = "color: grey";
-            isFalse = "color:red";
-        }
-
+        OneMF.Displayed = false;
+        OneMF.CountOpened = 0;
+        OneMF.CountSealed = 0;
     }
-    void changeTrueFalse()
+    private async Task Save(int number)
     {
-        if (figure.Displayed)
-        {
-            isTrue = "color: grey";
-            isFalse = "color:red";
-        }
-        else
-        {
-            isTrue = "color:green";
-            isFalse = "color: grey";
-        }
-        changeDisplayed();
-
+        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
+        edit = false;
     }
-    void isExist(int number)
+    // show editable fields
+    private void editfigure()
     {
-        foreach (var fig in MF)
+        edit = true;
+    }
+    // check if number is existing in db
+    void isExist(int number) //combine with checkNumber????
+    {
+        foreach (var fig in ListOfMF)
         {
             if (number == fig.Number)
             {
@@ -294,12 +249,12 @@
             else
             {
                 ShowWarningForNumber = "none";
-                figure.Number = Convert.ToInt32(args.Value);
+                OneMF.Number = Convert.ToInt32(args.Value);
                 currentNumber = null;
             }
         }
     }
-
+    // Show warning on delete
     void deletePromptShow()
     {
         if (deletePrompt == "none")
@@ -311,7 +266,7 @@
             deletePrompt = "none";
         }
     }
-
+    // navigation
     void goTo(int i)
     {
         NavigationManager.NavigateTo($"/{serieToShow}/{i}");
@@ -319,6 +274,67 @@
     void close()
     {
         NavigationManager.NavigateTo($"/{serieToShow}");
+    }
+
+
+
+    //TODO: try to simplifiy
+    private void changeDisplayed()
+    {
+        if (OneMF.Displayed)
+        {
+
+            OneMF.Displayed = false;
+            displayButton = "true";
+        }
+        else
+        {
+            OneMF.Displayed = true;
+            displayButton = "false";
+        }
+    }
+    private string changeIcon(bool test)
+    {
+        if (test)
+        {
+            OnDisplayIcon = "fas fa-check";
+            OnDisplayIconColor = "color:green";
+        }
+        else
+        {
+            OnDisplayIcon = "fas fa-times";
+            OnDisplayIconColor = "color:red";
+        }
+        return OnDisplayIcon;
+    }
+    void trueOrFalse()
+    {
+        if (OneMF.Displayed)
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+
+        }
+        else
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+
+    }
+    void changeTrueFalse()
+    {
+        if (OneMF.Displayed)
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+        else
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+        }
+        changeDisplayed();
 
     }
 

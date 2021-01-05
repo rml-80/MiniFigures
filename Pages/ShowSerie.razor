@@ -1,55 +1,27 @@
 ﻿@page "/{serieToShow}"
 @using MiniFigures.Models
 @using MiniFigures.Data
-@inject IMiniFigureService Mini
+@inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="css/ShowSerie.css" />
 
-<div class="headerCenter" style="background-color:@Color">
-    <h3>
-        @serieToShow.Replace("_", " ")
-        <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
-    </h3>
-</div>
-
-@if (MF == null)
+@if (ListOfMF == null)
 {
-    <h4>Loading.......</h4>
+    <h2>Loading.......</h2>
 }
-else if (MF.Count == 0)
-{ <div class="headerCenter">
-        <h4 class="marginBig">No Figures in collection</h4>
-        <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
-    </div>
+else if (ListOfMF.Count == 0)
+{
+<Header serie="series" amountOfFigures="ListOfMF.Count"/>
+<div class="headerCenter">
+    <h4 class="marginBig">No Figures in collection</h4>
+    <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
+</div>
 }
 else
 {
-    <div class="infoBlock" style="display:@HideShow;border-color:@Color">
-        <table class="biggerText">
-            <tr>
-                <td class="infoRow">Number:</td>
-                <td class="infoRow txtCenter">@series.Number</td>
-                <td class="txtRight"><input type="button" @onclick="ToEdit" value="Edit" /></td>
-            </tr>
-            <tr>
-                <td class="infoRow">Number of figures:</td>
-                <td class="infoRow txtCenter">@series.NumberOfFigures</td>
-                <td class="txtRight">
-                    @if (MF.Count != series.NumberOfFigures)
-                    {
-                        <p>@MF.Count of @series.NumberOfFigures are added to the serie <input type="button" @onclick="ToAdd" value="Add figure" /></p>
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td class="infoRow">Series color:</td>
-                <td class="infoRow txtCenter">@series.SeriesColor</td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
+<Header serie="series" amountOfFigures="ListOfMF.Count"/>
     <h4>
         You own @owned of @series.NumberOfFigures
         @if (owned == series.NumberOfFigures)
@@ -58,16 +30,16 @@ else
         }
     </h4>
     <div class="card-deck">
-        @foreach (var figure in MF)
+        @foreach (var figure in ListOfMF)
         {
-            <div class="Card" style="border-color:@Color">
-                <div class="txtLeftBold" style="color:@Color">@figure.Number</div>
-                <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
+            <div class="Card" style="border-color:@series.SeriesColor">
+                <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
+                <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => IncrementListOfMF(figure.Number))" />
                 <h5>@figure.Name</h5>
                 <table>
                     <tr>
                         <td class="label">In display:</td>
-                        <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
+                        <td><i class=@changeTrueFalseIcon(figure.Displayed) style=@OnDisplayIconColor></i></td>
                     </tr>
                     <tr>
                         <td class="label">Ownd openend:</td>
@@ -78,7 +50,7 @@ else
                         <td>@figure.CountSealed</td>
                     </tr>
                 </table>
-                <a class="fas fa-info-circle fa-2x infoBtn" style="color:@Color" @onclick="(() => ShowOne(figure.Number))" />
+                <a class="fas fa-info-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => ShowOne(figure.Number))" />
             </div>
         }
     </div>
@@ -86,65 +58,59 @@ else
 @code {
     [Parameter]
     public string serieToShow { get; set; }
-    List<MiniFigure> MF;
-    public int number { get; set; }
-    protected MiniFigure SingleMF = new MiniFigure();
-    public Series series { get; set; }
-    public string Color { get; set; }
-    public string Icon { get; set; }
-    public string iconColor { get; set; }
-    public int owned { get; set; }
-    public string HideShow { get; set; } = "none";
-    public string InfoIcon { get; set; } = "fas fa-chevron-down";
+
+    List<MiniFigure> ListOfMF;
+
+    protected MiniFigure OneMF = new MiniFigure();
+
+    protected Series series { get; set; }
+
+    protected int owned { get; set; }
+    protected string OnDisplayIcon { get; set; }
+    protected string OnDisplayIconColor { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serieToShow);
     }
-
     protected override async Task OnParametersSetAsync()
     {
-        await SendCollectionName(serieToShow);
+        SendCollectionName(serieToShow);
         series = await SeriesService.GetOneSerie(serieToShow);
-        Color = series.SeriesColor;
         Owned();
-        HideShow = "none";
-        InfoIcon = "fas fa-chevron-down";
     }
-    public async Task SendCollectionName(string collectionName)
+    private void SendCollectionName(string collectionName)
     {
-        MF = Mini.GetMiniFigures(collectionName);
+        ListOfMF = MiniFigureService.GetMiniFigures(collectionName);
     }
     private void ShowOne(int number)
     {
         NavigationManager.NavigateTo($"/{serieToShow}/{number}");
     }
-
-    private async Task IncrementMF(int number)
+    private async Task IncrementListOfMF(int number)
     {
-        SingleMF = await Mini.GetOneMiniFigure(serieToShow, number);
-        if (SingleMF.CountSealed == 0 && SingleMF.CountOpened == 0 || SingleMF.Displayed == true)
+        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+        if (OneMF.CountSealed == 0 && OneMF.CountOpened == 0 || OneMF.Displayed == true)
         {
-            SingleMF.CountSealed++;
+            OneMF.CountSealed++;
             owned++;
         }
-        else if (SingleMF.CountSealed == 1 && SingleMF.CountOpened == 0)
+        else if (OneMF.CountSealed == 1 && OneMF.CountOpened == 0)
         {
-            SingleMF.CountSealed = 0;
-            SingleMF.CountOpened++;
+            OneMF.CountSealed = 0;
+            OneMF.CountOpened++;
         }
-        else if (SingleMF.CountOpened == 1)
+        else if (OneMF.CountOpened == 1)
         {
-            SingleMF.Displayed = true;
+            OneMF.Displayed = true;
         }
-
-        await Mini.EditFigure(SingleMF.ID, SingleMF, serieToShow);
-        await SendCollectionName(serieToShow);
+        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
+        SendCollectionName(serieToShow);
     }
     private void Owned()
     {
         owned = 0;
-        foreach (var figure in MF)
+        foreach (var figure in ListOfMF)
         {
             if (figure.CountSealed > 0 || figure.CountOpened > 0)
             {
@@ -152,41 +118,26 @@ else
             }
         }
     }
-    private string changeIcon(bool test)
+    private string changeTrueFalseIcon(bool test)
     {
         if (test)
         {
-            Icon = "fas fa-check";
-            iconColor = "color:green";
+            OnDisplayIcon = "fas fa-check";
+            OnDisplayIconColor = "color:green";
         }
         else
         {
-            Icon = "fas fa-times";
-            iconColor = "color:red";
+            OnDisplayIcon = "fas fa-times";
+            OnDisplayIconColor = "color:red";
         }
-        return Icon;
+        return OnDisplayIcon;
     }
-
-    void ToEdit()
+    private void ToEdit()
     {
         NavigationManager.NavigateTo($"/{serieToShow}/edit");
     }
-    void ToAdd()
+    private void ToAdd()
     {
         NavigationManager.NavigateTo($"/addnew/figures/{serieToShow}");
     }
-    void ToggleInfo()
-    {
-        if (HideShow == "none")
-        {
-            HideShow = "block";
-            InfoIcon = "fas fa-chevron-up";
-        }
-        else
-        {
-            HideShow = "none";
-            InfoIcon = "fas fa-chevron-down";
-        }
-    }
-
 }

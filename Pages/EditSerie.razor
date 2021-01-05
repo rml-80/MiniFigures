@@ -5,7 +5,7 @@
 @inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="css/EditSerie.css" />
-
+<Header serie="series"/>
 <h3>Edit Serie</h3>
 <div>
     <div class="center">
@@ -51,9 +51,9 @@
                 </div>
             </div>
             <div class="btnRow">
-                <input type="button" @onclick="() => saveSerie(series)" value="Save" />
-                <input type="button" @onclick="cancel" value="Cancel" />
                 <input type="button" @onclick="deletePromptShow" value="Delete" />
+                <input type="button" @onclick="cancel" value="Cancel" />
+                <input type="button" @onclick="() => saveSerie(series)" value="Save" />
             </div>
 
         </div>
