@@ -12,7 +12,6 @@
 <div>
     <div class="center">
         <div class="Card" style="border-color:@Color">
-
             <div class="row">
                 <div class="label">
                     <label for="Number">Number: </label>
@@ -64,15 +63,17 @@
 </div>
 
 @code {
-    MiniFigure miniFigure = new MiniFigure();
-    Series series = new Series();
-    string collectionName;
-    public string Color { get; set; } = "lightgrey";
-    public bool Existing { get; set; }
-    public string ShowWarningForNumber { get; set; } = "none";
-    public static List<Series> seriesList = new List<Series>();
-    public string currentNumber { get; set; }
-    public bool canSave { get; set; }
+    protected MiniFigure miniFigure = new MiniFigure();
+    protected Series series = new Series();
+    protected List<Series> seriesList = new List<Series>();
+
+    //string collectionName;
+    protected bool canSave { get; set; }
+    protected bool Existing { get; set; }
+
+    protected string Color { get; set; } = "lightgrey";
+    protected string currentNumber { get; set; }
+    protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
@@ -94,12 +95,12 @@
             }
         }
     }
-    void ColorChange(ChangeEventArgs args)
+    protected void ColorChange(ChangeEventArgs args)
     {
         Color = (string)args.Value;
         series.SeriesColor = Color;
     }
-    void isExist(string number)
+    protected void isExist(string number)
     {
         foreach (var s in seriesList)
         {
@@ -114,7 +115,7 @@
             }
         }
     }
-    void checkNumber(ChangeEventArgs args)
+    protected void checkNumber(ChangeEventArgs args)
     {
         if (args != null)
         {
@@ -135,7 +136,7 @@
             }
         }
     }
-    void cancel()
+    protected void cancel()
     {
         NavigationManager.NavigateTo("/");
     }

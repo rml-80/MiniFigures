@@ -9,7 +9,7 @@
 <h3>Edit Serie</h3>
 <div>
     <div class="center">
-        <div class="card" style="border-color:@Color">
+        <div class="card" style="border-color:@series.SeriesColor">
             <div class="row">
                 <div class="label">
                     <label for="Number">Number: </label>
@@ -61,7 +61,6 @@
             <p>Sure you want to DELETE this serie?</p>
             <input type="button" @onclick="() => deleteSerie(series.Name)" value="YES" />
             <input type="button" @onclick="deletePromptShow" value="NO" />
-
         </div>
     </div>
 </div>
@@ -70,13 +69,16 @@
 
     [Parameter]
     public string serieToShow { get; set; }
-    public string deletePrompt { get; set; } = "none";
+
     protected Series series = new Series();
-    public string Color { get; set; }
+
+    protected string deletePrompt { get; set; } = "none";
+    //protected string Color { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serieToShow);
-        Color = series.SeriesColor;
+        //Color = series.SeriesColor;
     }
     void saveSerie(Series serie)
     {
@@ -90,15 +92,17 @@
         SeriesService.DeleteSerie(name);
         NavigationManager.NavigateTo("/", true);
     }
+    //change color on frame when adding color
     void ColorChange(ChangeEventArgs args)
     {
-        Color = (string)args.Value;
+        var Color = (string)args.Value;
         series.SeriesColor = Color;
     }
     void cancel()
     {
         NavigationManager.NavigateTo($"/{serieToShow}");
     }
+    // Show warning on delete
     void deletePromptShow()
     {
         if (deletePrompt == "none")

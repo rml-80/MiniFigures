@@ -9,19 +9,23 @@
 
 <link rel="stylesheet" href="css/AddNewFigures.css">
 
-@if (MF.Count == series.NumberOfFigures)
+@if (ListOfMF.Count == series.NumberOfFigures)
 {
     <h3>No more figures to add</h3>
+<div class="txtCenter">
+    <input type="button" value="OK" @onclick="cancel" />
+</div>
+
 }
 else
 {
     <h3>Add Figure</h3>
     <div class="card-deck">
         <div class="addCard" style="border-color:@Color">
-            <div class="topMargin2">Figures To add: @(series.NumberOfFigures - MF.Count) </div>
+            <div class="topMargin2">Figures To add: @(series.NumberOfFigures - ListOfMF.Count) </div>
             <select @onchange="@SerieClicked">
-                <option value="@collectionName">@collectionName</option>
-                @foreach (var serie in SerieList)
+                <option value="@serie">@serie</option>
+                @foreach (var serie in SeriesList)
                 {
                     <option value="@serie.Name">@serie.Name</option>
                 }
@@ -29,38 +33,40 @@ else
             <label for="Number">Number: </label>
             <input tabindex="1" form="Number" class="txtCenter" @onchange="isExist" />
             <label for="Name">Name: </label>
-            <input tabindex="2" form="Name" class="txtCenter" @bind="@miniFigure.Name" />
+            <input tabindex="2" form="Name" class="txtCenter" @bind="@OneMF.Name" />
             <div class="marginBig">
                 <input type="button" @onclick="cancel" value="Cancel" />
                 <input tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
-
             </div>
         </div>
     </div>
-        <div style="display:@ShowWarningForNumber; color:red">
-            <h4>Minifigure with Number: @miniFigure.Number <br />already exists!</h4>
-        </div>
+    <div style="display:@ShowWarningForNumber; color:red">
+        <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
+    </div>
 }
 @code {
     [Parameter]
     public string serie { get; set; }
-    MiniFigure miniFigure = new MiniFigure();
-    Series series = new Series();
-    string collectionName;
-    public string Color { get; set; } = "lightgrey";
-    List<Series> SerieList = new List<Series>();
-    List<MiniFigure> MF = new List<MiniFigure>();
-    public bool Existing { get; set; }
-    public string Pic { get; set; }
-    public string ShowWarningForNumber { get; set; } = "none";
+
+    protected MiniFigure OneMF = new MiniFigure();
+    protected Series series = new Series();
+    //string collectionName;
+    protected List<Series> SeriesList = new List<Series>();
+    protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
+    protected bool Existing { get; set; }
+
+    protected string Color { get; set; } = "lightgrey";
+    protected string FigureNumber { get; set; }
+    protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serie);
         Color = series.SeriesColor;
-        collectionName = serie;
-        SerieList = await SeriesService.GetSeries();
-        MF = MiniFigureService.GetMiniFigures(collectionName);
+        //collectionName = serie;
+        SeriesList = await SeriesService.GetSeries();
+        ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }
     protected async Task AddNewFigure()
     {
@@ -70,31 +76,31 @@ else
         }
         else
         {
-            Pic = miniFigure.Number.ToString();
-            if (Pic.Length > 1)
+            FigureNumber = OneMF.Number.ToString();
+            if (FigureNumber.Length > 1)
             {
-                miniFigure.Image = $"{series.Number}-{Pic}.jpg";
+                OneMF.Image = $"{series.Number}-{FigureNumber}.jpg";
             }
             else
             {
-                miniFigure.Image = $"{series.Number}-0{Pic}.jpg";
+                OneMF.Image = $"{series.Number}-0{FigureNumber}.jpg";
             }
-            miniFigure.CountOpened = 0;
-            miniFigure.CountSealed = 0;
-            miniFigure.Displayed = false;
+            OneMF.CountOpened = 0;
+            OneMF.CountSealed = 0;
+            OneMF.Displayed = false;
 
-            await MiniFigureService.AddFigure(miniFigure, collectionName);
+            await MiniFigureService.AddFigure(OneMF, serie);
             //NavigationManager.NavigateTo($"/{collectionName}", true);
             NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
         }
     }
     protected void SerieClicked(ChangeEventArgs args)
     {
-        collectionName = (string)args.Value;
+        serie = (string)args.Value;
     }
-    void isExist(ChangeEventArgs args)
+    protected void isExist(ChangeEventArgs args)
     {
-        foreach (var figure in MF)
+        foreach (var figure in ListOfMF)
         {
             if (figure.Number == Convert.ToInt32(args.Value))
             {
@@ -102,10 +108,10 @@ else
                 break;
             }
         }
-        miniFigure.Number = Convert.ToInt32(args.Value);
+        OneMF.Number = Convert.ToInt32(args.Value);
     }
-    void cancel()
+    protected void cancel()
     {
-        NavigationManager.NavigateTo($"/{collectionName}");
+        NavigationManager.NavigateTo($"/{serie}");
     }
 }
