@@ -5,7 +5,7 @@
 @inject IMiniFigureService Mini
 @inject ISeriesService SeriesService
 
-<link rel="stylesheet" href="css/card-vertical-large.css" />
+<link rel="stylesheet" href="css/ShowOne.css" />
 
 <div class="txtCenter">
     <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
@@ -22,32 +22,32 @@
                 }
             </td>
             <td>
-                <div class="OwnCard-cvl" style="border-color:@Color">
+                <div class="card" style="border-color:@Color">
                     <div class="txtLeft" style="color:@Color">@serieToShow.Replace("_", " ")</div>
                     <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
                     @if (!edit)
                     {
                         <p>@figure.Name</p>
-                        <table class="tblCard">
+                        <table class="cardTabel">
                             <tr>
-                                <td class="lbl-Card">Number:</td>
+                                <td class="label">Number:</td>
                                 <td>@figure.Number</td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">In display:</td>
+                                <td class="label">In display:</td>
                                 <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
 
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Ownd openend:</td>
+                                <td class="label">Ownd openend:</td>
                                 <td>@figure.CountOpened</td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Ownd sealed:</td>
+                                <td class="label">Ownd sealed:</td>
                                 <td>@figure.CountSealed</td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Image:</td>
+                                <td class="label">Image:</td>
                                 <td>@figure.Image</td>
                             </tr>
                         </table>
@@ -56,20 +56,20 @@
                     else
                     {
                         <input for="Name" class="form-control p txtCenter" @bind="@figure.Name" />
-                        <table class="tblCard">
+                        <table class="cardTabel">
                             <tr>
-                                <td class="lbl-Card">Number:</td>
+                                <td class="label">Number:</td>
                                 <td><input for="Number" class="form-control infotable txtCenter" placeholder="@figure.Number" @onchange="@checkNumber" /></td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">In display:</td>
+                                <td class="label">In display:</td>
                                 <td>
                                 <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="True"/>
                                 <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="False"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Ownd openend:</td>
+                                <td class="label">Ownd openend:</td>
                                 <td>
                                     <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Color" />
 
@@ -79,7 +79,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Ownd sealed:</td>
+                                <td class="label">Ownd sealed:</td>
                                 <td>
                                     <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Color" />
                                     @figure.CountSealed
@@ -87,7 +87,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lbl-Card">Image:</td>
+                                <td class="label">Image:</td>
                                 <td> <input for="Name" class="form-control infotable txtCenter" @bind="@figure.Image" /></td>
                             </tr>
                             <tr>

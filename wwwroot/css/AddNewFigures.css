@@ -1,0 +1,44 @@
+html, body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+h3, h4 {
+    text-align:center;
+    font-weight:bold;
+}
+label {
+    margin-top:1rem;
+    margin-bottom:0;
+}
+p {
+    margin:0;
+}
+select {
+    width: 80%;
+    height: 2rem;
+    margin-top:1.5rem;
+}
+table{
+    width:100%;
+}
+.addCard {
+    text-align:center;
+    width:16rem;
+    height: 26em;
+    border: solid 0.6rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+}
+.card-deck {
+    justify-content:center;
+}
+.marginBig {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+.topMargin2{
+    margin-top:2rem;
+}
+.txtCenter{
+    text-align:center;
+}

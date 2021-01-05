@@ -6,15 +6,15 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/card-horizontal-large.css" />
+<link rel="stylesheet" href="css/AddNewSerie.css" />
 
 <h3>Add Serie</h3>
 <div>
-    <div style="text-align:center">
-        <div class="OwnCard-chl" style="border-color:@Color">
+    <div class="center">
+        <div class="Card" style="border-color:@Color">
 
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="Number">Number: </label>
                 </div>
                 <div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="Name">Name: </label>
                 </div>
                 <div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
                 <div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="SeriePicture">Path to picture: </label>
                 </div>
                 <div>
@@ -46,14 +46,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="SeriesColor">Color code: </label>
                 </div>
                 <div>
                     <input form="SeriesColor" @onchange="@ColorChange" />
                 </div>
             </div>
-            <div class="buttonsrow-chl">
+            <div class="btnRow">
                 <input type="button" @onclick="@AddSerie" value="Save" />
                 <input type="button" @onclick="@cancel" value="Cancel" />
             </div>

@@ -1,0 +1,16 @@
+html, body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+img {
+    max-height:100%;
+}
+.card-deck{
+    text-align:center;
+}
+.figCard {
+    width: 21rem;
+    height: 15rem;
+    border: solid 0.6rem;
+    border-radius: 10px;
+    margin: 1rem auto 1rem auto;
+}

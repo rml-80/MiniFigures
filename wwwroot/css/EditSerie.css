@@ -4,28 +4,23 @@ html, body {
 h3 {
     text-align:center;
 }
-img {
-    max-height:100%;
-}
-.buttonsrow-chs {
+.btnRow {
     margin-top: 1rem
 }
-.card-deck{
-    text-align:center;
-}
-.center-chs {
+.center {
     text-align: center;
 }
-.label-chs {
+.label {
     width: 40%;
     text-align: right;
 }
-.OwnCard-chs {
-    width: 21rem;
-    height: 15rem;
+.card {
+    width: 31rem;
+    height: 21rem;
     border: solid 0.6rem;
     border-radius: 10px;
     margin: 1rem auto 1rem auto;
+    padding-top:0.5rem;
 }
 .row {
     margin-top: 1rem;

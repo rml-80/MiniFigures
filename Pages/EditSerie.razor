@@ -4,14 +4,14 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/card-horizontal-large.css" />
+<link rel="stylesheet" href="css/EditSerie.css" />
 
 <h3>Edit Serie</h3>
 <div>
-    <div class="center-chl">
-        <div class="OwnCard-chl" style="border-color:@Color">
+    <div class="center">
+        <div class="card" style="border-color:@Color">
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="Number">Number: </label>
                 </div>
                 <div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="Name">Name: </label>
                 </div>
                 <div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
                 <div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="SeriePicture">Path to picture: </label>
                 </div>
                 <div>
@@ -43,14 +43,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label-chl">
+                <div class="label">
                     <label for="SeriesColor">Color code: </label>
                 </div>
                 <div>
                     <input form="SeriesColor" placeholder="@series.SeriesColor" @onchange="@ColorChange" />
                 </div>
             </div>
-            <div class="buttonsrow-chl">
+            <div class="btnRow">
                 <input type="button" @onclick="() => saveSerie(series)" value="Save" />
                 <input type="button" @onclick="cancel" value="Cancel" />
                 <input type="button" @onclick="deletePromptShow" value="Delete" />

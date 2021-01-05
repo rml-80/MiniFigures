@@ -3,12 +3,12 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/card-horizontal-small.css" />
+<link rel="stylesheet" href="css/SeriesList.css" />
 
 <div class="card-deck">
     @foreach (var item in seriesList)
     {
-        <div class="OwnCard-chs" style="border-color: @item.SeriesColor; background-color:@item.SeriesColor">
+        <div class="figCard" style="border-color: @item.SeriesColor; background-color:@item.SeriesColor">
             <img src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" alt="@item.Name" />
         </div>
     }

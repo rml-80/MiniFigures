@@ -7,7 +7,7 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/card-vertical-small.css">
+<link rel="stylesheet" href="css/AddNewFigures.css">
 
 @if (MF.Count == series.NumberOfFigures)
 {
@@ -17,7 +17,7 @@ else
 {
     <h3>Add Figure</h3>
     <div class="card-deck">
-        <div class="ownCard" style="border-color:@Color">
+        <div class="addCard" style="border-color:@Color">
             <div class="topMargin2">Figures To add: @(series.NumberOfFigures - MF.Count) </div>
             <select @onchange="@SerieClicked">
                 <option value="@collectionName">@collectionName</option>

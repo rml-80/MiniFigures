@@ -5,7 +5,7 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/card-vertical-small.css" />
+<link rel="stylesheet" href="css/ShowSerie.css" />
 
 <div class="headerCenter" style="background-color:@Color">
     <h3>
@@ -60,21 +60,21 @@ else
     <div class="card-deck">
         @foreach (var figure in MF)
         {
-            <div class="ownCard" style="border-color:@Color">
+            <div class="Card" style="border-color:@Color">
                 <div class="txtLeftBold" style="color:@Color">@figure.Number</div>
                 <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => IncrementMF(figure.Number))" />
                 <h5>@figure.Name</h5>
                 <table>
                     <tr>
-                        <td class="lbl-Cardtbl">In display:</td>
+                        <td class="label">In display:</td>
                         <td><i class=@changeIcon(figure.Displayed) style=@iconColor></i></td>
                     </tr>
                     <tr>
-                        <td class="lbl-Cardtbl">Ownd openend:</td>
+                        <td class="label">Ownd openend:</td>
                         <td>@figure.CountOpened</td>
                     </tr>
                     <tr>
-                        <td class="lbl-Cardtbl">Ownd sealed:</td>
+                        <td class="label">Ownd sealed:</td>
                         <td>@figure.CountSealed</td>
                     </tr>
                 </table>

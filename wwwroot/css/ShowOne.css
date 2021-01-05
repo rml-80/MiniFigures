@@ -6,14 +6,15 @@ h3, h4 {
     font-weight:bold;
 }
 img {
-    max-width:100%;
+    max-width:90%;
     height:55%;
+    margin-left:auto;
+    margin-right:auto;
 }
 table{
     width:100%;
 }
 td {
-    /*border: solid 1px;*/
     width: 33%;
 }
 tr {
@@ -35,17 +36,14 @@ p, .p{
     font-size:1rem;
 }
 .editbutton{
-    float:right;
+    text-align:end;
     margin-top:2.5rem;
 }
-.infotable{
-    font-size:1.25rem;
-}
-.lbl-Card {
+.label {
     text-align: right;
     width: 35%;
 }
-.OwnCard-cvl {
+.card {
     text-align:center;
     width:36rem;
     height: 48em;
@@ -57,7 +55,7 @@ p, .p{
 .resetBtn{
     font-size:1rem;
 }
-.tblCard {
+.cardTabel {
     width:80%;
     margin-left:auto;
     margin-right:auto;

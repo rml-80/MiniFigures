@@ -4,17 +4,17 @@ html, body {
 h3 {
     text-align:center;
 }
-.buttonsrow-chl {
+.btnRow {
     margin-top: 1rem
 }
-.center-chl {
+.center {
     text-align: center;
 }
-.label-chl {
+.label {
     width: 40%;
     text-align: right;
 }
-.OwnCard-chl {
+.Card {
     width: 31rem;
     height: 21rem;
     border: solid 0.6rem;
