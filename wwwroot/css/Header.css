@@ -1,0 +1,41 @@
+html, body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+h3, h4 {
+    text-align:center;
+    font-weight:bold;
+}
+table{
+    width:100%;
+}
+.biggerText {
+    font-size: 1.25rem;
+}
+.headerCenter {
+    text-align: center;
+    height: 5rem;
+    padding-top: 1.5rem;
+    border-radius: 2rem;
+    margin-bottom: 1.5rem;
+}
+.infoRow {
+    width: 12rem;
+    text-align: right;
+}
+.infoBlock {
+    border: solid 0.6rem;
+    width: 98%;
+    margin: -2rem auto 1rem auto;
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.SerieInfobutton {
+    float: right;
+    margin-right: 2rem;
+}
+.txtCenter{
+    text-align:center;
+}
+.txtRight{
+    text-align:right;
+}

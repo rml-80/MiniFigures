@@ -1,0 +1,71 @@
+html, body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+h3, h4 {
+    text-align:center;
+    font-weight:bold;
+}
+img {
+    max-width:90%;
+    height:55%;
+    margin-left:auto;
+    margin-right:auto;
+}
+table{
+    width:100%;
+}
+td {
+    width: 33%;
+}
+tr {
+    font-size: 1.25rem;
+    height:3rem;
+}
+p, .p{
+    font-size:1.5rem;
+    font-weight:bold;
+}
+.arrowPrevious{
+    text-align:right;
+}
+.closeBtn{
+    float:right;
+}
+.deleteBtn{
+    color:red;
+    font-size:1rem;
+}
+.editbutton{
+    text-align:end;
+    margin-top:2.5rem;
+}
+.label {
+    text-align: right;
+    width: 35%;
+}
+.card {
+    text-align:center;
+    width:36rem;
+    height: 48em;
+    border: solid 1.2rem;
+    border-radius: 1rem;
+    margin: 1rem auto;
+    padding: 0.5rem;
+}
+.resetBtn{
+    font-size:1rem;
+}
+.cardTabel {
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.txtCenter{
+    text-align:center;
+}
+.txtLeft{
+    text-align:left;
+}
+.txtRight{
+    text-align:right
+}

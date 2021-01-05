@@ -5,6 +5,8 @@
 
 @inject NavigationManager NavigationManager
 
+<link rel="stylesheet" href="css/Header.css"/>
+
 <div class="headerCenter" style="background-color:@serie.SeriesColor">
     <h3>
         @serie.DisplayName
@@ -36,34 +38,14 @@
     </table>
 </div>
 
-
 @code {
-        [Parameter]
-        public Series serie { get; set; }
-
-        public string Color { get; set; }
-        public string HideShow { get; set; } = "none";
-        public string InfoIcon { get; set; } = "fas fa-chevron-down";
-        public string Icon { get; set; }
-        public string iconColor { get; set; }
+    [Parameter]
+    public Series serie { get; set; }
     [Parameter]
     public int amountOfFigures { get; set; }
 
-
-    private string changeIcon(bool test)
-    {
-        if (test)
-        {
-            Icon = "fas fa-check";
-            iconColor = "color:green";
-        }
-        else
-        {
-            Icon = "fas fa-times";
-            iconColor = "color:red";
-        }
-        return Icon;
-    }
+    public string HideShow { get; set; } = "none";
+    public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
     void ToEdit()
     {
@@ -86,5 +68,4 @@
             InfoIcon = "fas fa-chevron-down";
         }
     }
-
 }

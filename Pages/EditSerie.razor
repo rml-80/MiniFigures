@@ -2,10 +2,12 @@
 @using MiniFigures.Data
 @using MiniFigures.Models
 @inject ISeriesService SeriesService
+@inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
+
 <link rel="stylesheet" href="css/EditSerie.css" />
-<Header serie="series"/>
+<Header serie="series" amountOfFigures="ListOfMF.Count"/>
 <h3>Edit Serie</h3>
 <div>
     <div class="center">
@@ -70,15 +72,17 @@
     [Parameter]
     public string serieToShow { get; set; }
 
+    protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
     protected Series series = new Series();
 
     protected string deletePrompt { get; set; } = "none";
-    //protected string Color { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serieToShow);
-        //Color = series.SeriesColor;
+        ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
+
     }
     void saveSerie(Series serie)
     {

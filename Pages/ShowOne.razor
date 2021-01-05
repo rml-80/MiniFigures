@@ -40,7 +40,16 @@ else
                                 </tr>
                                 <tr>
                                     <td class="label">In display:</td>
-                                    <td><i class=@changeIcon(OneMF.Displayed) style=@OnDisplayIconColor></i></td>
+                                    <td>
+                                        @if (!OneMF.Displayed)
+                                        {
+                                            <i class="fas fa-times" style="color:red" />
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-check" style="color:green" />
+                                        }
+                                    </td>
 
                                 </tr>
                                 <tr>
@@ -60,6 +69,7 @@ else
                         }
                         else
                         {
+                            @*<EditOne OneFigure="@OneMF" serie="@series" />*@ // try with componetn for edit figure, not working at the moment
                             <input for="Name" class="form-control p txtCenter" @bind="@OneMF.Name" />
                             <table class="cardTabel">
                                 <tr>
@@ -77,11 +87,11 @@ else
                                     <td class="label">Ownd openend:</td>
                                     <td>
                                         <a class="fas fa-minus-square" @onclick="DecrementOpen"
-                                           style="color:@series.SeriesColor" />
+                                           style="color:@series.SeriesColor; margin-right:1rem" />
 
                                         @OneMF.CountOpened
                                         <a class="fas fa-plus-square" @onclick="IncrementOpen"
-                                           style="color:@series.SeriesColor" />
+                                           style="color:@series.SeriesColor; margin-left:1rem" />
 
                                     </td>
                                 </tr>
@@ -89,10 +99,10 @@ else
                                     <td class="label">Ownd sealed:</td>
                                     <td>
                                         <a class="fas fa-minus-square" @onclick="DecrementSealed"
-                                           style="color:@series.SeriesColor" />
+                                           style="color:@series.SeriesColor; margin-right:1rem" />
                                         @OneMF.CountSealed
                                         <a class="fas fa-plus-square" @onclick="IncrementSealed"
-                                           style="color:@series.SeriesColor" />
+                                           style="color:@series.SeriesColor; margin-left:1rem" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -103,7 +113,7 @@ else
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="txtRight">
-                                        <i class="fas fa-save fa-2x" style="color:@series.SeriesColor" @onclick="() => Save(OneMF.Number)"/>
+                                        <i class="fas fa-save fa-2x" style="color:@series.SeriesColor" @onclick="() => Save(OneMF.Number)" />
                                     </td>
                                 </tr>
                             </table>
@@ -147,18 +157,17 @@ else
     protected MiniFigure OneMF = new MiniFigure();
 
     List<MiniFigure> ListOfMF = new List<MiniFigure>();
-
-    protected bool edit = false;
+    [Parameter]
+    public bool edit { get; set; } = false;
     protected bool Existing { get; set; }
 
     protected int? currentNumber { get; set; }
 
     protected string deletePrompt { get; set; } = "none";
-    protected string displayButton { get; set; }
+    //protected string displayButton { get; set; }
     protected string isFalse { get; set; }
     protected string isTrue { get; set; }
-    protected string OnDisplayIcon { get; set; }
-    protected string OnDisplayIconColor { get; set; }
+
     protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnParametersSetAsync()
@@ -207,10 +216,15 @@ else
         OneMF.Displayed = false;
         OneMF.CountOpened = 0;
         OneMF.CountSealed = 0;
+        trueOrFalse();
     }
-    private async Task Save(int number)
+    public async Task Save(int number)
     {
-        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
+        await MiniFigureService.EditFigure(OneMF.ID, OneMF, series.Name);
+        edit = false;
+    }
+    public void closeEdit()
+    {
         edit = false;
     }
     // show editable fields
@@ -278,49 +292,19 @@ else
 
 
 
-    //TODO: try to simplifiy
-    private void changeDisplayed()
-    {
-        if (OneMF.Displayed)
-        {
-
-            OneMF.Displayed = false;
-            displayButton = "true";
-        }
-        else
-        {
-            OneMF.Displayed = true;
-            displayButton = "false";
-        }
-    }
-    private string changeIcon(bool test)
-    {
-        if (test)
-        {
-            OnDisplayIcon = "fas fa-check";
-            OnDisplayIconColor = "color:green";
-        }
-        else
-        {
-            OnDisplayIcon = "fas fa-times";
-            OnDisplayIconColor = "color:red";
-        }
-        return OnDisplayIcon;
-    }
+    // for chaning color of buttons in editmode
     void trueOrFalse()
     {
         if (OneMF.Displayed)
         {
             isTrue = "color:green";
             isFalse = "color: grey";
-
         }
         else
         {
             isTrue = "color: grey";
             isFalse = "color:red";
         }
-
     }
     void changeTrueFalse()
     {
@@ -328,14 +312,14 @@ else
         {
             isTrue = "color: grey";
             isFalse = "color:red";
+            OneMF.Displayed = false;
         }
         else
         {
             isTrue = "color:green";
             isFalse = "color: grey";
+            OneMF.Displayed = true;
         }
-        changeDisplayed();
-
     }
 
 }

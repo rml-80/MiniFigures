@@ -1,0 +1,262 @@
+﻿@page "/{serieToShow}/{number:int}/edit"
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject NavigationManager NavigationManager
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+<h3>EditOne</h3>
+<input for="Name" class="form-control p txtCenter" @bind="@OneFigure.Name" />
+<table class="cardTabel">
+    <tr>
+        <td class="label">Number:</td>
+        <td><input for="Number" class="form-control infotable txtCenter" placeholder="@OneFigure.Number" /></td>
+    </tr>
+    <tr>
+        <td class="label">In display:</td>
+        <td>
+            <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="True" />
+            <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="False" />
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Ownd openend:</td>
+        <td>
+            <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@serie.SeriesColor" />
+
+            @OneFigure.CountOpened
+            <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@serie.SeriesColor" />
+
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Ownd sealed:</td>
+        <td>
+            <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@serie.SeriesColor" />
+            @OneFigure.CountSealed
+            <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@serie.SeriesColor" />
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Image:</td>
+        <td>
+            <input for="Name" class="form-control infotable txtCenter" @bind="@OneFigure.Image" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="txtRight">
+            <i class="fas fa-save fa-2x" style="color:@serie.SeriesColor" @onclick="() => Save(OneFigure.Number)" />
+        </td>
+    </tr>
+</table>
+<div>
+    @*<input class="deleteBtn" type="button" @onclick="deletePromptShow" value="Delete">
+    <input class="resetBtn" type="button" @onclick="resetfigure" value="Reset" />
+    <input class="resetBtn" type="button" @onclick="cancel" value="Cancel" />*@
+</div>
+
+@code {
+    [Parameter]
+    public int number { get; set; }
+    [Parameter]
+    public string serieToShow { get; set; }
+    [Parameter]
+    public MiniFigure OneFigure { get; set; }
+    [Parameter]
+    public Series serie { get; set; }
+
+    ShowOne showOne = new ShowOne();
+    //List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
+    //protected bool edit = false;
+    //protected bool Existing { get; set; }
+
+    //protected int? currentNumber { get; set; }
+
+    //protected string deletePrompt { get; set; } = "none";
+    protected string displayButton { get; set; }
+    protected string isFalse { get; set; }
+    protected string isTrue { get; set; }
+    //protected string OnDisplayIcon { get; set; }
+    //protected string OnDisplayIconColor { get; set; }
+    //protected string ShowWarningForNumber { get; set; } = "none";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //serie = await SeriesService.GetOneSerie(serieToShow);
+        trueOrFalse();
+        //ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
+    }
+
+    ////calculations
+    private void IncrementOpen()
+    {
+        OneFigure.CountOpened++;
+    }
+    private void DecrementOpen()
+    {
+        if (OneFigure.CountOpened != 0)
+        {
+            OneFigure.CountOpened--;
+        }
+    }
+    private void IncrementSealed()
+    {
+        OneFigure.CountSealed++;
+    }
+    private void DecrementSealed()
+    {
+        if (OneFigure.CountSealed != 0)
+        {
+            OneFigure.CountSealed--;
+        }
+    }
+    //// db methods
+    //protected void cancel()
+    //{
+    //    edit = false;
+    //}
+    //void deleteFigure(string id)
+    //{
+    //    MiniFigureService.DeleteFigure(id);
+    //    NavigationManager.NavigateTo($"/{serieToShow}");
+    //}
+    //private void resetfigure()
+    //{
+    //    OneFigure.Displayed = false;
+    //    OneFigure.CountOpened = 0;
+    //    OneFigure.CountSealed = 0;
+    //}
+    private async Task Save(int number)
+    {
+        await MiniFigureService.EditFigure(OneFigure.ID, OneFigure, serie.Name);
+        showOne.closeEdit();
+        NavigationManager.NavigateTo($"{serie.Name}/{OneFigure.Number}");
+        //edit = false;
+    }
+    //// show editable fields
+    //private void editfigure()
+    //{
+    //    edit = true;
+    //}
+    //// check if number is existing in db
+    //void isExist(int number) //combine with checkNumber????
+    //{
+    //    foreach (var fig in ListOfMF)
+    //    {
+    //        if (number == fig.Number)
+    //        {
+    //            Existing = true;
+    //            break;
+    //        }
+    //        else
+    //        {
+    //            Existing = false;
+    //        }
+    //    }
+    //}
+    //void checkNumber(ChangeEventArgs args)
+    //{
+    //    if (args != null)
+    //    {
+    //        currentNumber = Convert.ToInt32(args.Value);
+    //        isExist(Convert.ToInt32(args.Value));
+
+    //        if (Existing)
+    //        {
+    //            ShowWarningForNumber = "inline";
+    //            Existing = false;
+    //        }
+    //        else
+    //        {
+    //            ShowWarningForNumber = "none";
+    //            OneFigure.Number = Convert.ToInt32(args.Value);
+    //            currentNumber = null;
+    //        }
+    //    }
+    //}
+    //// Show warning on delete
+    //void deletePromptShow()
+    //{
+    //    if (deletePrompt == "none")
+    //    {
+    //        deletePrompt = "inline";
+    //    }
+    //    else
+    //    {
+    //        deletePrompt = "none";
+    //    }
+    //}
+    //// navigation
+    //void goTo(int i)
+    //{
+    //    NavigationManager.NavigateTo($"/{serieToShow}/{i}");
+    //}
+    //void close()
+    //{
+    //    NavigationManager.NavigateTo($"/{serieToShow}");
+    //}
+
+
+
+    ////TODO: try to simplifiy
+    private void changeDisplayed()
+    {
+        if (OneFigure.Displayed)
+        {
+
+            OneFigure.Displayed = false;
+            displayButton = "true";
+        }
+        else
+        {
+            OneFigure.Displayed = true;
+            displayButton = "false";
+        }
+    }
+    //private string changeIcon(bool test)
+    //{
+    //    if (test)
+    //    {
+    //        OnDisplayIcon = "fas fa-check";
+    //        OnDisplayIconColor = "color:green";
+    //    }
+    //    else
+    //    {
+    //        OnDisplayIcon = "fas fa-times";
+    //        OnDisplayIconColor = "color:red";
+    //    }
+    //    return OnDisplayIcon;
+    //}
+    void trueOrFalse()
+    {
+        if (OneFigure.Displayed)
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+
+        }
+        else
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+
+    }
+    void changeTrueFalse()
+    {
+        if (OneFigure.Displayed)
+        {
+            isTrue = "color: grey";
+            isFalse = "color:red";
+        }
+        else
+        {
+            isTrue = "color:green";
+            isFalse = "color: grey";
+        }
+        changeDisplayed();
+
+    }
+
+
+}

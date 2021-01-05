@@ -11,14 +11,16 @@
 
 @if (ListOfMF.Count == series.NumberOfFigures)
 {
+    <Header serie="series"  amountOfFigures="ListOfMF.Count"/>
     <h3>No more figures to add</h3>
-<div class="txtCenter">
-    <input type="button" value="OK" @onclick="cancel" />
-</div>
+    <div class="txtCenter">
+        <input type="button" value="OK" @onclick="cancel" />
+    </div>
 
 }
 else
 {
+    <Header serie="series" amountOfFigures="ListOfMF.Count" />
     <h3>Add Figure</h3>
     <div class="card-deck">
         <div class="addCard" style="border-color:@Color">
@@ -50,7 +52,6 @@ else
 
     protected MiniFigure OneMF = new MiniFigure();
     protected Series series = new Series();
-    //string collectionName;
     protected List<Series> SeriesList = new List<Series>();
     protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
 
@@ -64,7 +65,6 @@ else
     {
         series = await SeriesService.GetOneSerie(serie);
         Color = series.SeriesColor;
-        //collectionName = serie;
         SeriesList = await SeriesService.GetSeries();
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }

@@ -39,7 +39,16 @@ else
                 <table>
                     <tr>
                         <td class="label">In display:</td>
-                        <td><i class=@changeTrueFalseIcon(figure.Displayed) style=@OnDisplayIconColor></i></td>
+                        <td>
+                            @if (!figure.Displayed)
+                            {
+                                <i class="fas fa-times" style="color:red" />
+                            }
+                            else
+                            {
+                                <i class="fas fa-check" style="color:green" />
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <td class="label">Ownd openend:</td>
@@ -66,8 +75,8 @@ else
     protected Series series { get; set; }
 
     protected int owned { get; set; }
-    protected string OnDisplayIcon { get; set; }
-    protected string OnDisplayIconColor { get; set; }
+    //protected string OnDisplayIcon { get; set; }
+    //protected string OnDisplayIconColor { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -118,20 +127,20 @@ else
             }
         }
     }
-    private string changeTrueFalseIcon(bool test)
-    {
-        if (test)
-        {
-            OnDisplayIcon = "fas fa-check";
-            OnDisplayIconColor = "color:green";
-        }
-        else
-        {
-            OnDisplayIcon = "fas fa-times";
-            OnDisplayIconColor = "color:red";
-        }
-        return OnDisplayIcon;
-    }
+    //private string changeTrueFalseIcon(bool test)
+    //{
+    //    if (test)
+    //    {
+    //        OnDisplayIcon = "fas fa-check";
+    //        OnDisplayIconColor = "color:green";
+    //    }
+    //    else
+    //    {
+    //        OnDisplayIcon = "fas fa-times";
+    //        OnDisplayIconColor = "color:red";
+    //    }
+    //    return OnDisplayIcon;
+    //}
     private void ToEdit()
     {
         NavigationManager.NavigateTo($"/{serieToShow}/edit");

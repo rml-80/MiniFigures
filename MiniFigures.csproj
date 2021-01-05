@@ -7,6 +7,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\css\AddNewFigures.css" />
     <Content Remove="wwwroot\css\AddNewSerie.css" />
+    <Content Remove="wwwroot\css\Header.css" />
     <Content Remove="wwwroot\css\Index.css" />
     <Content Remove="wwwroot\css\ShowSerie.css" />
   </ItemGroup>
@@ -14,6 +15,7 @@
   <ItemGroup>
     <None Include="wwwroot\css\AddNewSerie.css" />
     <None Include="wwwroot\css\Index.css" />
+    <None Include="wwwroot\css\Header.css" />
     <None Include="wwwroot\css\ShowSerie.css" />
     <None Include="wwwroot\css\AddNewFigures.css" />
     <None Include="wwwroot\css\EditSerie.css" />
