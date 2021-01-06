@@ -49,11 +49,11 @@ table{
 }
 .Card {
     text-align:center;
-    width:16rem;
+    width:15rem;
     height: 26em;
     border: solid 0.6rem;
     border-radius: 1rem;
-    margin: 1rem;
+    margin: 0.5rem;
     padding: 0.5rem 0.6rem 0.5rem 0.6rem;
 }
 .SerieInfobutton {
