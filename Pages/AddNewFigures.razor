@@ -37,8 +37,8 @@ else
             <label for="Name">Name: </label>
             <input tabindex="2" form="Name" class="txtCenter" @bind="@OneMF.Name" />
             <div class="marginBig">
-                <input type="button" @onclick="cancel" value="Cancel" />
-                <input tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
+                <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
+                <input class="btn btn-outline-success" tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
             </div>
         </div>
     </div>

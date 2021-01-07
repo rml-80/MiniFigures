@@ -1,12 +1,9 @@
 ﻿//TODO
 
-create a header component with serie info
+change color on edit button showOne page
+navigation ShowOne page
+css editone delete
 
-text color on dark background "Header"
+collapseble header part
 
-
-popup
-	showone
-	addserie
-	editserie
-	addfigure
+remove waring text when something exists EditOne

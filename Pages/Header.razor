@@ -6,19 +6,35 @@
 @inject NavigationManager NavigationManager
 
 <link rel="stylesheet" href="css/Header.css"/>
+<style>
+    .btn.btn-outline-info{
+        color:@serie.SeriesColor;
+        border-color:@serie.SeriesColor;
+        box-shadow:none !important;
+        outline:none !important;
+    }
+        .btn.btn-outline-info:active:hover,
+        .btn.btn-outline-info:hover {
+            background-color: @serie.SeriesColor;
+            color: white;
+            border-color: @serie.SeriesColor;
+            box-shadow: none !important;
+            outline: none !important;
+        }
 
+</style>
 <div class="headerCenter" style="background-color:@serie.SeriesColor">
-    <h3>
+    <h2>
         @serie.DisplayName
         <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
-    </h3>
+    </h2>
 </div>
 <div class="infoBlock" style="display:@HideShow;border-color:@serie.SeriesColor">
     <table class="biggerText">
         <tr>
             <td class="infoRow">Number:</td>
             <td class="infoRow txtCenter">@serie.Number</td>
-            <td class="txtRight"><input type="button" @onclick="ToEdit" value="Edit" /></td>
+            <td class="txtRight"><input class="btn btn-outline-info" type="button" @onclick="ToEdit" value="Edit" /></td>
         </tr>
         <tr>
             <td class="infoRow">Number of figures:</td>
@@ -26,7 +42,7 @@
             <td class="txtRight">
                 @if (amountOfFigures != serie.NumberOfFigures)
                 {
-                    <p>@amountOfFigures of @serie.NumberOfFigures are added to the serie <input type="button" @onclick="ToAdd" value="Add figure" /></p>
+                    <p>@amountOfFigures of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure"/></p>
                 }
             </td>
         </tr>

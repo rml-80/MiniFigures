@@ -1,23 +1,24 @@
 ﻿@page "/{serieToShow}/edit"
 @using MiniFigures.Data
 @using MiniFigures.Models
+@using MiniFigures.Shared
 @inject ISeriesService SeriesService
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
 
 <link rel="stylesheet" href="css/EditSerie.css" />
-<Header serie="series" amountOfFigures="ListOfMF.Count"/>
+<Header serie="serie" amountOfFigures="ListOfMF.Count" />
 <h3>Edit Serie</h3>
 <div>
     <div class="center">
-        <div class="card" style="border-color:@series.SeriesColor">
+        <div class="card" style="border-color:@serie.SeriesColor">
             <div class="row">
                 <div class="label">
                     <label for="Number">Number: </label>
                 </div>
                 <div>
-                    <input form="Number" @bind="@series.Number" />
+                    <input form="Number" @bind="@serie.Number" />
                 </div>
             </div>
             <div class="row">
@@ -25,7 +26,7 @@
                     <label for="Name">Name: </label>
                 </div>
                 <div>
-                    <input form="Name" @bind="@series.DisplayName" />
+                    <input form="Name" @bind="@serie.DisplayName" />
                 </div>
             </div>
             <div class="row">
@@ -33,7 +34,7 @@
                     <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
                 <div>
-                    <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                    <input form="NumberOfFigures" @bind="@serie.NumberOfFigures" />
                 </div>
             </div>
             <div class="row">
@@ -41,7 +42,7 @@
                     <label for="SeriePicture">Path to picture: </label>
                 </div>
                 <div>
-                    <input form="SeriePicture" @bind="@series.SeriePicture" />
+                    <input form="SeriePicture" @bind="@serie.SeriePicture" />
                 </div>
             </div>
             <div class="row">
@@ -49,21 +50,37 @@
                     <label for="SeriesColor">Color code: </label>
                 </div>
                 <div>
-                    <input form="SeriesColor" placeholder="@series.SeriesColor" @onchange="@ColorChange" />
+                    <input form="SeriesColor" placeholder="@serie.SeriesColor" @onchange="@ColorChange" />
                 </div>
             </div>
             <div class="btnRow">
-                <input type="button" @onclick="deletePromptShow" value="Delete" />
-                <input type="button" @onclick="cancel" value="Cancel" />
-                <input type="button" @onclick="() => saveSerie(series)" value="Save" />
+                @*<input type="button" @onclick="() => deleteSerie(serie.Name)" value="Delete" />*@
+                <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete" />
+                <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
+                <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(serie)" value="Save" />
             </div>
-
         </div>
-        <div style="display:@deletePrompt; color:red">
-            <p>Sure you want to DELETE this serie?</p>
-            <input type="button" @onclick="() => deleteSerie(series.Name)" value="YES" />
-            <input type="button" @onclick="deletePromptShow" value="NO" />
-        </div>
+        @if (showDelete)
+        {
+            <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
+                <div class="modal-dialog" @onclick:stopPropagation="true">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirm Delete</h4>
+                            <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete:</p>
+                            <h3>@serie.DisplayName</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel">Cancel</button>
+                            <button type="button" class="btn btn-danger" @onclick="() => deleteSerie(serie.Name)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
 
@@ -74,48 +91,54 @@
 
     protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
 
-    protected Series series = new Series();
+    protected Series serie = new Series();
 
-    protected string deletePrompt { get; set; } = "none";
+    //protected string deletePrompt { get; set; } = "none";
+
+    bool showDelete = false;
 
     protected override async Task OnInitializedAsync()
     {
-        series = await SeriesService.GetOneSerie(serieToShow);
+        serie = await SeriesService.GetOneSerie(serieToShow);
         ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
 
     }
     void saveSerie(Series serie)
     {
-        SeriesService.EditSerie(series.Id, series);
-        SeriesService.RenameCollection(serieToShow, series.Name);
+        SeriesService.EditSerie(serie.Id, serie);
+        SeriesService.RenameCollection(serieToShow, serie.Name);
         NavigationManager.NavigateTo("/", true);
     }
-    void deleteSerie(string name)
+    public void deleteSerie(string name)
     {
         SeriesService.DeleteCollection(name);
         SeriesService.DeleteSerie(name);
         NavigationManager.NavigateTo("/", true);
+        showDelete = false;
     }
     //change color on frame when adding color
     void ColorChange(ChangeEventArgs args)
     {
         var Color = (string)args.Value;
-        series.SeriesColor = Color;
+        serie.SeriesColor = Color;
     }
     void cancel()
     {
         NavigationManager.NavigateTo($"/{serieToShow}");
     }
     // Show warning on delete
-    void deletePromptShow()
-    {
-        if (deletePrompt == "none")
-        {
-            deletePrompt = "inline";
-        }
-        else
-        {
-            deletePrompt = "none";
-        }
-    }
+    //void deletePromptShow()
+    //{
+    //    if (deletePrompt == "none")
+    //    {
+    //        deletePrompt = "inline";
+    //    }
+    //    else
+    //    {
+    //        deletePrompt = "none";
+    //    }
+    //}
+    public void DeleteShow() => showDelete = true;
+    public void DeleteCancel() => showDelete = false;
+
 }

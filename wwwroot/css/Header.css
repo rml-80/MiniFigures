@@ -1,9 +1,10 @@
 html, body {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
-h3, h4 {
+h2 {
     text-align:center;
     font-weight:bold;
+    color:whitesmoke;
 }
 table{
     width:100%;
