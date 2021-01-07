@@ -3,7 +3,7 @@
 change color on edit button showOne page
 navigation ShowOne page
 css editone delete
-
+delete navigation goes to far back
 collapseble header part
 
 remove waring text when something exists EditOne

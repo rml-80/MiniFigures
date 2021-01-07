@@ -84,14 +84,7 @@ else
     }
     public void editfigure()
     {
-        if (edit)
-        {
-            edit = false;
-        }
-        else
-        {
-            edit = true;
-        }
+        edit = true;
     }
     void goTo(int i)
     {
@@ -101,5 +94,9 @@ else
     void close()
     {
         NavigationManager.NavigateTo($"/{serieToShow}");
+    }
+   public void back()
+    {
+        ShouldRender();
     }
 }
