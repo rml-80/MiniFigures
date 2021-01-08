@@ -6,46 +6,52 @@
 
 <link rel="stylesheet" href="css/ShowOne.css" />
 
-<div>
-    <div class="txtLeft" style="color:@series.SeriesColor">@series.DisplayName</div>
-    <div style="height:30rem"><img src="/images/@series.Name/@OneMF.Image" alt="Picture of @OneMF.Name" /></div>
-    <p>@OneMF.Name</p>
-    <table class="cardTabel">
-        <tr>
-            <td class="label">Number:</td>
-            <td>@OneMF.Number</td>
-        </tr>
-        <tr>
-            <td class="label">In display:</td>
-            <td>
-                @if (!OneMF.Displayed)
-                {
-                    <i class="fas fa-times" style="color:red" />
-                }
-                else
-                {
-                    <i class="fas fa-check" style="color:green" />
-                }
-            </td>
-        </tr>
-        <tr>
-            <td class="label">Ownd openend:</td>
-            <td>@OneMF.CountOpened</td>
-        </tr>
-        <tr>
-            <td class="label">Ownd sealed:</td>
-            <td>@OneMF.CountSealed</td>
-        </tr>
-        <tr>
-            <td class="label">Image:</td>
-            <td>@OneMF.Image</td>
-        </tr>
-    </table>
-</div>
-
-@code {
-    [Parameter]
-    public Series series { get; set; }
-    [Parameter]
-    public MiniFigure OneMF { get; set; }
+@if (serie == null)
+{
+    <h2>Loading......</h2>
 }
+else
+{
+    <div>
+        <div class="txtLeft" style="color:@serie.SeriesColor">@serie.DisplayName</div>
+        <div style="height:30rem"><img src="/images/@serie.Name/@OneMF.Image" alt="Picture of @OneMF.Name" /></div>
+        <p>@OneMF.Name</p>
+        <table class="cardTabel">
+            <tr>
+                <td class="label">Number:</td>
+                <td>@OneMF.Number</td>
+            </tr>
+            <tr>
+                <td class="label">In display:</td>
+                <td>
+                    @if (!OneMF.Displayed)
+                    {
+                        <i class="fas fa-times" style="color:red" />
+                    }
+                    else
+                    {
+                        <i class="fas fa-check" style="color:green" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Ownd openend:</td>
+                <td>@OneMF.CountOpened</td>
+            </tr>
+            <tr>
+                <td class="label">Ownd sealed:</td>
+                <td>@OneMF.CountSealed</td>
+            </tr>
+            <tr>
+                <td class="label">Image:</td>
+                <td>@OneMF.Image</td>
+            </tr>
+        </table>
+    </div>
+}
+    @code {
+        [Parameter]
+        public Series serie { get; set; }
+        [Parameter]
+        public MiniFigure OneMF { get; set; }
+    }

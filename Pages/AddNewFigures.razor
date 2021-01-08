@@ -26,14 +26,14 @@ else
         <div class="addCard" style="border-color:@Color">
             <div class="topMargin2">Figures To add: @(series.NumberOfFigures - ListOfMF.Count) </div>
             <select @onchange="@SerieClicked">
-                <option value="@serie">@serie</option>
+                <option value="@serie">@series.DisplayName</option>
                 @foreach (var serie in SeriesList)
                 {
-                    <option value="@serie.Name">@serie.Name</option>
+                    <option value="@serie.Name">@serie.DisplayName</option>
                 }
             </select>
             <label for="Number">Number: </label>
-            <input tabindex="1" form="Number" class="txtCenter" @onchange="isExist" />
+            <input tabindex="1" form="Number" class="txtCenter" @onchange="checkNumber" />
             <label for="Name">Name: </label>
             <input tabindex="2" form="Name" class="txtCenter" @bind="@OneMF.Name" />
             <div class="marginBig">
@@ -55,11 +55,14 @@ else
     protected List<Series> SeriesList = new List<Series>();
     protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
 
+    protected bool canSave { get; set; }
     protected bool Existing { get; set; }
 
     protected string Color { get; set; } = "lightgrey";
     protected string FigureNumber { get; set; }
     protected string ShowWarningForNumber { get; set; } = "none";
+    protected int? currentNumber { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,11 +73,7 @@ else
     }
     protected async Task AddNewFigure()
     {
-        if (Existing)
-        {
-            ShowWarningForNumber = "inline";
-        }
-        else
+        if (canSave)
         {
             FigureNumber = OneMF.Number.ToString();
             if (FigureNumber.Length > 1)
@@ -98,17 +97,41 @@ else
     {
         serie = (string)args.Value;
     }
-    protected void isExist(ChangeEventArgs args)
+    protected void isExist(int? number)
     {
         foreach (var figure in ListOfMF)
         {
-            if (figure.Number == Convert.ToInt32(args.Value))
+            if (number == figure.Number)
             {
                 Existing = true;
                 break;
             }
+            else
+            {
+                Existing = false;
+            }
         }
-        OneMF.Number = Convert.ToInt32(args.Value);
+    }
+    protected void checkNumber(ChangeEventArgs args)
+    {
+        if (args != null)
+        {
+            currentNumber = Convert.ToInt32(args.Value);
+            isExist(currentNumber);
+
+            if (Existing || currentNumber == 0)
+            {
+                ShowWarningForNumber = "inline";
+                Existing = false;
+            }
+            else
+            {
+                ShowWarningForNumber = "none";
+                OneMF.Number = Convert.ToInt32(args.Value);
+                currentNumber = null;
+                canSave = true;
+            }
+        }
     }
     protected void cancel()
     {

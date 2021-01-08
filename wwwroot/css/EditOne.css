@@ -7,14 +7,13 @@ h3, h4 {
 }
 img {
     max-width:100%;
-    height:80%;
+    height:75%;
     margin-left:auto;
     margin-right:auto;
 }
 #bottom {
     position:absolute;
     bottom:1rem;
-    margin-left:6rem;
 }
 table {
     width: 90%;

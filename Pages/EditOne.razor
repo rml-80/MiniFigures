@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <td class="label">Number:</td>
-            <td><input for="Number" class="form-control txtCenter" style="margin-left:auto ;margin-right:auto; widt" placeholder="@OneFigure.Number" /></td>
+            <td><input for="Number" class="form-control txtCenter" style="margin-left:auto ;margin-right:auto" @onchange="@checkNumber" placeholder="@OneFigure.Number" /></td>
         </tr>
         <tr>
             <td class="label">In display:</td>
@@ -57,15 +57,12 @@
         </tr>
     </table>
     <div id="bottom">
-        <div style="margin-left:auto;margin-right:auto">
+        <div>
             <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
             <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
             <input class="btn btn-outline-dark" type="button" @onclick="goBack" value="Cancel" />
             <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)"/>
         </div>
-    </div>
-    <div style="display:@ShowWarningForNumber; color:red">
-        Minifigure with Number: @currentNumber <br />already exists!
     </div>
     @if (showDelete)
     {
@@ -90,6 +87,9 @@
         </div>
     }
 </div>
+    <div style="display:@ShowWarningForNumber;margin-top:10rem ; color:red">
+        Minifigure with Number: @currentNumber <br />already exists!
+    </div>
 
 @code {
     [Parameter]
@@ -103,8 +103,9 @@
 
     public bool showDelete { get; set; } = false;
 
-    OneCard oc = new OneCard();
+
     List<MiniFigure> ListOfMF = new List<MiniFigure>();
+    protected bool canSave { get; set; }
 
     protected bool Existing { get; set; }
 
@@ -119,6 +120,7 @@
     protected override void OnParametersSet()
     {
         trueOrFalse();
+        ListOfMF = MiniFigureService.GetMiniFigures(serie.Name);
     }
     ////calculations
     private void IncrementOpen()
@@ -146,7 +148,7 @@
     void deleteFigure(string id)
     {
         MiniFigureService.DeleteFigure(id);
-        NavigationManager.NavigateTo($"/{serieToShow}");
+        NavigationManager.NavigateTo($"/{serie.Name}");
     }
     private void resetfigure()
     {
@@ -165,7 +167,7 @@
         NavigationManager.NavigateTo($"/{serie.Name}/{OneFigure.Number}", true);
     }
     // check if number is existing in db
-    void isExist(int number) //combine with checkNumber????
+    void isExist(int? number) //combine with checkNumber????
     {
         foreach (var fig in ListOfMF)
         {
@@ -185,9 +187,9 @@
         if (args != null)
         {
             currentNumber = Convert.ToInt32(args.Value);
-            isExist(Convert.ToInt32(args.Value));
+            isExist(currentNumber);
 
-            if (Existing)
+            if (Existing || currentNumber == 0)
             {
                 ShowWarningForNumber = "inline";
                 Existing = false;
@@ -197,6 +199,7 @@
                 ShowWarningForNumber = "none";
                 OneFigure.Number = Convert.ToInt32(args.Value);
                 currentNumber = null;
+                canSave = true;
             }
         }
     }

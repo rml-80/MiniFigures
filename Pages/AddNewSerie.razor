@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="css/AddNewSerie.css" />
 
 <h3>Add Serie</h3>
-<div>
     <div class="center">
         <div class="Card" style="border-color:@Color">
             <div class="row">
@@ -56,11 +55,10 @@
                 <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
                 <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
             </div>
-            <div style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</div>
 
         </div>
+            <h4 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h4>
     </div>
-</div>
 
 @code {
     protected MiniFigure miniFigure = new MiniFigure();
@@ -83,8 +81,6 @@
     {
         if (canSave)
         {
-            if (ShowWarningForNumber == "none")
-            {
                 if (series.DisplayName == null)
                 {
                     series.DisplayName = "Rename serie";
@@ -92,7 +88,6 @@
                 await SeriesService.AddSerie(series);
                 await SeriesService.CreateNewCollection(series.Name);
                 NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");
-            }
         }
     }
     protected void ColorChange(ChangeEventArgs args)

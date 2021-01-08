@@ -6,7 +6,8 @@
 @inject ISeriesService SeriesService
 
 <link rel="stylesheet" href="css/ShowOne.css" />
-@if (series == null)
+
+@if (serie == null)
 {
     <h2>Loading......</h2>
 }
@@ -17,45 +18,41 @@ else
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <table>
             <tr>
-                <td class="txtRight" style="color:@series.SeriesColor">
-                    @if (OneMF.Number > 1)
-                    {
-                        <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMF.Number - 1)" />
-                    }
-                    else
+                <td class="txtRight" style="color:@serie.SeriesColor">
+                    @if (OneMF.Number <= 1 || (edit))
                     {
                         <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
                     }
+                    else
+                    {
+                        <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMF.Number - 1)" />
+                    }
                 </td>
                 <td>
-                    <div class="card" style="border-color:@series.SeriesColor">
+                    <div class="card" style="border-color:@serie.SeriesColor">
                         @if (!edit)
                         {
-                            <ShowOne OneMF="@OneMF" series="series" />
+                            <ShowOne OneMF="@OneMF" serie="@serie" />
+                            <div>
+                                <input type="button" class="btn btn-outline-dark editBtn" value="Edit" @onclick="editfigure" />
+                            </div>
                         }
                         else
                         {
-                            <EditOne OneFigure="@OneMF" serie="@series" />
+                            <EditOne OneFigure="@OneMF" serie="@serie" />
                         }
                     </div>
                 </td>
-                <td class="txtLeft" style="color: @series.SeriesColor">
-                    @if (OneMF.Number != ListOfMF.Count)
-                    {
-                        <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMF.Number + 1)" />
-                    }
-                    else
+                <td class="txtLeft" style="color: @serie.SeriesColor">
+                    @if (OneMF.Number == ListOfMF.Count || (edit))
                     {
                         <a class="fas fa-chevron-right fa-5x" style="opacity:0.3" />
                     }
+                    else
+                    {
+                        <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMF.Number + 1)" />
+                    }
                 </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="button" class="btn btn-outline-warning editBtn" value="Edit" style="color:@series.SeriesColor" @onclick="editfigure" />
-                </td>
-                <td></td>
             </tr>
         </table>
     </div>
@@ -66,7 +63,7 @@ else
     [Parameter]
     public string serieToShow { get; set; }
 
-    protected Series series { get; set; }
+    protected Series serie { get; set; }
     protected MiniFigure OneMF = new MiniFigure();
 
     List<MiniFigure> ListOfMF = new List<MiniFigure>();
@@ -75,7 +72,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        series = await SeriesService.GetOneSerie(serieToShow);
+        serie = await SeriesService.GetOneSerie(serieToShow);
         ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
     }
     protected override async Task OnParametersSetAsync()
@@ -95,7 +92,7 @@ else
     {
         NavigationManager.NavigateTo($"/{serieToShow}");
     }
-   public void back()
+    public void back()
     {
         ShouldRender();
     }
