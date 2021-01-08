@@ -13,15 +13,15 @@
 }
 else if (ListOfMF.Count == 0)
 {
-<Header serie="series" amountOfFigures="ListOfMF.Count"/>
-<div class="headerCenter">
-    <h4 class="marginBig">No Figures in collection</h4>
-    <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
-</div>
+    <Header serie="series" amountOfFigures="ListOfMF.Count" />
+    <div class="headerCenter">
+        <h4 class="marginBig">No Figures in collection</h4>
+        <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
+    </div>
 }
 else
 {
-<Header serie="series" amountOfFigures="ListOfMF.Count"/>
+    <Header serie="series" amountOfFigures="ListOfMF.Count" />
     <h4>
         You own @owned of @series.NumberOfFigures
         @if (owned == series.NumberOfFigures)
@@ -33,33 +33,39 @@ else
         @foreach (var figure in ListOfMF)
         {
             <div class="Card" style="border-color:@series.SeriesColor">
-                <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
-                <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => IncrementListOfMF(figure.Number))" />
-                <h5>@figure.Name</h5>
-                <table>
-                    <tr>
-                        <td class="label">In display:</td>
-                        <td>
-                            @if (!figure.Displayed)
-                            {
-                                <i class="fas fa-times" style="color:red" />
-                            }
-                            else
-                            {
-                                <i class="fas fa-check" style="color:green" />
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">Ownd openend:</td>
-                        <td>@figure.CountOpened</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Ownd sealed:</td>
-                        <td>@figure.CountSealed</td>
-                    </tr>
-                </table>
-                <a class="fas fa-info-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => ShowOne(figure.Number))" />
+                <div style="height:22rem" @onclick="(() => ShowOne(figure.Number))">
+                    <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
+                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name"  />
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <h5>@figure.Name</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">In display:</td>
+                            <td>
+                                @if (!figure.Displayed)
+                                {
+                                    <i class="fas fa-times" style="color:red" />
+                                }
+                                else
+                                {
+                                    <i class="fas fa-check" style="color:green" />
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">Ownd openend:</td>
+                            <td>@figure.CountOpened</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Ownd sealed:</td>
+                            <td>@figure.CountSealed</td>
+                        </tr>
+                    </table>
+                </div>
+                <a class="fas fa-plus-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => IncrementListOfMF(figure.Number))" />
             </div>
         }
     </div>

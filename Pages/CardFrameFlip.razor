@@ -1,0 +1,156 @@
+﻿@page "/{serieToShow}/{number:int}"
+@using MiniFigures.Data
+@using MiniFigures.Models
+@inject NavigationManager NavigationManager
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+
+<link rel="stylesheet" href="css/ShowOne.css" />
+<style>
+    /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+    .flip-card {
+        background-color: transparent;
+        width: 35rem;
+        height: 58rem;
+        margin-left:auto;
+        margin-right:auto;
+        /*border: 1px solid #f1f1f1;*/
+        /*perspective: 1000px;*/ /* Remove this if you don't want the 3D effect */
+    }
+
+    /* This container is needed to position the front and back side */
+    .flip-card-inner {
+         position: relative;
+            width: 100%;
+            height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    /* Do an horizontal flip when you move the mouse over the flip box container */
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    /* Position the front and back side */
+    .flip-card-front {
+        position: absolute;
+            width: 100%;
+            height: 90%;
+            /*-webkit-backface-visibility: hidden;*/ /* Safari */
+        backface-visibility: hidden;
+    }
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        /*-webkit-backface-visibility: hidden;*/ /* Safari */
+        backface-visibility: hidden;
+    }
+    /* Style the front side (fallback if image is missing) */
+    /**/ .flip-card-front {
+        /*            background-color: #bbb;
+            color: black;*/
+    }
+
+    /* Style the back side */
+    .flip-card-back {
+        /*            background-color: dodgerblue;*/
+           background-color: white;
+        transform: rotateY(180deg);
+    }
+</style>
+@if (serie == null)
+{
+    <h2>Loading......</h2>
+}
+else
+{
+    <div>
+
+        <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
+        <table>
+            <tr>
+                <td class="txtRight" style="color:@serie.SeriesColor">
+                    @if (OneMF.Number <= 1 || (edit))
+                    {
+                        <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
+                    }
+                    else
+                    {
+                        <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMF.Number - 1)" />
+                    }
+                </td>
+                <td>
+                        <div class="flip-card">
+                            <div class="flip-card-inner" >
+
+                                <div class="flip-card-front">
+                                    <ShowOne OneMF="@OneMF" serie="@serie" />
+                                    @*<div>
+            <input type="button" class="btn btn-outline-dark editBtn" value="Edit" @onclick="editfigure" />
+        </div>*@
+                                </div>
+
+                                <div class="flip-card-back">
+                                    <EditOne OneFigure="@OneMF" serie="@serie" />
+                                </div>
+
+                            </div>
+                        </div>
+                </td>
+                <td class="txtLeft" style="color: @serie.SeriesColor">
+                    @if (OneMF.Number == ListOfMF.Count || (edit))
+                    {
+                        <a class="fas fa-chevron-right fa-5x" style="opacity:0.3" />
+                    }
+                    else
+                    {
+                        <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMF.Number + 1)" />
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+@code {
+    [Parameter]
+    public int number { get; set; }
+    [Parameter]
+    public string serieToShow { get; set; }
+
+    protected Series serie { get; set; }
+    protected MiniFigure OneMF = new MiniFigure();
+
+    List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
+    public bool edit { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        serie = await SeriesService.GetOneSerie(serieToShow);
+        ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+    }
+    public void editfigure()
+    {
+        edit = true;
+    }
+    void goTo(int i)
+    {
+        NavigationManager.NavigateTo($"/{serieToShow}/{i}");
+        this.StateHasChanged();
+    }
+    void close()
+    {
+        NavigationManager.NavigateTo($"/{serieToShow}");
+    }
+    public void back()
+    {
+        ShouldRender();
+    }
+}

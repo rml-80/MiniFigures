@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="css/EditOne.css" />
 
-<div>
+<div class="card" style="border-color:@serie.SeriesColor">
     <h3 style="color:@serie.SeriesColor">@serie.DisplayName</h3>
     <table class="cardTable">
         <tr>
@@ -32,7 +32,7 @@
                 <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@serie.SeriesColor; margin-right:1rem" />
 
                 @OneFigure.CountOpened
-                <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@serie.SeriesColor; margin-left:1rem"/>
+                <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@serie.SeriesColor; margin-left:1rem" />
             </td>
         </tr>
         <tr>
@@ -50,25 +50,30 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"  class="smallImage">
-                <img src="/images/@serie.Name/@OneFigure.Image" alt="Picture of @OneFigure.Name" />
+            <td colspan="2">
+                <img  class="smallImage" src="/images/@serie.Name/@OneFigure.Image" alt="Picture of @OneFigure.Name" />
 
             </td>
         </tr>
+
+
     </table>
-    <div id="bottom">
-        <div>
-            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
-            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
-            <input class="btn btn-outline-dark" type="button" @onclick="goBack" value="Cancel" />
-            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)"/>
-        </div>
-    </div>
+                    <div style="margin-top:2rem">
+
+                        <div style="float:right; margin-right:0px">
+                            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
+                            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
+                            @*<input class="btn btn-outline-dark" type="button" @onclick="goBack" value="Cancel" />*@
+                            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)" />
+                        </div>
+                    </div>
+
+
     @if (showDelete)
     {
-        <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
-            <div class="modal-dialog" @onclick:stopPropagation="true">
-                <div class="modal-content">
+        <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
+            <div class="modal-dialog" @onclick:stopPropagation="true" style="margin-top:50%;width:80%">
+                <div class="modal-content" style="background-color:ivory">
                     <div class="modal-header">
                         <h4>Confirm Delete</h4>
                         <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
@@ -160,7 +165,8 @@
     private async Task Save(int number)
     {
         await MiniFigureService.EditFigure(OneFigure.ID, OneFigure, serie.Name);
-        goBack();
+        //goBack();
+        ShouldRender();
     }
     void goBack()
     {

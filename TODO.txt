@@ -1,2 +1,4 @@
 ﻿//TODO
 
+Render ShowOne after savce in edit
+modal on cardframe? Add new serie?
