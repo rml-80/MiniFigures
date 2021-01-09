@@ -5,7 +5,7 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link rel="stylesheet" href="css/ShowSerie.css" />
+<link href="/css/Serie.razor.css" rel="stylesheet"/>
 
 @if (ListOfMF == null)
 {
@@ -35,7 +35,7 @@ else
             <div class="Card" style="border-color:@series.SeriesColor">
                 <div style="height:22rem" @onclick="(() => ShowOne(figure.Number))">
                     <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
-                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name"  />
+                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
                     <table>
                         <tr>
                             <td colspan="2">
@@ -43,7 +43,7 @@ else
                             </td>
                         </tr>
                         <tr>
-                            <td class="label">In display:</td>
+                            <td class="labelSmall">In display:</td>
                             <td>
                                 @if (!figure.Displayed)
                                 {
@@ -56,11 +56,11 @@ else
                             </td>
                         </tr>
                         <tr>
-                            <td class="label">Ownd openend:</td>
+                            <td class="labelSmall">Ownd openend:</td>
                             <td>@figure.CountOpened</td>
                         </tr>
                         <tr>
-                            <td class="label">Ownd sealed:</td>
+                            <td class="labelSmall">Ownd sealed:</td>
                             <td>@figure.CountSealed</td>
                         </tr>
                     </table>
@@ -68,6 +68,16 @@ else
                 <a class="fas fa-plus-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => IncrementListOfMF(figure.Number))" />
             </div>
         }
+            @if (showCard)
+            {
+                <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.2);" aria-modal="true" role="dialog">
+                    <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+                        <div class="modal-content" style="background-color:transparent; border:none">
+                            <CardFrameFlip serieToShow="@serieToShow" number="@no" />
+                        </div>
+                    </div>
+                </div>
+            }
     </div>
 }
 @code {
@@ -79,8 +89,9 @@ else
     protected MiniFigure OneMF = new MiniFigure();
 
     protected Series series { get; set; }
-
+    bool showCard = false;
     protected int owned { get; set; }
+    protected int no { get; set; }
     //protected string OnDisplayIcon { get; set; }
     //protected string OnDisplayIconColor { get; set; }
 
@@ -94,13 +105,16 @@ else
         series = await SeriesService.GetOneSerie(serieToShow);
         Owned();
     }
+
     private void SendCollectionName(string collectionName)
     {
         ListOfMF = MiniFigureService.GetMiniFigures(collectionName);
     }
     private void ShowOne(int number)
     {
-        NavigationManager.NavigateTo($"/{serieToShow}/{number}");
+        //NavigationManager.NavigateTo($"/{serieToShow}/{number}");
+        no = number;
+        showCard = true;
     }
     private async Task IncrementListOfMF(int number)
     {

@@ -6,15 +6,15 @@
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
+<link href="/css/Serie.razor.css" rel="stylesheet"/>
 
-<link rel="stylesheet" href="css/EditSerie.css" />
 <Header serie="serie" amountOfFigures="ListOfMF.Count" />
 <h3>Edit Serie</h3>
 <div>
-    <div class="center">
-        <div class="card" style="border-color:@serie.SeriesColor">
+    <div>
+        <div class="CardEdit Center" style="border-color:@serie.SeriesColor">
             <div class="row">
-                <div class="label">
+                <div class="labelEditSerie">
                     <label for="Number">Number: </label>
                 </div>
                 <div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label">
+                <div class="labelEditSerie">
                     <label for="Name">Name: </label>
                 </div>
                 <div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label">
+                <div class="labelEditSerie">
                     <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
                 <div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label">
+                <div class="labelEditSerie">
                     <label for="SeriePicture">Path to picture: </label>
                 </div>
                 <div>
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="label">
+                <div class="labelEditSerie">
                     <label for="SeriesColor">Color code: </label>
                 </div>
                 <div>

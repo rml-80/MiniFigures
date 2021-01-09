@@ -4,11 +4,11 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
-<link rel="stylesheet" href="css/EditOne.css" />
+<link href="/css/Serie.razor.css" rel="stylesheet"/>
 
 <div class="card" style="border-color:@serie.SeriesColor">
     <h3 style="color:@serie.SeriesColor">@serie.DisplayName</h3>
-    <table class="cardTable">
+    <table class="cardTable TableOne">
         <tr>
             <td class="label">Name:</td>
             <td>
@@ -58,7 +58,7 @@
 
 
     </table>
-                    <div style="margin-top:2rem">
+                    <div id="bottom">
 
                         <div style="float:right; margin-right:0px">
                             <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
