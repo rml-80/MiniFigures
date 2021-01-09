@@ -6,133 +6,129 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-    <link href="/css/Serie.razor.css" rel="stylesheet" />
-
-    <h3>Add Serie</h3>
-    <div class="txtCenter">
-        <div class="addSeriesCard" style="border-color:@Color">
-            <div class="row">
-                <div class="label">
-                    <label for="Number">Number: </label>
-                </div>
-                <div>
-                    <input form="Number" @onchange="@checkNumber" />
-                </div>
+<h3>Add Serie</h3>
+<div class="txtCenter">
+    <div class="addSeriesCard" style="border-color:@Color">
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="Number">Number: </label>
             </div>
-            <div class="row">
-                <div class="label">
-                    <label for="Name">Name: </label>
-                </div>
-                <div>
-                    <input form="Name" @bind="@series.DisplayName" />
-                </div>
+            <div>
+                <input form="Number" @onchange="@checkNumber" />
             </div>
-            <div class="row">
-                <div class="label">
-                    <label for="NumberOfFiguers">Number of figures: </label>
-                </div>
-                <div>
-                    <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="label">
-                    <label for="SeriePicture">Path to picture: </label>
-                </div>
-                <div>
-                    <input form="SeriePicture" @bind="@series.SeriePicture" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="label">
-                    <label for="SeriesColor">Color code: </label>
-                </div>
-                <div>
-                    <input form="SeriesColor" @onchange="@ColorChange" />
-                </div>
-            </div>
-            <div class="btnRow">
-                <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-                <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
-            </div>
-
         </div>
-        <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="Name">Name: </label>
+            </div>
+            <div>
+                <input form="Name" @bind="@series.DisplayName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="NumberOfFiguers">Number of figures: </label>
+            </div>
+            <div>
+                <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="SeriePicture">Path to picture: </label>
+            </div>
+            <div>
+                <input form="SeriePicture" @bind="@series.SeriePicture" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="SeriesColor">Color code: </label>
+            </div>
+            <div>
+                <input form="SeriesColor" @onchange="@ColorChange" />
+            </div>
+        </div>
+        <div class="btnRow">
+            <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
+            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
+        </div>
     </div>
+    <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>
+</div>
 
-    @code {
-        protected MiniFigure miniFigure = new MiniFigure();
-        protected Series series = new Series();
-        protected List<Series> seriesList = new List<Series>();
+@code {
+    protected MiniFigure miniFigure = new MiniFigure();
+    protected Series series = new Series();
+    protected List<Series> seriesList = new List<Series>();
 
-        //string collectionName;
-        protected bool canSave { get; set; }
-        protected bool Existing { get; set; }
+    protected bool canSave { get; set; }
+    protected bool Existing { get; set; }
 
-        protected string Color { get; set; } = "lightgrey";
-        protected string currentNumber { get; set; }
-        protected string ShowWarningForNumber { get; set; } = "none";
+    protected string Color { get; set; } = "lightgrey";
+    protected string currentNumber { get; set; }
+    protected string ShowWarningForNumber { get; set; } = "none";
 
-        protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        seriesList = await SeriesService.GetSeries();
+    }
+    protected async Task AddSerie()
+    {
+        if (canSave)
         {
-            seriesList = await SeriesService.GetSeries();
-        }
-        protected async Task AddSerie()
-        {
-            if (canSave)
+            if (series.DisplayName == null)
             {
-                if (series.DisplayName == null)
-                {
-                    series.DisplayName = "Rename serie";
-                }
-                await SeriesService.AddSerie(series);
-                await SeriesService.CreateNewCollection(series.Name);
-                NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");
+                series.DisplayName = "Rename serie";
             }
-        }
-        protected void ColorChange(ChangeEventArgs args)
-        {
-            Color = (string)args.Value;
-            series.SeriesColor = Color;
-        }
-        protected void isExist(string number)
-        {
-            foreach (var s in seriesList)
-            {
-                if (number == s.Number)
-                {
-                    Existing = true;
-                    break;
-                }
-                else
-                {
-                    Existing = false;
-                }
-            }
-        }
-        protected void checkNumber(ChangeEventArgs args)
-        {
-            if (args != null)
-            {
-                currentNumber = (string)args.Value;
-                isExist(currentNumber);
-
-                if (Existing)
-                {
-                    ShowWarningForNumber = "inline";
-                    Existing = false;
-                }
-                else
-                {
-                    ShowWarningForNumber = "none";
-                    series.Number = (string)args.Value;
-                    currentNumber = null;
-                    canSave = true;
-                }
-            }
-        }
-        protected void cancel()
-        {
-            NavigationManager.NavigateTo("/");
+            await SeriesService.AddSerie(series);
+            await SeriesService.CreateNewCollection(series.Name);
+            NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");
         }
     }
+    protected void ColorChange(ChangeEventArgs args)
+    {
+        Color = (string)args.Value;
+        series.SeriesColor = Color;
+    }
+    protected void isExist(string number)
+    {
+        foreach (var s in seriesList)
+        {
+            if (number == s.Number)
+            {
+                Existing = true;
+                break;
+            }
+            else
+            {
+                Existing = false;
+            }
+        }
+    }
+    protected void checkNumber(ChangeEventArgs args)
+    {
+        if (args != null)
+        {
+            currentNumber = (string)args.Value;
+            isExist(currentNumber);
+
+            if (Existing)
+            {
+                ShowWarningForNumber = "inline";
+                Existing = false;
+            }
+            else
+            {
+                ShowWarningForNumber = "none";
+                series.Number = (string)args.Value;
+                currentNumber = null;
+                canSave = true;
+            }
+        }
+    }
+    protected void cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

@@ -1,42 +1,65 @@
 html, body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
-
 h3, h4 {
     text-align: center;
     font-weight: bold;
 }
-
 img {
     max-width: 100%;
     height: 57%;
 }
-
 input {
     box-shadow: none !important;
     outline: none !important;
 }
-
+p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+select {
+    width: 80%;
+    height: 2rem;
+    margin-top: 1.5rem;
+}
 table {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
-
 #bottom {
-    position: absolute;
+    /*position: absolute;*/
     bottom: 1rem;
     width: 97%;
 }
-
+.addCard {
+    text-align: center;
+    width: 16rem;
+    height: 26em;
+    border: solid 0.6rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+}
+.addSeriesCard {
+    width: 31rem;
+    height: 21rem;
+    border: solid 0.6rem;
+    border-radius: 10px;
+    margin: 1rem auto 1rem auto;
+    padding-top: 0.5rem;
+}
 .arrowPrevious {
     text-align: right;
 }
 .biggerText {
     font-size: 1.25rem;
 }
-
-.card {
+.btnRow {
+    margin-top: 1rem;
+    text-align:center;
+}
+.cardBig {
     text-align: center;
     width: 35rem;
     height: 55rem;
@@ -44,15 +67,9 @@ table {
     border-radius: 1rem;
     margin: 1rem auto;
     padding: 0.5rem;
-}
-.CardEdit{
-    text-align: center;
-    width: 30rem;
-    height: 21em;
-    border: solid 0.6rem;
-    border-radius: 1rem;
-    margin: 0.5rem;
-    padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:white;
 }
 .Card {
     text-align: center;
@@ -63,11 +80,18 @@ table {
     margin: 0.5rem;
     padding: 0.5rem 0.6rem 0.5rem 0.6rem;
 }
-
-/*.card-deck {
+.CardEdit{
+    text-align: center;
+    width: 30rem;
+    height: 21em;
+    border: solid 0.6rem;
+    border-radius: 1rem;
+    margin: 0.5rem;
+    padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+}
+.card-deck {
     justify-content: center;
-}*/
-
+}
 .cardTabel {
     width: 80%;
     margin-left: auto;
@@ -79,30 +103,35 @@ table {
 }
 .closeBtn {
     float: right;
+    margin-right: 5rem;
+    margin-top: 1rem;
 }
-
 .deleteBtn {
     color: red;
     font-size: 1rem;
 }
-
 .display {
     background-color: white;
     border: none;
     box-shadow: none !important;
     outline: none !important;
 }
-
 .editBtn {
     float: right;
     margin-right: 1rem;
 }
-
 .imgBig {
     max-width: 100%;
     height: 100%;
     margin-left: auto;
     margin-right: auto;
+}
+.imgSmall {
+    max-width: 100%;
+    height: 26rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2rem;
 }
 .indexImg{
     height:100%;
@@ -110,12 +139,10 @@ table {
 .infoBtn {
     float: right;
 }
-
 .infoRow {
     width: 12rem;
     text-align: right;
 }
-
 .infoBlock {
     border: solid 0.6rem;
     width: 98%;
@@ -123,7 +150,6 @@ table {
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
 }
-
 .label {
     text-align: right;
     width: 50%;
@@ -133,121 +159,78 @@ table {
     text-align:right;
     width:50%;
 }
-p {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-.TableOne {
-    font-size: 1.25rem;
-    height: 3rem;
-}
 .labelSmall {
     font-size: 1rem;
     text-align: right;
     width: 65%;
 }
-
 .marginBig {
     margin-top: 3rem;
     margin-bottom: 3rem;
 }
-
+.row {
+    margin-top: 1rem;
+}
 .SerieInfobutton {
     float: right;
     margin-right: 2rem;
 }
-.smallImage {
-    max-width: 100%;
-    height: 26rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:2rem;
+.TableOne {
+    font-size: 1.25rem;
+    height: 3rem;
+}
+.topMargin2 {
+    margin-top: 2rem;
 }
 .txtCenter {
     text-align: center;
 }
-
 .txtLeft {
     text-align: left;
 }
-
 .txtLeftBold {
     text-align: left;
     font-weight: bolder;
 }
-
 .txtRight {
     text-align: right;
 }
 
-.btnRow {
-    margin-top: 1rem;
-    text-align:center;
+/*css for flipcard*/
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+    background-color: transparent;
+    width: 37rem;
+    height: 58rem;
+    margin-left: auto;
+    margin-right: auto;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
-
-.label {
-    width: 40%;
-    text-align: right;
-}
-
-.addSeriesCard {
-    width: 31rem;
-    height: 21rem;
-    border: solid 0.6rem;
-    border-radius: 10px;
-    margin: 1rem auto 1rem auto;
-    padding-top: 0.5rem;
-}
-
-.row {
-    margin-top: 1rem;
-}
-select {
-    width: 80%;
-    height: 2rem;
-    margin-top: 1.5rem;
-}
-
-table {
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: absolute;
     width: 100%;
-}
-
-.addCard {
+    height: 100%;
     text-align: center;
-    width: 16rem;
-    height: 26em;
-    border: solid 0.6rem;
-    border-radius: 1rem;
-    margin: 1rem;
-    padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
 }
-
-.card-deck {
-    justify-content: center;
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
 }
-
-.marginBig {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*-webkit-backface-visibility: hidden;*/ /* Safari */
+    backface-visibility: hidden;
 }
-
-.topMargin2 {
-    margin-top: 2rem;
+/* Style the back side */
+.flip-card-back {
+    transform: rotateY(180deg);
 }
-
-
-/*td {
-    width: 33%;
-}*/
-/*tr {
-    font-size: 1.25rem;
-    height:3rem;
-}*/
-
-
-
-
-
 
 
 

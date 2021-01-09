@@ -1,4 +1,5 @@
 ﻿//TODO
 
 Render ShowOne after save in edit
-modal on cardframe? Add new serie?
+modal Add new serie? add figure?
+Figures to add not updating when changing series

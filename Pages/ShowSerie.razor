@@ -5,8 +5,6 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<link href="/css/Serie.razor.css" rel="stylesheet"/>
-
 @if (ListOfMF == null)
 {
     <h2>Loading.......</h2>
@@ -33,7 +31,7 @@ else
         @foreach (var figure in ListOfMF)
         {
             <div class="Card" style="border-color:@series.SeriesColor">
-                <div style="height:22rem" @onclick="(() => ShowOne(figure.Number))">
+                <div style="height:22rem" @onclick="(() => ShowCard(figure.Number))">
                     <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
                     <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
                     <table>
@@ -70,13 +68,14 @@ else
         }
             @if (showCard)
             {
-                <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.2);" aria-modal="true" role="dialog">
-                    <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
-                        <div class="modal-content" style="background-color:transparent; border:none">
-                            <CardFrameFlip serieToShow="@serieToShow" number="@no" />
-                        </div>
-                    </div>
-                </div>
+    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
+        <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
+        <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+            <div class="modal-content" style="background-color:transparent; border:none">
+                <CardFrameFlip serieToShow="@serieToShow" number="@no" />
+            </div>
+        </div>
+    </div>
             }
     </div>
 }
@@ -92,8 +91,6 @@ else
     bool showCard = false;
     protected int owned { get; set; }
     protected int no { get; set; }
-    //protected string OnDisplayIcon { get; set; }
-    //protected string OnDisplayIconColor { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -105,16 +102,24 @@ else
         series = await SeriesService.GetOneSerie(serieToShow);
         Owned();
     }
-
+    protected override void OnAfterRender(bool firstRender)
+    {
+        SendCollectionName(serieToShow);
+        StateHasChanged();
+    }
     private void SendCollectionName(string collectionName)
     {
         ListOfMF = MiniFigureService.GetMiniFigures(collectionName);
     }
-    private void ShowOne(int number)
+    private void ShowCard(int number)
     {
-        //NavigationManager.NavigateTo($"/{serieToShow}/{number}");
         no = number;
         showCard = true;
+    }
+    public void HideCard()
+    {
+        showCard = false;
+        //NavigationManager.NavigateTo($"{serieToShow}",true );
     }
     private async Task IncrementListOfMF(int number)
     {
@@ -147,20 +152,6 @@ else
             }
         }
     }
-    //private string changeTrueFalseIcon(bool test)
-    //{
-    //    if (test)
-    //    {
-    //        OnDisplayIcon = "fas fa-check";
-    //        OnDisplayIconColor = "color:green";
-    //    }
-    //    else
-    //    {
-    //        OnDisplayIcon = "fas fa-times";
-    //        OnDisplayIconColor = "color:red";
-    //    }
-    //    return OnDisplayIcon;
-    //}
     private void ToEdit()
     {
         NavigationManager.NavigateTo($"/{serieToShow}/edit");

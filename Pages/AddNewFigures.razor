@@ -8,135 +8,133 @@
 @inject NavigationManager NavigationManager
 
 
-    <link href="/css/Serie.razor.css" rel="stylesheet" />
+<link href="/css/Serie.razor.css" rel="stylesheet" />
 
-
-    @if (ListOfMF.Count == series.NumberOfFigures)
-    {
-        <Header serie="series" amountOfFigures="ListOfMF.Count" />
-        <h3>No more figures to add</h3>
-        <div class="txtCenter">
-            <input type="button" value="OK" @onclick="cancel" />
-        </div>
-
-    }
-    else
-    {
-        <Header serie="series" amountOfFigures="ListOfMF.Count" />
-        <h3>Add Figure</h3>
-        <div class="card-deck">
-            <div class="addCard" style="border-color:@Color">
-                <div class="topMargin2">Figures To add: @(series.NumberOfFigures - ListOfMF.Count) </div>
-                <select @onchange="@SerieClicked">
-                    <option value="@serie">@series.DisplayName</option>
-                    @foreach (var serie in SeriesList)
-                    {
-                        <option value="@serie.Name">@serie.DisplayName</option>
-                    }
-                </select>
-                <label for="Number">Number: </label>
-                <input tabindex="1" form="Number" class="txtCenter" @onchange="checkNumber" />
-                <label for="Name">Name: </label>
-                <input tabindex="2" form="Name" class="txtCenter" @bind="@OneMF.Name" />
-                <div class="marginBig">
-                    <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
-                    <input class="btn btn-outline-success" tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
-                </div>
+@if (ListOfMF.Count == series.NumberOfFigures)
+{
+    <Header serie="series" amountOfFigures="ListOfMF.Count" />
+    <h3>No more figures to add</h3>
+    <div class="txtCenter">
+        <input type="button" value="OK" @onclick="cancel" />
+    </div>
+}
+else
+{
+    <Header serie="series" amountOfFigures="ListOfMF.Count" />
+    <h3>Add Figure</h3>
+    <div class="card-deck">
+        <div class="addCard" style="border-color:@Color">
+            <div class="topMargin2">Figures To add: @(series.NumberOfFigures - ListOfMF.Count) </div>
+            <select @onchange="@SerieClicked">
+                <option value="@serie">@series.DisplayName</option>
+                @foreach (var serie in SeriesList)
+                {
+                    <option value="@serie.Name">@serie.DisplayName</option>
+                }
+            </select>
+            <label for="Number">Number: </label>
+            <input tabindex="1" form="Number" class="txtCenter" @onchange="checkNumber" />
+            <label for="Name">Name: </label>
+            <input tabindex="2" form="Name" class="txtCenter" @bind="@OneMF.Name" />
+            <div class="marginBig">
+                <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
+                <input class="btn btn-outline-success" tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
             </div>
         </div>
-        <div style="display:@ShowWarningForNumber; color:red">
-            <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
-        </div>
+    </div>
+    <div style="display:@ShowWarningForNumber; color:red">
+        <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
+    </div>
+}
+@code {
+    [Parameter]
+    public string serie { get; set; }
+
+    protected MiniFigure OneMF = new MiniFigure();
+    protected Series series = new Series();
+
+    protected List<Series> SeriesList = new List<Series>();
+    protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
+
+    protected bool canSave { get; set; }
+    protected bool Existing { get; set; }
+
+    protected int? currentNumber { get; set; }
+
+    protected string Color { get; set; } = "lightgrey";
+    protected string FigureNumber { get; set; }
+    protected string ShowWarningForNumber { get; set; } = "none";
+
+    protected override async Task OnInitializedAsync()
+    {
+        series = await SeriesService.GetOneSerie(serie);
+        Color = series.SeriesColor;
+        SeriesList = await SeriesService.GetSeries();
+        ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }
-    @code {
-        [Parameter]
-        public string serie { get; set; }
-
-        protected MiniFigure OneMF = new MiniFigure();
-        protected Series series = new Series();
-        protected List<Series> SeriesList = new List<Series>();
-        protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
-
-        protected bool canSave { get; set; }
-        protected bool Existing { get; set; }
-
-        protected string Color { get; set; } = "lightgrey";
-        protected string FigureNumber { get; set; }
-        protected string ShowWarningForNumber { get; set; } = "none";
-        protected int? currentNumber { get; set; }
-
-
-        protected override async Task OnInitializedAsync()
+    protected async Task AddNewFigure()
+    {
+        if (canSave)
         {
-            series = await SeriesService.GetOneSerie(serie);
-            Color = series.SeriesColor;
-            SeriesList = await SeriesService.GetSeries();
-            ListOfMF = MiniFigureService.GetMiniFigures(serie);
-        }
-        protected async Task AddNewFigure()
-        {
-            if (canSave)
+            FigureNumber = OneMF.Number.ToString();
+            if (FigureNumber.Length > 1)
             {
-                FigureNumber = OneMF.Number.ToString();
-                if (FigureNumber.Length > 1)
-                {
-                    OneMF.Image = $"{series.Number}-{FigureNumber}.jpg";
-                }
-                else
-                {
-                    OneMF.Image = $"{series.Number}-0{FigureNumber}.jpg";
-                }
-                OneMF.CountOpened = 0;
-                OneMF.CountSealed = 0;
-                OneMF.Displayed = false;
-
-                await MiniFigureService.AddFigure(OneMF, serie);
-                //NavigationManager.NavigateTo($"/{collectionName}", true);
-                NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
+                OneMF.Image = $"{series.Number}-{FigureNumber}.jpg";
             }
-        }
-        protected void SerieClicked(ChangeEventArgs args)
-        {
-            serie = (string)args.Value;
-        }
-        protected void isExist(int? number)
-        {
-            foreach (var figure in ListOfMF)
+            else
             {
-                if (number == figure.Number)
-                {
-                    Existing = true;
-                    break;
-                }
-                else
-                {
-                    Existing = false;
-                }
+                OneMF.Image = $"{series.Number}-0{FigureNumber}.jpg";
             }
-        }
-        protected void checkNumber(ChangeEventArgs args)
-        {
-            if (args != null)
-            {
-                currentNumber = Convert.ToInt32(args.Value);
-                isExist(currentNumber);
+            OneMF.CountOpened = 0;
+            OneMF.CountSealed = 0;
+            OneMF.Displayed = false;
 
-                if (Existing || currentNumber == 0)
-                {
-                    ShowWarningForNumber = "inline";
-                    Existing = false;
-                }
-                else
-                {
-                    ShowWarningForNumber = "none";
-                    OneMF.Number = Convert.ToInt32(args.Value);
-                    currentNumber = null;
-                    canSave = true;
-                }
-            }
-        }
-        protected void cancel()
-        {
-            NavigationManager.NavigateTo($"/{serie}");
+            await MiniFigureService.AddFigure(OneMF, serie);
+            NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
         }
     }
+    protected void SerieClicked(ChangeEventArgs args)
+    {
+        serie = (string)args.Value;
+    }
+    protected void isExist(int? number)
+    {
+        foreach (var figure in ListOfMF)
+        {
+            if (number == figure.Number)
+            {
+                Existing = true;
+                break;
+            }
+            else
+            {
+                Existing = false;
+            }
+        }
+    }
+    protected void checkNumber(ChangeEventArgs args)
+    {
+        if (args != null)
+        {
+            currentNumber = Convert.ToInt32(args.Value);
+            isExist(currentNumber);
+
+            if (Existing || currentNumber == 0)
+            {
+                ShowWarningForNumber = "inline";
+                Existing = false;
+            }
+            else
+            {
+                ShowWarningForNumber = "none";
+                OneMF.Number = Convert.ToInt32(args.Value);
+                currentNumber = null;
+                canSave = true;
+            }
+        }
+    }
+    protected void cancel()
+    {
+        NavigationManager.NavigateTo($"/{serie}");
+    }
+}

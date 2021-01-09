@@ -4,9 +4,10 @@
 @inject ISeriesService SeriesService
 
 @inject NavigationManager NavigationManager
-    <link href="/css/Header.razor.css" rel="stylesheet" />
 
-    <style>
+<link href="/css/Header.razor.css" rel="stylesheet" />
+
+<style>
     .btn.btn-outline-info{
         color:@serie.SeriesColor;
         border-color:@serie.SeriesColor;
@@ -21,72 +22,70 @@
             box-shadow: none !important;
             outline: none !important;
         }
+</style>
+<div class="headerCenter" style="background-color:@serie.SeriesColor">
+    <h2>
+        @serie.DisplayName
+        <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
+    </h2>
+</div>
+<div class="infoBlock" style="display:@HideShow;border-color:@serie.SeriesColor">
+    <table class="biggerText">
+        <tr>
+            <td class="infoRow">Number:</td>
+            <td class="infoRow txtCenter">@serie.Number</td>
+            <td class="txtRight"><input class="btn btn-outline-info" type="button" @onclick="ToEdit" value="Edit" /></td>
+        </tr>
+        <tr>
+            <td class="infoRow">Number of figures:</td>
+            <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
+            <td class="txtRight">
+                @if (amountOfFigures != serie.NumberOfFigures)
+                {
+                    <p>@amountOfFigures of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="infoRow">Series color:</td>
+            <td class="infoRow txtCenter">@serie.SeriesColor</td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 
-    </style>
-    <div class="headerCenter" style="background-color:@serie.SeriesColor">
-        <h2>
-            @serie.DisplayName
-            <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
-        </h2>
-    </div>
-    <div class="infoBlock" style="display:@HideShow;border-color:@serie.SeriesColor">
+@code {
+    [Parameter]
+    public Series serie { get; set; }
+    [Parameter]
+    public int amountOfFigures { get; set; }
 
-        <table class="biggerText">
-            <tr>
-                <td class="infoRow">Number:</td>
-                <td class="infoRow txtCenter">@serie.Number</td>
-                <td class="txtRight"><input class="btn btn-outline-info" type="button" @onclick="ToEdit" value="Edit" /></td>
-            </tr>
-            <tr>
-                <td class="infoRow">Number of figures:</td>
-                <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
-                <td class="txtRight">
-                    @if (amountOfFigures != serie.NumberOfFigures)
-                    {
-                        <p>@amountOfFigures of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
-                    }
-                </td>
-            </tr>
-            <tr>
-                <td class="infoRow">Series color:</td>
-                <td class="infoRow txtCenter">@serie.SeriesColor</td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
+    public string HideShow { get; set; } = "none";
+    public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
-    @code {
-        [Parameter]
-        public Series serie { get; set; }
-        [Parameter]
-        public int amountOfFigures { get; set; }
-
-        public string HideShow { get; set; } = "none";
-        public string InfoIcon { get; set; } = "fas fa-chevron-down";
-
-        protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
+    {
+        HideShow = "none";
+    }
+    void ToEdit()
+    {
+        NavigationManager.NavigateTo($"/{serie.Name}/edit");
+    }
+    void ToAdd()
+    {
+        NavigationManager.NavigateTo($"/addnew/figures/{serie.Name}");
+    }
+    void ToggleInfo()
+    {
+        if (HideShow == "none")
+        {
+            HideShow = "block";
+            InfoIcon = "fas fa-chevron-up";
+        }
+        else
         {
             HideShow = "none";
-        }
-        void ToEdit()
-        {
-            NavigationManager.NavigateTo($"/{serie.Name}/edit");
-        }
-        void ToAdd()
-        {
-            NavigationManager.NavigateTo($"/addnew/figures/{serie.Name}");
-        }
-        void ToggleInfo()
-        {
-            if (HideShow == "none")
-            {
-                HideShow = "block";
-                InfoIcon = "fas fa-chevron-up";
-            }
-            else
-            {
-                HideShow = "none";
-                InfoIcon = "fas fa-chevron-down";
-            }
+            InfoIcon = "fas fa-chevron-down";
         }
     }
+}

@@ -4,9 +4,9 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
-<link href="/css/Serie.razor.css" rel="stylesheet"/>
+<link href="/css/Serie.razor.css" rel="stylesheet" />
 
-<div class="card" style="border-color:@serie.SeriesColor">
+<div class="cardBig" style="border-color:@serie.SeriesColor;margin-left:auto;margin-right:auto">
     <h3 style="color:@serie.SeriesColor">@serie.DisplayName</h3>
     <table class="cardTable TableOne">
         <tr>
@@ -51,24 +51,18 @@
         </tr>
         <tr>
             <td colspan="2">
-                <img  class="smallImage" src="/images/@serie.Name/@OneFigure.Image" alt="Picture of @OneFigure.Name" />
+                <img class="imgSmall" src="/images/@serie.Name/@OneFigure.Image" alt="Picture of @OneFigure.Name" />
 
             </td>
         </tr>
-
-
     </table>
-                    <div id="bottom">
-
-                        <div style="float:right; margin-right:0px">
-                            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
-                            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
-                            @*<input class="btn btn-outline-dark" type="button" @onclick="goBack" value="Cancel" />*@
-                            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)" />
-                        </div>
-                    </div>
-
-
+    <div id="bottom">
+        <div style="float:right; margin-right:0px">
+            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
+            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
+            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)"/>
+        </div>
+    </div>
     @if (showDelete)
     {
         <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
@@ -92,9 +86,9 @@
         </div>
     }
 </div>
-    <div style="display:@ShowWarningForNumber;margin-top:10rem ; color:red">
-        Minifigure with Number: @currentNumber <br />already exists!
-    </div>
+<div style="display:@ShowWarningForNumber;margin-top:10rem ; color:red">
+    Minifigure with Number: @currentNumber <br />already exists!
+</div>
 
 @code {
     [Parameter]
@@ -106,17 +100,13 @@
     [Parameter]
     public Series serie { get; set; }
 
+    protected bool canSave { get; set; }
+    protected bool Existing { get; set; }
     public bool showDelete { get; set; } = false;
 
-
     List<MiniFigure> ListOfMF = new List<MiniFigure>();
-    protected bool canSave { get; set; }
-
-    protected bool Existing { get; set; }
 
     protected int? currentNumber { get; set; }
-    public void DeleteShow() => showDelete = true;
-    public void DeleteCancel() => showDelete = false;
 
     protected string isFalse { get; set; }
     protected string isTrue { get; set; }
@@ -127,7 +117,9 @@
         trueOrFalse();
         ListOfMF = MiniFigureService.GetMiniFigures(serie.Name);
     }
-    ////calculations
+    public void DeleteShow() => showDelete = true;
+    public void DeleteCancel() => showDelete = false;
+    //calculations
     private void IncrementOpen()
     {
         OneFigure.CountOpened++;
@@ -165,8 +157,7 @@
     private async Task Save(int number)
     {
         await MiniFigureService.EditFigure(OneFigure.ID, OneFigure, serie.Name);
-        //goBack();
-        ShouldRender();
+
     }
     void goBack()
     {
@@ -222,7 +213,6 @@
             isTrue = "color: grey";
             isFalse = "color:red";
         }
-
     }
     void changeTrueFalse()
     {
