@@ -7,7 +7,7 @@
 @inject NavigationManager NavigationManager
 @*<link href="/css/Serie.razor.css" rel="stylesheet"/>*@
 
-<Header serie="serie" amountOfFigures="ListOfMF.Count" />
+@*<Header serie="serie" amountOfFigures="ListOfMF.Count" />*@
 <h3>Edit Serie</h3>
 <div>
     <div>
@@ -120,7 +120,7 @@
     }
     void cancel()
     {
-        NavigationManager.NavigateTo($"/{serieToShow}");
+        NavigationManager.NavigateTo($"/{serieToShow}",true);
     }
     public void DeleteShow() => showDelete = true;
     public void DeleteCancel() => showDelete = false;

@@ -53,6 +53,28 @@
         </tr>
     </table>
 </div>
+@if (showEdit)
+{
+    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
+        <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
+        <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+            <div class="modal-content" style="background-color:transparent; border:none">
+                <EditSerie serieToShow="@serie.Name" />
+            </div>
+        </div>
+    </div>
+}
+@if (showAdd)
+{
+    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
+        <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
+        <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+            <div class="modal-content" style="background-color:transparent; border:none">
+                <AddNewFigures serie="@serie.Name" />
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     [Parameter]
@@ -63,17 +85,23 @@
     public string HideShow { get; set; } = "none";
     public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
-    protected override async Task OnParametersSetAsync()
-    {
-        HideShow = "none";
-    }
+    bool showAdd { get; set; }
+    bool showEdit { get; set; }
+
     void ToEdit()
     {
-        NavigationManager.NavigateTo($"/{serie.Name}/edit");
+        showEdit = true;
+        //NavigationManager.NavigateTo($"/{serie.Name}/edit");
     }
     void ToAdd()
     {
-        NavigationManager.NavigateTo($"/addnew/figures/{serie.Name}");
+        showAdd = true;
+        //NavigationManager.NavigateTo($"/addnew/figures/{serie.Name}");
+    }
+    void close()
+    {
+        showAdd = false;
+        showEdit = false;
     }
     void ToggleInfo()
     {

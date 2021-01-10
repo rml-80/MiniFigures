@@ -9,21 +9,19 @@
 
 
 <link href="/css/Serie.razor.css" rel="stylesheet" />
+<h3>Add Figure</h3>
+<div class="card-deck">
+    <div class="addCard" style="border-color:@Color">
 
-@if (ListOfMF.Count == series.NumberOfFigures)
-{
-    <Header serie="series" amountOfFigures="ListOfMF.Count" />
-    <h3>No more figures to add</h3>
-    <div class="txtCenter">
-        <input type="button" value="OK" @onclick="cancel" />
-    </div>
-}
-else
-{
-    <Header serie="series" amountOfFigures="ListOfMF.Count" />
-    <h3>Add Figure</h3>
-    <div class="card-deck">
-        <div class="addCard" style="border-color:@Color">
+        @if (ListOfMF.Count == series.NumberOfFigures)
+        {
+            <h4 style="margin-top:8rem">No more<br /> figures to add</h4>
+            <div class="txtCenter">
+                <input type="button" value="OK" @onclick="cancel" />
+            </div>
+        }
+        else
+        {
             <div class="topMargin2">Figures To add: @(series.NumberOfFigures - ListOfMF.Count) </div>
             <select @onchange="@SerieClicked">
                 <option value="@serie">@series.DisplayName</option>
@@ -40,12 +38,12 @@ else
                 <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
                 <input class="btn btn-outline-success" tabindex="3" type="button" @onclick="@AddNewFigure" value="Save" />
             </div>
-        </div>
+        }
     </div>
-    <div style="display:@ShowWarningForNumber; color:red">
-        <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
-    </div>
-}
+</div>
+<div style="display:@ShowWarningForNumber; color:red">
+    <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
+</div>
 @code {
     [Parameter]
     public string serie { get; set; }
@@ -72,6 +70,16 @@ else
         SeriesList = await SeriesService.GetSeries();
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        series = await SeriesService.GetOneSerie(serie);
+        //Color = series.SeriesColor;
+        //SeriesList = await SeriesService.GetSeries();
+        ListOfMF = MiniFigureService.GetMiniFigures(serie);
+
+        StateHasChanged();
+    }
+
     protected async Task AddNewFigure()
     {
         if (canSave)
@@ -90,7 +98,12 @@ else
             OneMF.Displayed = false;
 
             await MiniFigureService.AddFigure(OneMF, serie);
-            NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
+            if (ListOfMF.Count != series.NumberOfFigures)
+            {
+                NavigationManager.NavigateTo($"/{serie}", true);
+            }
+
+
         }
     }
     protected void SerieClicked(ChangeEventArgs args)
@@ -135,6 +148,6 @@ else
     }
     protected void cancel()
     {
-        NavigationManager.NavigateTo($"/{serie}");
+        NavigationManager.NavigateTo($"/{serie}", true);
     }
 }

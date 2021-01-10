@@ -66,17 +66,17 @@ else
                 <a class="fas fa-plus-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => IncrementListOfMF(figure.Number))" />
             </div>
         }
-            @if (showCard)
-            {
-    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
-        <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
-        <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
-            <div class="modal-content" style="background-color:transparent; border:none">
-                <CardFrameFlip serieToShow="@serieToShow" number="@no" />
+        @if (showCard)
+        {
+            <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
+                <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
+                <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+                    <div class="modal-content" style="background-color:transparent; border:none">
+                        <CardFrameFlip serieToShow="@serieToShow" number="@no" />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-            }
+        }
     </div>
 }
 @code {
@@ -105,6 +105,8 @@ else
     protected override void OnAfterRender(bool firstRender)
     {
         SendCollectionName(serieToShow);
+        Owned();
+
         StateHasChanged();
     }
     private void SendCollectionName(string collectionName)
@@ -126,13 +128,18 @@ else
         OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
         if (OneMF.CountSealed == 0 && OneMF.CountOpened == 0 || OneMF.Displayed == true)
         {
+            if (OneMF.CountSealed == 1 && OneMF.CountOpened != 1)
+            {
+                owned++;
+
+            }
             OneMF.CountSealed++;
-            owned++;
         }
         else if (OneMF.CountSealed == 1 && OneMF.CountOpened == 0)
         {
             OneMF.CountSealed = 0;
             OneMF.CountOpened++;
+
         }
         else if (OneMF.CountOpened == 1)
         {

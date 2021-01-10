@@ -145,7 +145,7 @@
     void deleteFigure(string id)
     {
         MiniFigureService.DeleteFigure(id);
-        NavigationManager.NavigateTo($"/{serie.Name}");
+        NavigationManager.NavigateTo($"/{serie.Name}",true);
     }
     private void resetfigure()
     {
