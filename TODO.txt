@@ -2,3 +2,4 @@
 
 Add reset whole series
 Sort by date, need to add release date to series
+Image "placeholders" of same size, if img dosen't exist
