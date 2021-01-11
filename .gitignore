@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # ignore images folder
-wwwroot/images
+/wwwroot/images
