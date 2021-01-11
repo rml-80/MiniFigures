@@ -341,3 +341,4 @@ healthchecksdb
 
 # ignore images folder
 /wwwroot/images
+/MongoData
