@@ -1,4 +1,4 @@
 ﻿//TODO
 
-
 Add reset whole series
+Sort by date, need to add release date to series
