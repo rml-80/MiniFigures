@@ -14,6 +14,22 @@
         <div class="CardEdit Center" style="border-color:@serie.SeriesColor">
             <div class="row">
                 <div class="labelEditSerie">
+                    <label for="SeriesColor">Color code: </label>
+                </div>
+                <div>
+                    <input form="SeriesColor" placeholder="@serie.SeriesColor" @onchange="@ColorChange" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="labelEditSerie">
+                    <label for="ReleaseDate">Release Date: </label>
+                </div>
+                <div>
+                    <input form="ReleaseDate" @bind="@serie.ReleaseDate" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="labelEditSerie">
                     <label for="Number">Number: </label>
                 </div>
                 <div>
@@ -42,14 +58,6 @@
                 </div>
                 <div>
                     <input form="SeriePicture" @bind="@serie.SeriePicture" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="SeriesColor">Color code: </label>
-                </div>
-                <div>
-                    <input form="SeriesColor" placeholder="@serie.SeriesColor" @onchange="@ColorChange" />
                 </div>
             </div>
             <div class="btnRow">

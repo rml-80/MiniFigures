@@ -11,6 +11,22 @@
     <div class="addSeriesCard" style="border-color:@Color">
         <div class="row">
             <div class="labelEditSerie">
+                <label for="SeriesColor">Color code: </label>
+            </div>
+            <div>
+                <input form="SeriesColor" @onchange="@ColorChange" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="labelEditSerie">
+                <label for="ReleaseDate">Release Date: </label>
+            </div>
+            <div>
+                <input form="ReleaseDate" @bind="@series.ReleaseDate" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="labelEditSerie">
                 <label for="Number">Number: </label>
             </div>
             <div>
@@ -39,14 +55,6 @@
             </div>
             <div>
                 <input form="SeriePicture" @bind="@series.SeriePicture" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="SeriesColor">Color code: </label>
-            </div>
-            <div>
-                <input form="SeriesColor" @onchange="@ColorChange" />
             </div>
         </div>
         <div class="btnRow">

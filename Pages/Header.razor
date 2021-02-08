@@ -34,9 +34,13 @@
         <tr>
             <td class="infoRow">Number:</td>
             <td class="infoRow txtCenter">@serie.Number</td>
+            <td class="infoRow">Release date:</td>
+            <td class="infoRow txtCenter">@serie.ReleaseDate</td>
             <td class="txtRight"><input class="btn btn-outline-info" type="button" @onclick="ToEdit" value="Edit" /></td>
         </tr>
         <tr>
+            <td class="infoRow">Series color:</td>
+            <td class="infoRow txtCenter">@serie.SeriesColor</td>
             <td class="infoRow">Number of figures:</td>
             <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
             <td class="txtRight">
@@ -46,11 +50,7 @@
                 }
             </td>
         </tr>
-        <tr>
-            <td class="infoRow">Series color:</td>
-            <td class="infoRow txtCenter">@serie.SeriesColor</td>
-            <td></td>
-        </tr>
+
     </table>
 </div>
 @if (showEdit)
