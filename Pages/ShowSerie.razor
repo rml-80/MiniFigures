@@ -4,7 +4,7 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-
+<link href="/css/Serie.css" rel="stylesheet" />
 @if (ListOfMF == null)
 {
     <h2>Loading.......</h2>
@@ -70,7 +70,7 @@ else
         {
             <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
                 <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
-                <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
+                <div class="modal-dialog" @onclick:stopPropagation="true">
                     <div class="modal-content" style="background-color:transparent; border:none">
                         <CardFrameFlip serieToShow="@serieToShow" number="@no" />
                     </div>

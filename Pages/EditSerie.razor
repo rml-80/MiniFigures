@@ -5,7 +5,7 @@
 @inject ISeriesService SeriesService
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
-@*<link href="/css/Serie.razor.css" rel="stylesheet"/>*@
+<link href="/css/Serie.css" rel="stylesheet"/>
 
 @*<Header serie="serie" amountOfFigures="ListOfMF.Count" />*@
 <h3>Edit Serie</h3>
@@ -53,6 +53,7 @@
                 </div>
             </div>
             <div class="btnRow">
+                <input class="btn btn-outline-warning" type="button" @onclick="ResetAllFigures" value="Reset Figures" />
                 <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete" />
                 <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
                 <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(serie)" value="Save" />
@@ -124,4 +125,15 @@
     }
     public void DeleteShow() => showDelete = true;
     public void DeleteCancel() => showDelete = false;
+    void ResetAllFigures()
+    {
+        foreach (var item in ListOfMF)
+        {
+            item.Displayed = false;
+            item.CountSealed = 0;
+            item.CountOpened = 0;
+            MiniFigureService.EditFigure(item.ID, item, serieToShow);
+        }
+        NavigationManager.NavigateTo($"/{serieToShow}", true);
+    }
 }

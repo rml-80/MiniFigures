@@ -4,7 +4,7 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
-<link href="/css/Serie.razor.css" rel="stylesheet" />
+<link href="/css/Serie.css" rel="stylesheet" />
 
 <div class="cardBig" style="border-color:@serie.SeriesColor;margin-left:auto;margin-right:auto">
     <h3 style="color:@serie.SeriesColor">@serie.DisplayName</h3>
@@ -147,7 +147,7 @@
         MiniFigureService.DeleteFigure(id);
         NavigationManager.NavigateTo($"/{serie.Name}",true);
     }
-    private void resetfigure()
+    public void resetfigure()
     {
         OneFigure.Displayed = false;
         OneFigure.CountOpened = 0;
@@ -157,7 +157,6 @@
     private async Task Save(int number)
     {
         await MiniFigureService.EditFigure(OneFigure.ID, OneFigure, serie.Name);
-
     }
     void goBack()
     {

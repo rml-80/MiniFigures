@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css\Header.razor.css" />
-    <Content Remove="wwwroot\css\Index.razor.css" />
-    <Content Remove="wwwroot\css\Serie.razor.css" />
+    <Content Remove="wwwroot\css\Header.css" />
+    <Content Remove="wwwroot\css\Index.css" />
+    <Content Remove="wwwroot\css\Serie.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\Header.razor.css" />
-    <None Include="wwwroot\css\Index.razor.css" />
-    <None Include="wwwroot\css\Serie.razor.css" />
+    <None Include="wwwroot\css\Header.css" />
+    <None Include="wwwroot\css\Index.css" />
+    <None Include="wwwroot\css\Serie.css" />
   </ItemGroup>
 
   <ItemGroup>

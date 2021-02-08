@@ -4,7 +4,7 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 
-<link href="/css/Serie.razor.css" rel="stylesheet"/>
+<link href="/css/Serie.css" rel="stylesheet"/>
 @if (serie == null)
 {
     <h2>Loading......</h2>
@@ -13,7 +13,7 @@ else
 {
     <div class="cardBig" style="border-color:@serie.SeriesColor">
         <div class="txtLeft" style="color:@serie.SeriesColor">@serie.DisplayName</div>
-        <div style="height:30rem"><img class="imgBig" src="/images/@serie.Name/@OneMF.Image" alt="Picture of @OneMF.Name" /></div>
+        <div><img class="imgBig" src="/images/@serie.Name/@OneMF.Image" alt="Picture of @OneMF.Name" /></div>
         <p>@OneMF.Name</p>
         <table class="cardTabel">
             <tr class="TableOne">
