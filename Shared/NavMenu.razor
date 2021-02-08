@@ -4,10 +4,49 @@
 @inject ISeriesService SeriesService
 
 @inject NavigationManager NavigationManager
+<style>
+    .dropbtn {
+        background-color: white;
+        /*color: white;*/
+        /*padding: 16px;*/
+        /*font-size: 16px;*/
+        border: none;
+    }
 
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 100px;
+        /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+        z-index: 1;
+    }
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            /*padding: 12px 16px;*/
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                /*background-color: #ddd;*/
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
 
 <div class="top-row pl-4 navbar navbar-dark" style="margin-bottom: 1rem;margin-top:1rem">
-    <a href="" style="font-size:2rem;color:black;text-decoration:none" >MiniFigures</a>
+    <a href="" style="font-size:2rem;color:black;text-decoration:none">MiniFigures</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,10 +54,22 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
+
+        <li>
+            Order By:
+            <div class="dropdown">
+                <button class="dropbtn">@orderBy</button>
+                <div class="dropdown-content">
+                    <a href="" @onclick="() => OrderBy(1)">A-Z</a>
+                    <a href="" @onclick="() => OrderBy(2)">Z-A</a>
+                    <a href="">Relese date</a>
+                </div>
+            </div>
+        </li>
         @foreach (var serie in series)
         {
             <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
-                <NavLink class="nav-link" href="@serie.Name" >
+                <NavLink class="nav-link" href="@serie.Name">
                     <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie.DisplayName
                 </NavLink>
             </li>
@@ -36,6 +87,7 @@
     private bool collapseNavMenu = true;
     private string serieToShow;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string orderBy { get; set; } = "A-Z";
 
     private void ToggleNavMenu()
     {
@@ -45,11 +97,33 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //await Task.Delay(1000);
         await GetList();
     }
     protected async Task<List<Series>> GetList()
     {
         series = await SeriesService.GetSeries();
         return series;
+    }
+    protected void OrderBy(int order)
+    {
+
+        switch (order)
+        {
+            case 1:
+                orderBy = "A-Z";
+                series = series.OrderBy(n => n.Name).ToList();
+                break;
+            case 2:
+                series = series.OrderByDescending(n => n.Name).ToList();
+                orderBy = "Z-A";
+                break;
+            //case 3:
+            //    series = series.OrderBy(n => n.ReleseDate).ToList();
+            //    break;
+
+            default:
+                break;
+        }
     }
 }
