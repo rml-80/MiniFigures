@@ -6,6 +6,7 @@ h3, h4 {
     font-weight: bold;
 }
 img {
+    display: block;
     max-width: 100%;
     height: 57%;
 }
@@ -123,17 +124,19 @@ table {
     margin-right: 1rem;
 }
 .imgBig {
+    display:block;
     max-width: 100%;
-    height: 100%;
+    height: 30rem;
     margin-left: auto;
     margin-right: auto;
 }
 .imgSmall {
+    display: block;
     max-width: 100%;
     height: 26rem;
     margin-left: auto;
     margin-right: auto;
-    margin-top:2rem;
+    margin-top: 2rem;
 }
 .indexImg{
     height:100%;
