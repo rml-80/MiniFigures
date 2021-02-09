@@ -19,5 +19,6 @@ namespace MiniFigures.Models
         public string SeriePicture { get; set; }
         public string DisplayName { get; set; }
         public string ReleaseDate { get; set; }
+        public bool isComplete { get; set; }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using MiniFigures.Models;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 namespace MiniFigures.Data
 {
     public class SeriesService : ISeriesService
@@ -18,7 +15,6 @@ namespace MiniFigures.Data
             _database = _client.GetDatabase(settings.DatabaseName);
             _series = _database.GetCollection<Series>(settings.CollectionName);
         }
-
         public async Task<bool> CreateNewCollection(string name)
         {
             try
@@ -43,7 +39,6 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-
         public async Task<bool> DeleteCollection(string name)   //using name for deleting both collection in db and info in SeriesData
         {
             try
@@ -69,7 +64,6 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-
         public async Task<bool> EditSerie(string ID, Series series)
         {
             try
@@ -83,7 +77,6 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-
         public async Task<Series> GetOneSerie(string SerieName)
         {
             try
@@ -95,12 +88,10 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-
         public async Task<List<Series>> GetSeries()
         {
             return await _series.Find(series => true).SortBy(n => n.Number).ToListAsync();
         }
-
         public async Task<bool> DeleteSerie(string name)
         {
             try

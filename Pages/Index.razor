@@ -3,13 +3,14 @@
 @using MiniFigures.Models
 @using MiniFigures.Data
 @inject ISeriesService SeriesService
+@inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 <link rel="stylesheet" href="/css/Index.css" />
 
 <div class="row" style="border-radius:15px; margin-left:auto; margin-right:auto ">
     <div style="text-align:center;margin-left:auto; margin-right:auto">
-        <h5>There is @NumberOfSeries Series to Collect | You have ___ complete series</h5>
-        <h5>With a total of @TotalFigures figures | You have ___ figures </h5>
+        <h5>There is @NumberOfSeries Series to Collect | You have @CompleteSeries complete series</h5>
+        <h5>With a total of @TotalFigures figures | You have @TotalFiguresOwned figures </h5>
     </div>
 </div>
 
@@ -31,6 +32,7 @@
     protected override async Task OnInitializedAsync()
     {
         ListOfSeries = await SeriesService.GetSeries();
+
         GetInfo();
     }
     private void goTo(string serie)
@@ -43,7 +45,18 @@
         foreach (var serie in ListOfSeries)
         {
             TotalFigures += serie.NumberOfFigures;
+            if (serie.isComplete)
+            {
+                CompleteSeries++;
+            }
+            List<MiniFigure> series = MiniFigureService.GetMiniFigures(serie.Name).ToList();
+            foreach (var figure in series)
+            {
+                TotalFiguresOwned += figure.CountSealed;
+            }
+
         }
+
 
     }
 }

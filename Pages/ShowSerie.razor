@@ -5,6 +5,7 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 <link href="/css/Serie.css" rel="stylesheet" />
+
 @if (ListOfMF == null)
 {
     <h2>Loading.......</h2>
@@ -36,7 +37,7 @@ else
                     <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
                     <table>
                         <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                                 <h5>@figure.Name</h5>
                             </td>
                         </tr>
@@ -52,14 +53,17 @@ else
                                     <i class="fas fa-check" style="color:green" />
                                 }
                             </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td class="labelSmall">Ownd openend:</td>
                             <td>@figure.CountOpened</td>
+                            <td class="fas fa-plus-circle infoBtn" style="        color: @series.SeriesColor; margin-top:0.2rem;" @onclick="() => add(1,figure.Number)"></td>
                         </tr>
                         <tr>
                             <td class="labelSmall">Ownd sealed:</td>
                             <td>@figure.CountSealed</td>
+                            <td class="fas fa-plus-circle infoBtn" style="color:@series.SeriesColor; margin-top:0.2rem" @onclick="() => add(2,figure.Number)"></td>
                         </tr>
                     </table>
                 </div>
@@ -158,6 +162,15 @@ else
                 owned++;
             }
         }
+        if (owned == series.NumberOfFigures)
+        {
+            series.isComplete = true;
+        }
+        else
+        {
+            series.isComplete = false;
+        }
+        SeriesService.EditSerie(series.Id, series);
     }
     private void ToEdit()
     {
@@ -166,5 +179,25 @@ else
     private void ToAdd()
     {
         NavigationManager.NavigateTo($"/addnew/figures/{serieToShow}");
+    }
+    private async Task add(int i, int number)
+    {
+        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+        switch (i)
+        {
+            case 1:
+                OneMF.CountOpened++;
+                showCard = false;
+                break;
+            case 2:
+                OneMF.CountSealed++;
+                showCard = false;
+                break;
+            default:
+                break;
+        }
+
+        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
+        SendCollectionName(serieToShow);
     }
 }
