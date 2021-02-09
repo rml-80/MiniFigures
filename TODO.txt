@@ -1,7 +1,6 @@
 ﻿//TODO
 
-ShowOne
-	Close on click outside card
-
 ShowSerie
 	To previous and to next in the list, at bottom?
+
+Sort index list after order by from navMenu
