@@ -58,9 +58,17 @@
     </table>
     <div id="bottom">
         <div style="float:right; margin-right:0px">
-            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete">
-            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset" />
-            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)"/>
+            <div class="dropdown">
+                <input type="button" class="btn btn-light" value="More" />
+                <div class="dropdown-content">
+                    <div class="btn-group-vertical">
+                        <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset Figure" />
+                        <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete Figure">
+                    </div>
+                </div>
+            </div>
+            
+            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneFigure.Number)" />
         </div>
     </div>
     @if (showDelete)

@@ -12,7 +12,7 @@
 }
 else if (ListOfMF.Count == 0)
 {
-    <Header serie="series" amountOfFigures="ListOfMF.Count" />
+    <Header serie="series" listOfFigures="ListOfMF" />
     <div class="headerCenter">
         <h4 class="marginBig">No Figures in collection</h4>
         <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
@@ -20,7 +20,7 @@ else if (ListOfMF.Count == 0)
 }
 else
 {
-    <Header serie="series" amountOfFigures="ListOfMF.Count" />
+    <Header serie="series" listOfFigures="ListOfMF" />
     <h4>
         You own @owned of @series.NumberOfFigures
         @if (owned == series.NumberOfFigures)

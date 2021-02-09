@@ -44,9 +44,22 @@
             <td class="infoRow">Number of figures:</td>
             <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
             <td class="txtRight">
-                @if (amountOfFigures != serie.NumberOfFigures)
+                @if (listOfFigures.Count != serie.NumberOfFigures)
                 {
-                    <p>@amountOfFigures of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
+                    <p>@listOfFigures.Count of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
+                }
+                else
+                {
+                    <div class="dropdown">
+                        <input type="button" class="btn btn-light" value="More" />
+                        <div class="dropdown-content">
+                            <div class="btn-group-vertical">
+                                <input class="btn btn-outline-secondary" type="button" value="Add all sealed" @onclick="() => addFigures(1)" />
+                                <input class="btn btn-outline-secondary" type="button" value="Add all opened" @onclick="() => addFigures(2)">
+                                <input class="btn btn-outline-secondary" type="button" value="Add all displayed" @onclick="() => addFigures(3)">
+                            </div>
+                        </div>
+                    </div>
                 }
             </td>
         </tr>
@@ -80,7 +93,7 @@
     [Parameter]
     public Series serie { get; set; }
     [Parameter]
-    public int amountOfFigures { get; set; }
+    public List<MiniFigure> listOfFigures { get; set; }
 
     public string HideShow { get; set; } = "none";
     public string InfoIcon { get; set; } = "fas fa-chevron-down";
@@ -116,4 +129,34 @@
             InfoIcon = "fas fa-chevron-down";
         }
     }
+    protected void addFigures(int i)
+    {
+        switch (i)
+        {
+            case 1:
+                foreach (var figure in listOfFigures)
+                {
+                    figure.CountSealed++;
+                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                }
+                break;
+            case 2:
+                foreach (var figure in listOfFigures)
+                {
+                    figure.CountOpened++;
+                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                }
+                break;
+            case 3:
+                foreach (var figure in listOfFigures)
+                {
+                    figure.Displayed = true;
+                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 }

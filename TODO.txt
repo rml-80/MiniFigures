@@ -1,9 +1,5 @@
 ﻿//TODO
 
-EditSerie
-	Reset, Delete in a dropdown menu //more
-	Possibility to add one whole serie, sealed, opened and displayed, modal? new page?
-
 ShowOne
 	Close on click outside card
 
