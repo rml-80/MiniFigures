@@ -62,7 +62,7 @@
                 <div class="dropdown-content">
                     <a href="" @onclick="() => OrderBy(1)">A-Z</a>
                     <a href="" @onclick="() => OrderBy(2)">Z-A</a>
-                    <a href="">Relese date</a>
+                    <a href="" @onclick="() => OrderBy(3)">Release date</a>
                 </div>
             </div>
         </li>
@@ -105,7 +105,7 @@
         series = await SeriesService.GetSeries();
         return series;
     }
-    protected void OrderBy(int order)
+    public void OrderBy(int order)
     {
 
         switch (order)
@@ -118,9 +118,10 @@
                 series = series.OrderByDescending(n => n.Name).ToList();
                 orderBy = "Z-A";
                 break;
-            //case 3:
-            //    series = series.OrderBy(n => n.ReleseDate).ToList();
-            //    break;
+            case 3:
+                series = series.OrderBy(n => n.ReleaseDate).ToList();
+                orderBy = "Release date";
+                break;
 
             default:
                 break;

@@ -8,8 +8,8 @@
 
 <div class="row" style="border-radius:15px; margin-left:auto; margin-right:auto ">
     <div style="text-align:center;margin-left:auto; margin-right:auto">
-        <h5>There is ___ Series to Collect | You have ___ complete series</h5>
-        <h5>With a total of ___ figures | You have ___ figures </h5>
+        <h5>There is @NumberOfSeries Series to Collect | You have ___ complete series</h5>
+        <h5>With a total of @TotalFigures figures | You have ___ figures </h5>
     </div>
 </div>
 
@@ -23,12 +23,27 @@
 </div>
 @code {
     List<Series> ListOfSeries = new List<Series>();
+    public int NumberOfSeries { get; set; }
+    public int CompleteSeries { get; set; }
+    public int TotalFigures { get; set; }
+    public int TotalFiguresOwned { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         ListOfSeries = await SeriesService.GetSeries();
+        GetInfo();
     }
     private void goTo(string serie)
     {
         NavigationManager.NavigateTo($"/{serie}");
+    }
+    private void GetInfo()
+    {
+        NumberOfSeries = ListOfSeries.Count();
+        foreach (var serie in ListOfSeries)
+        {
+            TotalFigures += serie.NumberOfFigures;
+        }
+
     }
 }
