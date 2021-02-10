@@ -25,20 +25,26 @@
 @code {
 
     List<Series> ListOfSeries = new List<Series>();
-    
+
     public int NumberOfSeries { get; set; }
     public int CompleteSeries { get; set; }
     public int TotalFigures { get; set; }
     public int TotalFiguresOwned { get; set; }
-
+    public int OrderBy { get; set; }
     protected override async Task OnInitializedAsync()
     {
         await GetList();
         GetInfo();
     }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        OrderBy = NavMenu.orderBy;
+        GetList();
+        StateHasChanged();
+    }
     public async Task<List<Series>> GetList()
     {
-        ListOfSeries = await SeriesService.GetSeries(1);
+        ListOfSeries = await SeriesService.GetSeries(OrderBy);
         return ListOfSeries;
     }
     private void goTo(string serie)
