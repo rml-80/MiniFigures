@@ -40,11 +40,14 @@
     {
         OrderBy = NavMenu.orderBy;
         GetList();
+
+
         StateHasChanged();
+
     }
     public async Task<List<Series>> GetList()
     {
-        ListOfSeries = await SeriesService.GetSeries(OrderBy);
+        ListOfSeries = await SeriesService.GetSeries(NavMenu.orderBy);
         return ListOfSeries;
     }
     private void goTo(string serie)
@@ -61,11 +64,24 @@
             {
                 CompleteSeries++;
             }
+        }
+            GetOwned();
+    }
+    private void GetOwned()
+    {
+        TotalFiguresOwned = 0;
+        foreach (var serie in ListOfSeries)
+        {
             List<MiniFigure> series = MiniFigureService.GetMiniFigures(serie.Name).ToList();
             foreach (var figure in series)
             {
-                TotalFiguresOwned += figure.CountSealed;
+                if (figure.CountSealed > 0 || figure.CountOpened > 0)
+                {
+
+                TotalFiguresOwned ++;
+                }
             }
         }
+
     }
 }
