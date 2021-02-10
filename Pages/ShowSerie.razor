@@ -32,9 +32,9 @@ else
         @foreach (var figure in ListOfMF)
         {
             <div class="Card" style="border-color:@series.SeriesColor">
-                <div style="height:22rem" @onclick="(() => ShowCard(figure.Number))">
+                <div style="height:22rem" >
                     <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
-                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name" />
+                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name"@onclick="(() => ShowCard(figure.Number))" />
                     <table>
                         <tr>
                             <td colspan="3">
@@ -99,21 +99,27 @@ else
     protected override async Task OnInitializedAsync()
     {
         series = await SeriesService.GetOneSerie(serieToShow);
+
     }
-    protected override async Task OnParametersSetAsync()
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    GetFigures(serieToShow);
+    //    series = await SeriesService.GetOneSerie(serieToShow);
+    //    Owned();
+    //}
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        SendCollectionName(serieToShow);
-        series = await SeriesService.GetOneSerie(serieToShow);
-        Owned();
-    }
-    protected override void OnAfterRender(bool firstRender)
-    {
-        SendCollectionName(serieToShow);
+        await GetSerie();
+        GetFigures(serieToShow);
         Owned();
 
         StateHasChanged();
     }
-    private void SendCollectionName(string collectionName)
+    private async Task GetSerie()
+    {
+        series = await SeriesService.GetOneSerie(serieToShow);
+    }
+    private void GetFigures(string collectionName)
     {
         ListOfMF = MiniFigureService.GetMiniFigures(collectionName);
     }
@@ -150,7 +156,7 @@ else
             OneMF.Displayed = true;
         }
         await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
-        SendCollectionName(serieToShow);
+        GetFigures(serieToShow);
     }
     private void Owned()
     {
@@ -196,8 +202,8 @@ else
             default:
                 break;
         }
-
         await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
-        SendCollectionName(serieToShow);
+        //GetFigures(serieToShow);
+        //StateHasChanged();
     }
 }

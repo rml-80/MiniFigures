@@ -88,9 +88,32 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-        public async Task<List<Series>> GetSeries()
+        public async Task<List<Series>> GetSeries(int i)
         {
-            return await _series.Find(series => true).SortBy(n => n.Number).ToListAsync();
+            List<Series> list = new List<Series>();
+            switch (i)
+            {
+                case 1:
+                    list = await _series.Find(series => true).SortBy(n => n.Name).ToListAsync();
+                    //orderBy = "A-Z";
+                    //series = series.OrderBy(n => n.Name).ToList();
+                    break;
+                case 2:
+                    list = await _series.Find(series => true).SortByDescending(n => n.Name).ToListAsync();
+                    //series = series.OrderByDescending(n => n.Name).ToList();
+                    //orderBy = "Z-A";
+                    break;
+                case 3:
+                    list = await _series.Find(series => true).SortBy(n => n.ReleaseDate).ToListAsync();
+                    //series = series.OrderBy(n => n.ReleaseDate).ToList();
+                    //orderBy = "Release date";
+                    break;
+
+                default:
+                    break;
+            }
+            return list;
+                //.Find(series => true).SortBy(n => n.Number).ToListAsync();
         }
         public async Task<bool> DeleteSerie(string name)
         {

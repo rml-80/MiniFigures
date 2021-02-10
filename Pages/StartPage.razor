@@ -23,7 +23,9 @@
     }
 </div>
 @code {
+
     List<Series> ListOfSeries = new List<Series>();
+    
     public int NumberOfSeries { get; set; }
     public int CompleteSeries { get; set; }
     public int TotalFigures { get; set; }
@@ -31,9 +33,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListOfSeries = await SeriesService.GetSeries();
-
+        await GetList();
         GetInfo();
+    }
+    public async Task<List<Series>> GetList()
+    {
+        ListOfSeries = await SeriesService.GetSeries(1);
+        return ListOfSeries;
     }
     private void goTo(string serie)
     {
@@ -54,9 +60,6 @@
             {
                 TotalFiguresOwned += figure.CountSealed;
             }
-
         }
-
-
     }
 }

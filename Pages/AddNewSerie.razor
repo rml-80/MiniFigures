@@ -79,7 +79,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        seriesList = await SeriesService.GetSeries();
+        seriesList = await SeriesService.GetSeries(1);
     }
     protected async Task AddSerie()
     {

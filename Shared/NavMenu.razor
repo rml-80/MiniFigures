@@ -1,8 +1,8 @@
 ﻿@using MiniFigures.Data
 @using MiniFigures.Models
+@using MiniFigures.Pages
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
-
 @inject NavigationManager NavigationManager
 <style>
     .dropbtn {
@@ -58,7 +58,7 @@
         <li>
             Order By:
             <div class="dropdown">
-                <button class="dropbtn">@orderBy</button>
+                <button class="dropbtn">@orderByString</button>
                 <div class="dropdown-content">
                     <a href="" @onclick="() => OrderBy(1)">A-Z</a>
                     <a href="" @onclick="() => OrderBy(2)">Z-A</a>
@@ -87,8 +87,8 @@
     private bool collapseNavMenu = true;
     private string serieToShow;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    private string orderBy { get; set; } = "A-Z";
-
+    public string orderByString { get; set; } = "A-Z";
+    public static int orderBy { get; set; } = 1;
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
@@ -102,29 +102,25 @@
     }
     protected async Task<List<Series>> GetList()
     {
-        series = await SeriesService.GetSeries();
+        series = await SeriesService.GetSeries(orderBy);
         return series;
     }
-    public void OrderBy(int order)
+    public async Task OrderBy(int order)
     {
-
         switch (order)
         {
             case 1:
-                orderBy = "A-Z";
-                series = series.OrderBy(n => n.Name).ToList();
+                orderByString = "A-Z";
                 break;
             case 2:
-                series = series.OrderByDescending(n => n.Name).ToList();
-                orderBy = "Z-A";
+                orderByString = "Z-A";
                 break;
             case 3:
-                series = series.OrderBy(n => n.ReleaseDate).ToList();
-                orderBy = "Release date";
+                orderByString = "Release date";
                 break;
-
             default:
                 break;
         }
+        await GetList();
     }
 }

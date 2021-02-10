@@ -36,6 +36,7 @@ namespace MiniFigures
 
             services.AddScoped<IMiniFigureService, MiniFigureService>();
             services.AddScoped<ISeriesService, SeriesService>();
+            services.AddScoped<Class>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
