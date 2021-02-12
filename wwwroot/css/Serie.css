@@ -238,11 +238,11 @@ table {
     transform: rotateY(180deg);
 }
 .dropbtn {
-/*    background-color: grey;
-    color: black;
+    background-color: lightgrey;
+    /*    color: black;
     padding: 16px;
     font-size: 16px;*/
-    border: 1px solid black;
+    border: none;
 }
 
 .dropdown {
@@ -254,10 +254,12 @@ table {
     display: none;
     position: absolute;
     background-color: white;
-    min-width: 65px;
+/*    width: 120px;*/
     /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
     z-index: 1;
-    right:0px;
+}
+.dropRight {
+    right: 0px;
 }
     /* Links inside the dropdown */
     .dropdown-content a {

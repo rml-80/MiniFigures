@@ -4,7 +4,7 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-<style>
+@*<style>
     .dropbtn {
         background-color: white;
         /*color: white;*/
@@ -43,8 +43,8 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
-</style>
-
+</style>*@
+<link href="/css/Serie.css" rel="stylesheet" />
 <div class="top-row pl-4 navbar navbar-dark" style="margin-bottom: 1rem;margin-top:1rem">
     <a href="" style="font-size:2rem;color:black;text-decoration:none">MiniFigures</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -54,18 +54,23 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-
         <li>
             Order By:
             <div class="dropdown">
-                <button class="dropbtn">@orderByString</button>
+                <button class="btn btn-light" style="width:120px">@orderByString</button>
                 <div class="dropdown-content">
-                    <a href="" @onclick="() => OrderBy(1)">A-Z</a>
-                    <a href="" @onclick="() => OrderBy(2)">Z-A</a>
-                    <a href="" @onclick="() => OrderBy(3)">Release date</a>
+                    <div class="btn-group-vertical">
+                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick="() => OrderBy(1)" />
+                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick="() => OrderBy(2)">
+                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick="() => OrderBy(3)">
+                    </div>
+                    @*
+        <a href="" @onclick="() => OrderBy(1)">A-Z</a>
+        <a href="" @onclick="() => OrderBy(2)">Z-A</a>
+        <a href="" @onclick="() => OrderBy(3)">Release date</a>*@
                 </div>
-            </div>
-        </li>
+                </div>
+</li>
         @foreach (var serie in series)
         {
             <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
