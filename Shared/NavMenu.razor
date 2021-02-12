@@ -1,50 +1,10 @@
 ﻿@using MiniFigures.Data
 @using MiniFigures.Models
-@using MiniFigures.Pages
+
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-@*<style>
-    .dropbtn {
-        background-color: white;
-        /*color: white;*/
-        /*padding: 16px;*/
-        /*font-size: 16px;*/
-        border: none;
-    }
 
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white;
-        min-width: 100px;
-        /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
-        z-index: 1;
-    }
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            color: black;
-            /*padding: 12px 16px;*/
-            text-decoration: none;
-            display: block;
-        }
-
-            /* Change color of dropdown links on hover */
-            .dropdown-content a:hover {
-                /*background-color: #ddd;*/
-            }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-</style>*@
-<link href="/css/Serie.css" rel="stylesheet" />
 <div class="top-row pl-4 navbar navbar-dark" style="margin-bottom: 1rem;margin-top:1rem">
     <a href="" style="font-size:2rem;color:black;text-decoration:none">MiniFigures</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -64,13 +24,9 @@
                         <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick="() => OrderBy(2)">
                         <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick="() => OrderBy(3)">
                     </div>
-                    @*
-        <a href="" @onclick="() => OrderBy(1)">A-Z</a>
-        <a href="" @onclick="() => OrderBy(2)">Z-A</a>
-        <a href="" @onclick="() => OrderBy(3)">Release date</a>*@
                 </div>
-                </div>
-</li>
+            </div>
+        </li>
         @foreach (var serie in series)
         {
             <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
@@ -89,20 +45,22 @@
 
 
 @code {
-    private bool collapseNavMenu = true;
-    private string serieToShow;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    public string orderByString { get; set; } = "A-Z";
+    public static List<Series> series = new List<Series>();
+
+    private bool collapseNavMenu = true;
+
     public static int orderBy { get; set; } = 1;
+    
+    private string orderByString { get; set; } = "A-Z";
+    private string serieToShow;
+    
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
-    public static List<Series> series = new List<Series>();
-
     protected override async Task OnInitializedAsync()
     {
-        //await Task.Delay(1000);
         await GetList();
     }
     protected async Task<List<Series>> GetList()

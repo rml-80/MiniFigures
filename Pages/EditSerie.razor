@@ -1,23 +1,23 @@
-﻿@page "/{serieToShow}/edit"
+﻿@page "/{SerieToShow}/edit"
+
 @using MiniFigures.Data
 @using MiniFigures.Models
 @using MiniFigures.Shared
+
 @inject ISeriesService SeriesService
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
-<link href="/css/Serie.css" rel="stylesheet" />
 
-@*<Header serie="serie" amountOfFigures="ListOfMF.Count" />*@
 <h3>Edit Serie</h3>
 <div>
     <div>
-        <div class="CardEdit Center" style="border-color:@serie.SeriesColor">
+        <div class="CardEdit Center" style="border-color:@Serie.SeriesColor">
             <div class="row">
                 <div class="labelEditSerie">
                     <label for="SeriesColor">Color code: </label>
                 </div>
                 <div>
-                    <input form="SeriesColor" placeholder="@serie.SeriesColor" @onchange="@ColorChange" />
+                    <input form="SeriesColor" placeholder="@Serie.SeriesColor" @onchange="@ColorChange" />
                 </div>
             </div>
             <div class="row">
@@ -25,7 +25,7 @@
                     <label for="ReleaseDate">Release Date: </label>
                 </div>
                 <div>
-                    <input form="ReleaseDate" @bind="@serie.ReleaseDate" />
+                    <input form="ReleaseDate" @bind="@Serie.ReleaseDate" />
                 </div>
             </div>
             <div class="row">
@@ -33,7 +33,7 @@
                     <label for="Number">Number: </label>
                 </div>
                 <div>
-                    <input form="Number" @bind="@serie.Number" />
+                    <input form="Number" @bind="@Serie.Number" />
                 </div>
             </div>
             <div class="row">
@@ -41,7 +41,7 @@
                     <label for="Name">Name: </label>
                 </div>
                 <div>
-                    <input form="Name" @bind="@serie.DisplayName" />
+                    <input form="Name" @bind="@Serie.DisplayName" />
                 </div>
             </div>
             <div class="row">
@@ -49,7 +49,7 @@
                     <label for="NumberOfFiguers">Number of figures: </label>
                 </div>
                 <div>
-                    <input form="NumberOfFigures" @bind="@serie.NumberOfFigures" />
+                    <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
                 </div>
             </div>
             <div class="row">
@@ -57,25 +57,24 @@
                     <label for="SeriePicture">Path to picture: </label>
                 </div>
                 <div>
-                    <input form="SeriePicture" @bind="@serie.SeriePicture" />
+                    <input form="SeriePicture" @bind="@Serie.SeriePicture" />
                 </div>
             </div>
             <div class="btnRow">
                 <div class="dropdown">
-                    <input type="button" class="btn btn-light" value="More"/>
+                    <input type="button" class="btn btn-light" value="More" />
                     <div class="dropdown-content">
                         <div class="btn-group-vertical">
                             <input class="btn btn-outline-warning" type="button" @onclick="ResetAllFigures" value="Reset all Figures" />
-                            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete serie" />
+                            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete Serie" />
                         </div>
                     </div>
                 </div>
-                
                 <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
-                <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(serie)" value="Save" />
+                <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(Serie)" value="Save" />
             </div>
         </div>
-        @if (showDelete)
+        @if (ShowDelete)
         {
             <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
                 <div class="modal-dialog" @onclick:stopPropagation="true">
@@ -86,11 +85,11 @@
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to delete:</p>
-                            <h3>@serie.DisplayName</h3>
+                            <h3>@Serie.DisplayName</h3>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel">Cancel</button>
-                            <button type="button" class="btn btn-danger" @onclick="() => deleteSerie(serie.Name)">Delete</button>
+                            <button type="button" class="btn btn-danger" @onclick="() => deleteSerie(Serie.Name)">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -100,26 +99,24 @@
 </div>
 
 @code {
-
     [Parameter]
-    public string serieToShow { get; set; }
+    public string SerieToShow { get; set; }
 
-    protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
+    protected List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
 
-    protected Series serie = new Series();
+    protected Series Serie = new Series();
 
-    private bool showDelete = false;
+    private bool ShowDelete = false;
 
     protected override async Task OnInitializedAsync()
     {
-        serie = await SeriesService.GetOneSerie(serieToShow);
-        ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
-
+        Serie = await SeriesService.GetOneSerie(SerieToShow);
+        ListOfMiniFigures = MiniFigureService.GetMiniFigures(SerieToShow);
     }
-    void saveSerie(Series serie)
+    void saveSerie(Series Serie)
     {
-        SeriesService.EditSerie(serie.Id, serie);
-        SeriesService.RenameCollection(serieToShow, serie.Name);
+        SeriesService.EditSerie(Serie.Id, Serie);
+        SeriesService.RenameCollection(SerieToShow, Serie.Name);
         NavigationManager.NavigateTo("/", true);
     }
     public void deleteSerie(string name)
@@ -127,29 +124,29 @@
         SeriesService.DeleteCollection(name);
         SeriesService.DeleteSerie(name);
         NavigationManager.NavigateTo("/", true);
-        showDelete = false;
+        ShowDelete = false;
     }
     //change color on frame when adding color
     void ColorChange(ChangeEventArgs args)
     {
         var Color = (string)args.Value;
-        serie.SeriesColor = Color;
+        Serie.SeriesColor = Color;
     }
     void cancel()
     {
-        NavigationManager.NavigateTo($"/{serieToShow}", true);
+        NavigationManager.NavigateTo($"/{SerieToShow}", true);
     }
-    public void DeleteShow() => showDelete = true;
-    public void DeleteCancel() => showDelete = false;
+    public void DeleteShow() => ShowDelete = true;
+    public void DeleteCancel() => ShowDelete = false;
     void ResetAllFigures()
     {
-        foreach (var item in ListOfMF)
+        foreach (var item in ListOfMiniFigures)
         {
             item.Displayed = false;
             item.CountSealed = 0;
             item.CountOpened = 0;
-            MiniFigureService.EditFigure(item.ID, item, serieToShow);
+            MiniFigureService.EditFigure(item.ID, item, SerieToShow);
         }
-        NavigationManager.NavigateTo($"/{serieToShow}", true);
+        NavigationManager.NavigateTo($"/{SerieToShow}", true);
     }
 }

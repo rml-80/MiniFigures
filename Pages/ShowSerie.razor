@@ -1,18 +1,19 @@
-﻿@page "/{serieToShow}"
+﻿@page "/{SerieToShow}"
+
 @using MiniFigures.Models
 @using MiniFigures.Data
+
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-<link href="/css/Serie.css" rel="stylesheet" />
 
-@if (ListOfMF == null)
+@if (ListOfMiniFigures == null)
 {
     <h2>Loading.......</h2>
 }
-else if (ListOfMF.Count == 0)
+else if (ListOfMiniFigures.Count == 0)
 {
-    <Header serie="series" listOfFigures="ListOfMF" />
+    <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
     <div class="headerCenter">
         <h4 class="marginBig">No Figures in collection</h4>
         <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
@@ -20,21 +21,21 @@ else if (ListOfMF.Count == 0)
 }
 else
 {
-    <Header serie="series" listOfFigures="ListOfMF" />
+    <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
     <h4>
-        You own @owned of @series.NumberOfFigures
-        @if (owned == series.NumberOfFigures)
+        You own @Owned of @Serie.NumberOfFigures
+        @if (Owned == Serie.NumberOfFigures)
         {
-            <i class="fas fa-star" style="color:@series.SeriesColor" />
+            <i class="fas fa-star" style="color:@Serie.SeriesColor" />
         }
     </h4>
     <div class="card-deck">
-        @foreach (var figure in ListOfMF)
+        @foreach (var figure in ListOfMiniFigures)
         {
-            <div class="Card" style="border-color:@series.SeriesColor">
+            <div class="Card" style="border-color:@Serie.SeriesColor">
                 <div style="height:22rem" >
-                    <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
-                    <img src="/images/@serieToShow/@figure.Image" alt="Picture of @figure.Name"@onclick="(() => ShowCard(figure.Number))" />
+                    <div class="txtLeftBold" style="color:@Serie.SeriesColor">@figure.Number</div>
+                    <img src="/images/@SerieToShow/@figure.Image" alt="Picture of @figure.Name"@onclick="(() => showCard(figure.Number))" />
                     <table>
                         <tr>
                             <td colspan="3">
@@ -58,25 +59,25 @@ else
                         <tr>
                             <td class="labelSmall">Ownd openend:</td>
                             <td>@figure.CountOpened</td>
-                            <td class="fas fa-plus-circle infoBtn" style="        color: @series.SeriesColor; margin-top:0.2rem;" @onclick="() => add(1,figure.Number)"></td>
+                            <td class="fas fa-plus-circle infoBtn" style="        color: @Serie.SeriesColor; margin-top:0.2rem;" @onclick="() => add(1,figure.Number)"></td>
                         </tr>
                         <tr>
                             <td class="labelSmall">Ownd sealed:</td>
                             <td>@figure.CountSealed</td>
-                            <td class="fas fa-plus-circle infoBtn" style="color:@series.SeriesColor; margin-top:0.2rem" @onclick="() => add(2,figure.Number)"></td>
+                            <td class="fas fa-plus-circle infoBtn" style="color:@Serie.SeriesColor; margin-top:0.2rem" @onclick="() => add(2,figure.Number)"></td>
                         </tr>
                     </table>
                 </div>
-                <a class="fas fa-plus-circle fa-2x infoBtn" style="color:@series.SeriesColor" @onclick="(() => IncrementListOfMF(figure.Number))" />
+                <a class="fas fa-plus-circle fa-2x infoBtn" style="color:@Serie.SeriesColor" @onclick="(() => IncrementListOfMF(figure.Number))" />
             </div>
         }
-        @if (showCard)
+        @if (ShowCard)
         {
             <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="HideCard">
                 <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
                 <div class="modal-dialog" @onclick:stopPropagation="true">
                     <div class="modal-content" style="background-color:transparent; border:none">
-                        <CardFrameFlip serieToShow="@serieToShow" number="@no" />
+                        <CardFrameFlip SerieToShow="@SerieToShow" number="@NumberToShow" />
                     </div>
                 </div>
             </div>
@@ -85,125 +86,112 @@ else
 }
 @code {
     [Parameter]
-    public string serieToShow { get; set; }
+    public string SerieToShow { get; set; }
 
-    List<MiniFigure> ListOfMF;
+    List<MiniFigure> ListOfMiniFigures;
 
-    protected MiniFigure OneMF = new MiniFigure();
+    protected MiniFigure OneMiniFigures = new MiniFigure();
+    protected Series Serie { get; set; }
 
-    protected Series series { get; set; }
-    bool showCard = false;
-    protected int owned { get; set; }
-    protected int no { get; set; }
+    bool ShowCard = false;
+    protected int Owned { get; set; }
+    protected int NumberToShow { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        series = await SeriesService.GetOneSerie(serieToShow);
-
+        Serie = await SeriesService.GetOneSerie(SerieToShow);
     }
-    //protected override async Task OnParametersSetAsync()
-    //{
-    //    GetFigures(serieToShow);
-    //    series = await SeriesService.GetOneSerie(serieToShow);
-    //    Owned();
-    //}
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await GetSerie();
-        GetFigures(serieToShow);
-        Owned();
-
+        GetFigures(SerieToShow);
+        GetOwned();
         StateHasChanged();
     }
     private async Task GetSerie()
     {
-        series = await SeriesService.GetOneSerie(serieToShow);
+        Serie = await SeriesService.GetOneSerie(SerieToShow);
     }
     private void GetFigures(string collectionName)
     {
-        ListOfMF = MiniFigureService.GetMiniFigures(collectionName);
+        ListOfMiniFigures = MiniFigureService.GetMiniFigures(collectionName);
     }
-    private void ShowCard(int number)
+    private void showCard(int number)
     {
-        no = number;
-        showCard = true;
+        NumberToShow = number;
+        ShowCard = true;
     }
     public void HideCard()
     {
-        showCard = false;
-        //NavigationManager.NavigateTo($"{serieToShow}",true );
+        ShowCard = false;
     }
     private async Task IncrementListOfMF(int number)
     {
-        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
-        if (OneMF.CountSealed == 0 && OneMF.CountOpened == 0 || OneMF.Displayed == true)
+        OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, number);
+        if (OneMiniFigures.CountSealed == 0 && OneMiniFigures.CountOpened == 0 || OneMiniFigures.Displayed == true)
         {
-            if (OneMF.CountSealed == 1 && OneMF.CountOpened != 1)
+            if (OneMiniFigures.CountSealed == 1 && OneMiniFigures.CountOpened != 1)
             {
-                owned++;
-
+                Owned++;
             }
-            OneMF.CountSealed++;
+            OneMiniFigures.CountSealed++;
         }
-        else if (OneMF.CountSealed == 1 && OneMF.CountOpened == 0)
+        else if (OneMiniFigures.CountSealed == 1 && OneMiniFigures.CountOpened == 0)
         {
-            OneMF.CountSealed = 0;
-            OneMF.CountOpened++;
-
+            OneMiniFigures.CountSealed = 0;
+            OneMiniFigures.CountOpened++;
         }
-        else if (OneMF.CountOpened == 1)
+        else if (OneMiniFigures.CountOpened == 1)
         {
-            OneMF.Displayed = true;
+            OneMiniFigures.Displayed = true;
         }
-        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
-        GetFigures(serieToShow);
+        await MiniFigureService.EditFigure(OneMiniFigures.ID, OneMiniFigures, SerieToShow);
+        GetFigures(SerieToShow);
     }
-    private void Owned()
+    private void GetOwned()
     {
-        owned = 0;
-        foreach (var figure in ListOfMF)
+        Owned = 0;
+        foreach (var figure in ListOfMiniFigures)
         {
             if (figure.CountSealed > 0 || figure.CountOpened > 0)
             {
-                owned++;
+                Owned++;
             }
         }
-        if (owned == series.NumberOfFigures)
+        if (Owned == Serie.NumberOfFigures)
         {
-            series.isComplete = true;
+            Serie.isComplete = true;
         }
         else
         {
-            series.isComplete = false;
+            Serie.isComplete = false;
         }
-        SeriesService.EditSerie(series.Id, series);
+        SeriesService.EditSerie(Serie.Id, Serie);
     }
     private void ToEdit()
     {
-        NavigationManager.NavigateTo($"/{serieToShow}/edit");
+        NavigationManager.NavigateTo($"/{SerieToShow}/edit");
     }
     private void ToAdd()
     {
-        NavigationManager.NavigateTo($"/addnew/figures/{serieToShow}");
+        NavigationManager.NavigateTo($"/addnew/figures/{SerieToShow}");
     }
     private async Task add(int i, int number)
     {
-        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+        OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, number);
         switch (i)
         {
             case 1:
-                OneMF.CountOpened++;
-                showCard = false;
+                OneMiniFigures.CountOpened++;
+                ShowCard = false;
                 break;
             case 2:
-                OneMF.CountSealed++;
-                showCard = false;
+                OneMiniFigures.CountSealed++;
+                ShowCard = false;
                 break;
             default:
                 break;
         }
-        await MiniFigureService.EditFigure(OneMF.ID, OneMF, serieToShow);
-        //GetFigures(serieToShow);
-        //StateHasChanged();
+        await MiniFigureService.EditFigure(OneMiniFigures.ID, OneMiniFigures, SerieToShow);
     }
 }

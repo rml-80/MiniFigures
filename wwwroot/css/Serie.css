@@ -28,6 +28,9 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+.tbl100 {
+    width:100%
+}
 #bottom {
     /*position: absolute;*/
     bottom: 1rem;

@@ -1,29 +1,29 @@
 ﻿@using MiniFigures.Data
 @using MiniFigures.Models
-@inject NavigationManager NavigationManager
+
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
 
-<link href="/css/Serie.css" rel="stylesheet"/>
-@if (serie == null)
+@if (Serie == null)
 {
     <h2>Loading......</h2>
 }
 else
 {
-    <div class="cardBig" style="border-color:@serie.SeriesColor">
-        <div class="txtLeft" style="color:@serie.SeriesColor">@serie.DisplayName</div>
-        <div><img class="imgBig" src="/images/@serie.Name/@OneMF.Image" alt="Picture of @OneMF.Name" /></div>
-        <p>@OneMF.Name</p>
+    <div class="cardBig" style="border-color:@Serie.SeriesColor">
+        <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
+        <div><img class="imgBig" src="/images/@Serie.Name/@OneMiniFigures.Image" alt="Picture of @OneMiniFigures.Name" /></div>
+        <p>@OneMiniFigures.Name</p>
         <table class="cardTabel">
             <tr class="TableOne">
                 <td class="label">Number:</td>
-                <td>@OneMF.Number</td>
+                <td>@OneMiniFigures.Number</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">In display:</td>
                 <td>
-                    @if (!OneMF.Displayed)
+                    @if (!OneMiniFigures.Displayed)
                     {
                         <i class="fas fa-times fa-2x" style="color:red" />
                     }
@@ -35,27 +35,27 @@ else
             </tr>
             <tr class="TableOne">
                 <td class="label">Ownd openend:</td>
-                <td>@OneMF.CountOpened</td>
+                <td>@OneMiniFigures.CountOpened</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">Ownd sealed:</td>
-                <td>@OneMF.CountSealed</td>
+                <td>@OneMiniFigures.CountSealed</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">Image:</td>
-                <td>@OneMF.Image</td>
+                <td>@OneMiniFigures.Image</td>
             </tr>
         </table>
     </div>
 }
 @code {
     [Parameter]
-    public Series serie { get; set; }
+    public Series Serie { get; set; }
     [Parameter]
-    public MiniFigure OneMF { get; set; }
+    public MiniFigure OneMiniFigures { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
         StateHasChanged();
-        }
+    }
 }

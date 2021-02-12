@@ -2,10 +2,11 @@
 
 @using MiniFigures.Data
 @using MiniFigures.Models
+
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-    <link href="/css/Serie.css" rel="stylesheet" />
+
 <h3>Add Serie</h3>
 <div class="txtCenter">
     <div class="addSeriesCard" style="border-color:@Color">
@@ -22,7 +23,7 @@
                 <label for="ReleaseDate">Release Date: </label>
             </div>
             <div>
-                <input form="ReleaseDate" @bind="@series.ReleaseDate" />
+                <input form="ReleaseDate" @bind="@Serie.ReleaseDate" />
             </div>
         </div>
         <div class="row">
@@ -38,7 +39,7 @@
                 <label for="Name">Name: </label>
             </div>
             <div>
-                <input form="Name" @bind="@series.DisplayName" />
+                <input form="Name" @bind="@Serie.DisplayName" />
             </div>
         </div>
         <div class="row">
@@ -46,7 +47,7 @@
                 <label for="NumberOfFiguers">Number of figures: </label>
             </div>
             <div>
-                <input form="NumberOfFigures" @bind="@series.NumberOfFigures" />
+                <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
             </div>
         </div>
         <div class="row">
@@ -54,7 +55,7 @@
                 <label for="SeriePicture">Path to picture: </label>
             </div>
             <div>
-                <input form="SeriePicture" @bind="@series.SeriePicture" />
+                <input form="SeriePicture" @bind="@Serie.SeriePicture" />
             </div>
         </div>
         <div class="btnRow">
@@ -66,42 +67,42 @@
 </div>
 
 @code {
+    protected List<Series> SeriesList = new List<Series>();
     protected MiniFigure miniFigure = new MiniFigure();
-    protected Series series = new Series();
-    protected List<Series> seriesList = new List<Series>();
+    protected Series Serie = new Series();
 
-    protected bool canSave { get; set; }
+    protected bool CanSave { get; set; }
     protected bool Existing { get; set; }
 
     protected string Color { get; set; } = "lightgrey";
-    protected string currentNumber { get; set; }
+    protected string CurrentNumber { get; set; }
     protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
-        seriesList = await SeriesService.GetSeries(1);
+        SeriesList = await SeriesService.GetSeries(1);
     }
     protected async Task AddSerie()
     {
-        if (canSave)
+        if (CanSave)
         {
-            if (series.DisplayName == null)
+            if (Serie.DisplayName == null)
             {
-                series.DisplayName = "Rename serie";
+                Serie.DisplayName = "Rename serie";
             }
-            await SeriesService.AddSerie(series);
-            await SeriesService.CreateNewCollection(series.Name);
-            NavigationManager.NavigateTo($"/addnew/figures/{series.Name}");
+            await SeriesService.AddSerie(Serie);
+            await SeriesService.CreateNewCollection(Serie.Name);
+            NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
         }
     }
     protected void ColorChange(ChangeEventArgs args)
     {
         Color = (string)args.Value;
-        series.SeriesColor = Color;
+        Serie.SeriesColor = Color;
     }
     protected void isExist(string number)
     {
-        foreach (var s in seriesList)
+        foreach (var s in SeriesList)
         {
             if (number == s.Number)
             {
@@ -118,8 +119,8 @@
     {
         if (args != null)
         {
-            currentNumber = (string)args.Value;
-            isExist(currentNumber);
+            CurrentNumber = (string)args.Value;
+            isExist(CurrentNumber);
 
             if (Existing)
             {
@@ -129,9 +130,9 @@
             else
             {
                 ShowWarningForNumber = "none";
-                series.Number = (string)args.Value;
-                currentNumber = null;
-                canSave = true;
+                Serie.Number = (string)args.Value;
+                CurrentNumber = null;
+                CanSave = true;
             }
         }
     }

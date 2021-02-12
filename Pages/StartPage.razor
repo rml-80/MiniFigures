@@ -1,12 +1,12 @@
-﻿@page "/start"
+﻿@page "/"
 
 @using MiniFigures.Models
 @using MiniFigures.Data
 @using MiniFigures.Shared
+
 @inject ISeriesService SeriesService
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
-<link rel="stylesheet" href="/css/Index.css" />
 
 <div class="row" style="border-radius:15px; margin-left:auto; margin-right:auto ">
     <div style="text-align:center;margin-left:auto; margin-right:auto">
@@ -24,14 +24,14 @@
     }
 </div>
 @code {
-
     List<Series> ListOfSeries = new List<Series>();
 
-    public int NumberOfSeries { get; set; }
     public int CompleteSeries { get; set; }
+    public int NumberOfSeries { get; set; }
+    public int OrderBy { get; set; }
     public int TotalFigures { get; set; }
     public int TotalFiguresOwned { get; set; }
-    public int OrderBy { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await GetList();
@@ -41,10 +41,7 @@
     {
         OrderBy = NavMenu.orderBy;
         GetList();
-
-
         StateHasChanged();
-
     }
     public async Task<List<Series>> GetList()
     {
@@ -66,7 +63,7 @@
                 CompleteSeries++;
             }
         }
-            GetOwned();
+        GetOwned();
     }
     private void GetOwned()
     {
@@ -78,11 +75,9 @@
             {
                 if (figure.CountSealed > 0 || figure.CountOpened > 0)
                 {
-
-                TotalFiguresOwned ++;
+                    TotalFiguresOwned++;
                 }
             }
         }
-
     }
 }

@@ -7,12 +7,9 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-
-<link href="/css/Serie.css" rel="stylesheet" />
 <h3>Add Figure</h3>
 <div class="card-deck">
     <div class="addCard" style="border-color:@Color">
-
         @if (ListOfMF.Count == series.NumberOfFigures)
         {
             <h4 style="margin-top:8rem">No more<br /> figures to add</h4>
@@ -73,13 +70,9 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         series = await SeriesService.GetOneSerie(serie);
-        //Color = series.SeriesColor;
-        //SeriesList = await SeriesService.GetSeries();
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
-
         StateHasChanged();
     }
-
     protected async Task AddNewFigure()
     {
         if (canSave)
@@ -96,14 +89,12 @@
             OneMF.CountOpened = 0;
             OneMF.CountSealed = 0;
             OneMF.Displayed = false;
-
+            
             await MiniFigureService.AddFigure(OneMF, serie);
             if (ListOfMF.Count != series.NumberOfFigures)
             {
                 NavigationManager.NavigateTo($"/{serie}", true);
             }
-
-
         }
     }
     protected void SerieClicked(ChangeEventArgs args)

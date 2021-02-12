@@ -1,11 +1,13 @@
-﻿@*@page "/{serieToShow}/{number:int}"*@
+﻿@page "/{SerieToShow}/{Number:int}"
+
 @using MiniFigures.Data
 @using MiniFigures.Models
-@inject NavigationManager NavigationManager
+
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
 
-@if (serie == null)
+@if (Serie == null)
 {
     <h2>Loading......</h2>
 }
@@ -13,36 +15,36 @@ else
 {
     <table>
         <tr>
-            <td class="txtRight" style="color:@serie.SeriesColor">
-                @if (OneMF.Number <= 1 || (edit))
+            <td class="txtRight" style="color:@Serie.SeriesColor">
+                @if (OneMiniFigures.Number <= 1 || (Edit))
                 {
                     <a class="fas fa-chevron-left fa-5x" style="opacity:0.3" />
                 }
                 else
                 {
-                    <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMF.Number - 1)" />
+                    <a class="fas fa-chevron-left fa-5x" @onclick="() => goTo(OneMiniFigures.Number - 1)" />
                 }
             </td>
             <td>
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <ShowOne OneMF="@OneMF" serie="@serie" />
+                            <ShowOne OneMiniFigures="@OneMiniFigures" Serie="@Serie" />
                         </div>
                         <div class="flip-card-back">
-                            <EditOne OneFigure="@OneMF" serie="@serie" />
+                            <EditOne OneMiniFigures="@OneMiniFigures" Serie="@Serie" />
                         </div>
                     </div>
                 </div>
             </td>
-            <td class="txtLeft" style="color: @serie.SeriesColor">
-                @if (OneMF.Number == ListOfMF.Count || (edit))
+            <td class="txtLeft" style="color: @Serie.SeriesColor">
+                @if (OneMiniFigures.Number == ListOfMiniFigures.Count || (Edit))
                 {
                     <a class="fas fa-chevron-right fa-5x" style="opacity:0.3" />
                 }
                 else
                 {
-                    <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMF.Number + 1)" />
+                    <a class="fas fa-chevron-right fa-5x" @onclick="() => goTo(OneMiniFigures.Number + 1)" />
                 }
             </td>
         </tr>
@@ -50,41 +52,41 @@ else
 }
 @code {
     [Parameter]
-    public int number { get; set; }
+    public int Number { get; set; }
     [Parameter]
-    public string serieToShow { get; set; }
+    public string SerieToShow { get; set; }
 
-    protected Series serie { get; set; }
-    protected MiniFigure OneMF = new MiniFigure();
+    List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
 
-    List<MiniFigure> ListOfMF = new List<MiniFigure>();
+    public ShowSerie showSerie = new ShowSerie();
 
-    public bool edit { get; set; } = false;
-
-    public ShowSerie ss = new ShowSerie();
+    protected MiniFigure OneMiniFigures = new MiniFigure();
+    protected Series Serie { get; set; }
+    
+    public bool Edit { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
-        serie = await SeriesService.GetOneSerie(serieToShow);
-        ListOfMF = MiniFigureService.GetMiniFigures(serieToShow);
+        Serie = await SeriesService.GetOneSerie(SerieToShow);
+        ListOfMiniFigures = MiniFigureService.GetMiniFigures(SerieToShow);
     }
     protected override async Task OnParametersSetAsync()
     {
-        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+        OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, Number);
     }
     public void editfigure()
     {
-        edit = true;
+        Edit = true;
     }
     public async Task goTo(int i)
     {
-        number = i;
-        OneMF = await MiniFigureService.GetOneMiniFigure(serieToShow, number);
+        Number = i;
+        OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, Number);
         this.StateHasChanged();
     }
     void close()
     {
-        ss.HideCard();
-        NavigationManager.NavigateTo($"/{serieToShow}", true);
+        showSerie.HideCard();
+        NavigationManager.NavigateTo($"/{SerieToShow}", true);
     }
 }

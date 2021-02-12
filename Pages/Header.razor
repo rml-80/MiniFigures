@@ -5,8 +5,6 @@
 
 @inject NavigationManager NavigationManager
 
-<link href="/css/Header.css" rel="stylesheet" />
-
 <style>
     .btn.btn-outline-info{
         color:@serie.SeriesColor;
@@ -29,8 +27,8 @@
         <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
     </h2>
 </div>
-<div class="infoBlock" style="display:@HideShow;border-color:@serie.SeriesColor">
-    <table class="biggerText">
+<div class="infoBlock" style="display:@HideShowInfo;border-color:@serie.SeriesColor">
+    <table class="biggerText tbl100">
         <tr style="height:45px">
             <td class="infoRow">Number:</td>
             <td class="infoRow txtCenter">@serie.Number</td>
@@ -44,9 +42,9 @@
             <td class="infoRow">Number of figures:</td>
             <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
             <td class="txtRight">
-                @if (listOfFigures.Count != serie.NumberOfFigures)
+                @if (ListOfFigures.Count != serie.NumberOfFigures)
                 {
-                    <p>@listOfFigures.Count of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
+                    <p>@ListOfFigures.Count of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
                 }
                 else
                 {
@@ -63,10 +61,9 @@
                 }
             </td>
         </tr>
-
     </table>
 </div>
-@if (showEdit)
+@if (ShowEdit)
 {
     <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="close">
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
@@ -77,7 +74,7 @@
         </div>
     </div>
 }
-@if (showAdd)
+@if (ShowAdd)
 {
     <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
@@ -91,41 +88,39 @@
 
 @code {
     [Parameter]
-    public Series serie { get; set; }
+    public List<MiniFigure> ListOfFigures { get; set; }
     [Parameter]
-    public List<MiniFigure> listOfFigures { get; set; }
+    public Series serie { get; set; }
 
-    public string HideShow { get; set; } = "none";
+    public string HideShowInfo { get; set; } = "none";
     public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
-    bool showAdd { get; set; }
-    bool showEdit { get; set; }
+    bool ShowAdd { get; set; }
+    bool ShowEdit { get; set; }
 
     void ToEdit()
     {
-        showEdit = true;
-        //NavigationManager.NavigateTo($"/{serie.Name}/edit");
+        ShowEdit = true;
     }
     void ToAdd()
     {
-        showAdd = true;
-        //NavigationManager.NavigateTo($"/addnew/figures/{serie.Name}");
+        ShowAdd = true;
     }
     void close()
     {
-        showAdd = false;
-        showEdit = false;
+        ShowAdd = false;
+        ShowEdit = false;
     }
     void ToggleInfo()
     {
-        if (HideShow == "none")
+        if (HideShowInfo == "none")
         {
-            HideShow = "block";
+            HideShowInfo = "block";
             InfoIcon = "fas fa-chevron-up";
         }
         else
         {
-            HideShow = "none";
+            HideShowInfo = "none";
             InfoIcon = "fas fa-chevron-down";
         }
     }
@@ -134,21 +129,21 @@
         switch (i)
         {
             case 1:
-                foreach (var figure in listOfFigures)
+                foreach (var figure in ListOfFigures)
                 {
                     figure.CountSealed++;
                     Mini.EditFigure(figure.ID, figure, serie.Name);
                 }
                 break;
             case 2:
-                foreach (var figure in listOfFigures)
+                foreach (var figure in ListOfFigures)
                 {
                     figure.CountOpened++;
                     Mini.EditFigure(figure.ID, figure, serie.Name);
                 }
                 break;
             case 3:
-                foreach (var figure in listOfFigures)
+                foreach (var figure in ListOfFigures)
                 {
                     figure.Displayed = true;
                     Mini.EditFigure(figure.ID, figure, serie.Name);
@@ -158,5 +153,4 @@
                 break;
         }
     }
-
 }
