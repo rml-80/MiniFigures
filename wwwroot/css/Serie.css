@@ -173,6 +173,11 @@ table {
     text-align: right;
     width: 65%;
 }
+.loadingLabel {
+    text-align: center;
+    font-weight: bold;
+    color:black;
+}
 .marginBig {
     margin-top: 3rem;
     margin-bottom: 3rem;

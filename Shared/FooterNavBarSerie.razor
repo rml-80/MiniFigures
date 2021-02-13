@@ -2,14 +2,21 @@
 
 @inject NavigationManager NavigationManager
 
-<div>
-    <div style="float:left">Previous serie</div>
-    <div>@i</div>
-    <div style="float:right" @onclick="() => ToNextSerie(i + 1)">Next serie</div>
+<div >
+    @if (i != 0)
+    {
+    <a href="#" style="float:left; text-decoration:none; color:@SerieColor" @onclick="() => ToPreviousSerie(i)"><i class="fas fa-chevron-left"/> Previous serie</a>
+    }
+    @if (i != ListOfSeries.Count - 1)
+    {
+    <a href="#" style="float:right; text-decoration:none; color:@SerieColor" @onclick="() => ToNextSerie(i)">Next serie <i class="fas fa-chevron-right"/></a>
+    }
 </div>
 @code {
     [Parameter]
     public string SerieToShow { get; set; }
+    [Parameter]
+    public string SerieColor { get; set; }
 
     public int i { get; set; }
 
@@ -21,7 +28,18 @@
     }
     void ToNextSerie(int i)
     {
-        var NextSerie = ListOfSeries[i].Name;
-        NavigationManager.NavigateTo($"/{NextSerie}");
+        if (i != ListOfSeries.Count - 1)
+        {
+            var NextSerie = ListOfSeries[i + 1].Name;
+            NavigationManager.NavigateTo($"/{NextSerie}"); 
+        }
+    }
+    void ToPreviousSerie(int i)
+    {
+        if (i != 0)
+        {
+            var PreviousSerie = ListOfSeries[i - 1].Name;
+            NavigationManager.NavigateTo($"/{PreviousSerie}");
+        }
     }
 }

@@ -9,7 +9,7 @@
 
 @if (ListOfMiniFigures == null)
 {
-    <h2>Loading.......</h2>
+    <h2 class="loadingLabel">Loading.......</h2>
 }
 else if (ListOfMiniFigures.Count == 0)
 {
@@ -22,6 +22,8 @@ else if (ListOfMiniFigures.Count == 0)
 else
 {
     <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
+    <FooterNavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
+
     <h4>
         You own @Owned of @Serie.NumberOfFigures
         @if (Owned == Serie.NumberOfFigures)
@@ -33,9 +35,9 @@ else
         @foreach (var figure in ListOfMiniFigures)
         {
             <div class="Card" style="border-color:@Serie.SeriesColor">
-                <div style="height:22rem" >
+                <div style="height:22rem">
                     <div class="txtLeftBold" style="color:@Serie.SeriesColor">@figure.Number</div>
-                    <img src="/images/@SerieToShow/@figure.Image" alt="Picture of @figure.Name"@onclick="(() => showCard(figure.Number))" />
+                    <img src="/images/@SerieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => showCard(figure.Number))" />
                     <table>
                         <tr>
                             <td colspan="3">
@@ -83,7 +85,7 @@ else
             </div>
         }
     </div>
-    <FooterNavBarSerie SerieToShow="@SerieToShow" />
+    <FooterNavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
 }
 @code {
     [Parameter]

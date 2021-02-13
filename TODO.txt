@@ -1,5 +1,2 @@
 ﻿//TODO
 
-ShowSerie
-	To previous and to next in the list, at bottom?
-
