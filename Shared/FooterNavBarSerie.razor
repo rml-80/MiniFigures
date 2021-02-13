@@ -1,0 +1,27 @@
+﻿@using MiniFigures.Models
+
+@inject NavigationManager NavigationManager
+
+<div>
+    <div style="float:left">Previous serie</div>
+    <div>@i</div>
+    <div style="float:right" @onclick="() => ToNextSerie(i + 1)">Next serie</div>
+</div>
+@code {
+    [Parameter]
+    public string SerieToShow { get; set; }
+
+    public int i { get; set; }
+
+    List<Series> ListOfSeries = NavMenu.series;
+
+    protected override void OnParametersSet()
+    {
+        i = ListOfSeries.FindIndex(i => i.Name.Equals(SerieToShow));
+    }
+    void ToNextSerie(int i)
+    {
+        var NextSerie = ListOfSeries[i].Name;
+        NavigationManager.NavigateTo($"/{NextSerie}");
+    }
+}
