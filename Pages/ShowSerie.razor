@@ -9,7 +9,7 @@
 
 @if (ListOfMiniFigures == null)
 {
-    <h2 class="loadingLabel">Loading.......</h2>
+    <Loading />
 }
 else if (ListOfMiniFigures.Count == 0)
 {
@@ -22,7 +22,7 @@ else if (ListOfMiniFigures.Count == 0)
 else
 {
     <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
-    <FooterNavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
+    <NavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
 
     <h4>
         You own @Owned of @Serie.NumberOfFigures
@@ -85,7 +85,7 @@ else
             </div>
         }
     </div>
-    <FooterNavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
+    <NavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
 }
 @code {
     [Parameter]
