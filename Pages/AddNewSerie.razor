@@ -80,7 +80,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        SeriesList = await SeriesService.GetSeries(1);
+        SeriesList = await SeriesService.GetSeries(NavMenu.orderByString);
     }
     protected async Task AddSerie()
     {

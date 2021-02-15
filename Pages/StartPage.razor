@@ -46,13 +46,12 @@
     }
     protected override void OnAfterRender(bool firstRender)
     {
-        OrderBy = NavMenu.orderBy;
         GetList();
         StateHasChanged();
     }
     public async Task<List<Series>> GetList()
     {
-        ListOfSeries = await SeriesService.GetSeries(NavMenu.orderBy);
+        ListOfSeries = await SeriesService.GetSeries(NavMenu.orderByString);
         return ListOfSeries;
     }
     private void goTo(string serie)

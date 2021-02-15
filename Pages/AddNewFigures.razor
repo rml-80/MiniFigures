@@ -64,7 +64,7 @@
     {
         series = await SeriesService.GetOneSerie(serie);
         Color = series.SeriesColor;
-        SeriesList = await SeriesService.GetSeries(1);
+        SeriesList = await SeriesService.GetSeries(NavMenu.orderByString);
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
