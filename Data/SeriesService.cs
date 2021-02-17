@@ -1,7 +1,10 @@
 ﻿using MiniFigures.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+
 namespace MiniFigures.Data
 {
     public class SeriesService : ISeriesService
@@ -56,6 +59,7 @@ namespace MiniFigures.Data
             try
             {
                 series.Name = series.DisplayName.Replace(" ", "_");
+                //Replace first letter with upper case or and Serie instead of writning it?
                 await _series.InsertOneAsync(series);
                 return true;
             }
@@ -127,5 +131,6 @@ namespace MiniFigures.Data
                 return false;
             }
         }
+
     }
 }

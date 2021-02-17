@@ -36,7 +36,7 @@
         </div>
         <div class="row">
             <div class="labelEditSerie">
-                <label for="Name">Name: </label>
+                <label for="Name">Name/Number: </label>
             </div>
             <div>
                 <input form="Name" @bind="@Serie.DisplayName" />
@@ -92,6 +92,7 @@
             }
             await SeriesService.AddSerie(Serie);
             await SeriesService.CreateNewCollection(Serie.Name);
+            await MiniFigureService.AddFiguresToDb(Serie.NumberOfFigures, Serie.Name);
             NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
         }
     }
@@ -140,4 +141,6 @@
     {
         NavigationManager.NavigateTo("/");
     }
+    //Add method to generate imageName
+    //Add method to rename serie
 }

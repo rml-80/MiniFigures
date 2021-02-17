@@ -16,5 +16,6 @@ namespace MiniFigures.Data
         Task<bool> AddSerie(Series series);
         Task<bool> EditSerie(string ID, Series series);
         Task<bool> DeleteSerie(string ID);
+
     }
 }
