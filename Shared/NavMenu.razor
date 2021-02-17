@@ -20,9 +20,9 @@
                 <button class="btn btn-light" style="width:120px">@orderByString</button>
                 <div class="dropdown-content">
                     <div class="btn-group-vertical">
-                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick='() => OrderBy("A-Z")' />
-                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick='() => OrderBy("Z-A")'>
-                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px"  @onclick='() => OrderBy("Release date")'>
+                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick="() => OrderBy(1)" />
+                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick="() => OrderBy(2)">
+                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick="() => OrderBy(3)">
                     </div>
                 </div>
             </div>
@@ -50,9 +50,11 @@
 
     private bool collapseNavMenu = true;
 
-    public static string orderByString { get; set; } = "A-Z";
+    public static int orderBy { get; set; } = 1;
+    
+    private string orderByString { get; set; } = "A-Z";
     private string serieToShow;
-
+    
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
@@ -63,22 +65,24 @@
     }
     protected async Task<List<Series>> GetList()
     {
-        series = await SeriesService.GetSeries(orderByString);
+        series = await SeriesService.GetSeries(orderBy);
         return series;
     }
-   
-    public async Task OrderBy(string stringorderBy)
+    public async Task OrderBy(int order)
     {
-        switch (stringorderBy)
+        switch (order)
         {
-            case "A-Z":
+            case 1:
                 orderByString = "A-Z";
+                orderBy = 1;
                 break;
-            case "Z-A":
+            case 2:
                 orderByString = "Z-A";
+                orderBy = 2;
                 break;
-            case "Release date":
+            case 3:
                 orderByString = "Release date";
+                orderBy = 3;
                 break;
             default:
                 break;

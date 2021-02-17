@@ -88,22 +88,22 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-        public async Task<List<Series>> GetSeries(string i)
+        public async Task<List<Series>> GetSeries(int i)
         {
             List<Series> list = new List<Series>();
             switch (i)
             {
-                case "A-Z":
+                case 1:
                     list = await _series.Find(series => true).SortBy(n => n.Name).ToListAsync();
                     //orderBy = "A-Z";
                     //series = series.OrderBy(n => n.Name).ToList();
                     break;
-                case "Z-A":
+                case 2:
                     list = await _series.Find(series => true).SortByDescending(n => n.Name).ToListAsync();
                     //series = series.OrderByDescending(n => n.Name).ToList();
                     //orderBy = "Z-A";
                     break;
-                case "Release date":
+                case 3:
                     list = await _series.Find(series => true).SortBy(n => n.ReleaseDate).ToListAsync();
                     //series = series.OrderBy(n => n.ReleaseDate).ToList();
                     //orderBy = "Release date";
