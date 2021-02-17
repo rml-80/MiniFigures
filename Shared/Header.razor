@@ -1,5 +1,6 @@
 ﻿@using MiniFigures.Models
 @using MiniFigures.Data
+@using MiniFigures.Pages
 @inject IMiniFigureService Mini
 @inject ISeriesService SeriesService
 
@@ -63,13 +64,14 @@
         </tr>
     </table>
 </div>
+<NavBarSerie SerieToShow="@serie.Name" SerieColor="@serie.SeriesColor" />
 @if (ShowEdit)
 {
     <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="close">
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">
-                <EditSerie serieToShow="@serie.Name" />
+                <EditSerie SerieToShow="@serie.Name" />
             </div>
         </div>
     </div>
@@ -95,7 +97,7 @@
     public string HideShowInfo { get; set; } = "none";
     public string InfoIcon { get; set; } = "fas fa-chevron-down";
 
-    bool ShowAdd { get; set; }
+    public static bool ShowAdd { get; set; }
     bool ShowEdit { get; set; }
 
     void ToEdit()

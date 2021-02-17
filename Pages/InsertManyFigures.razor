@@ -1,0 +1,49 @@
+﻿@page "/insertmany/{serie}"
+
+@using MiniFigures.Models
+@using MiniFigures.Data
+
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+
+@if (Serie == null)
+{
+    <Loading />
+}
+else
+{
+    <h3>Add Figure</h3>
+    <div class="card-deck">
+        @for (int i = 1; i < Serie.NumberOfFigures; i++)
+        {
+            <div class="Card" style="border-color:@Serie.SeriesColor">
+
+                <div>
+                    <label>Number: @i</label>
+                </div>
+                <div>
+                    <label for="Name">Name:</label>
+                    <input id="@i" type="text" />
+                </div>
+
+            </div>
+        }
+    </div>
+}
+@code {
+    [Parameter]
+    public string serie { get; set; }
+
+    public MiniFigure miniFigure { get; set; } = new MiniFigure();
+
+    protected Series Serie = new Series();
+
+    List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        Serie = await SeriesService.GetOneSerie(serie);
+        ListOfMiniFigures = MiniFigureService.GetMiniFigures(serie);
+    }
+}

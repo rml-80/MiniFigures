@@ -123,8 +123,8 @@
     {
         SeriesService.DeleteCollection(name);
         SeriesService.DeleteSerie(name);
+        //ShowDelete = false;
         NavigationManager.NavigateTo("/", true);
-        ShowDelete = false;
     }
     //change color on frame when adding color
     void ColorChange(ChangeEventArgs args)
