@@ -9,7 +9,7 @@
 
 @if (Serie == null)
 {
-   <Loading />
+    <Loading />
 }
 else
 {
@@ -29,10 +29,10 @@ else
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <ShowOne OneMiniFigures="@OneMiniFigures" Serie="@Serie" />
+                            <ShowOne OneMiniFigure="@OneMiniFigures" Serie="@Serie" />
                         </div>
                         <div class="flip-card-back">
-                            <EditOne OneMF="@OneMiniFigures" Serie="@Serie" />
+                            <EditOne OneMiniFigure="@OneMiniFigures" Serie="@Serie" />
                         </div>
                     </div>
                 </div>
@@ -51,40 +51,36 @@ else
     </table>
 }
 @code {
-    [Parameter]
-    public int Number { get; set; }
-    [Parameter]
-    public string SerieToShow { get; set; }
+    [Parameter] public int Number { get; set; }
+    [Parameter] public string SerieToShow { get; set; }
 
-    List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
+    private List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
 
-    public ShowSerie showSerie = new ShowSerie();
+    private ShowSerie showSerie = new ShowSerie();
 
-    protected MiniFigure OneMiniFigures = new MiniFigure();
-    protected Series Serie { get; set; }
-    
-    public bool Edit { get; set; } = false;
+    private MiniFigure OneMiniFigures = new MiniFigure();
+    private Series Serie { get; set; }
+
+    private bool Edit { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
         Serie = await SeriesService.GetOneSerie(SerieToShow);
         ListOfMiniFigures = MiniFigureService.GetMiniFigures(SerieToShow);
     }
-    protected override async Task OnParametersSetAsync()
-    {
-        OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, Number);
-    }
-    public void editfigure()
-    {
-        Edit = true;
-    }
-    public async Task goTo(int i)
+
+    protected override async Task OnParametersSetAsync() => OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, Number);
+
+    private void editfigure() => Edit = true;
+
+    private async Task goTo(int i)
     {
         Number = i;
         OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, Number);
         this.StateHasChanged();
     }
-    void close()
+
+    private void close()
     {
         showSerie.HideCard();
         NavigationManager.NavigateTo($"/{SerieToShow}", true);

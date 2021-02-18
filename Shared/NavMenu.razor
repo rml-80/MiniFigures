@@ -20,14 +20,14 @@
                 <button class="btn btn-light" style="width:120px">@orderByString</button>
                 <div class="dropdown-content">
                     <div class="btn-group-vertical">
-                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick="() => OrderBy(1)" />
-                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick="() => OrderBy(2)">
-                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick="() => OrderBy(3)">
+                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick='() => OrderBy("A-Z")' />
+                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick='() => OrderBy("Z-A")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick='() => OrderBy("Release date")'>
                     </div>
                 </div>
             </div>
         </li>
-        @foreach (var serie in series)
+        @foreach (var serie in ListOfSeries)
         {
             <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
                 <NavLink class="nav-link" href="@serie.Name">
@@ -46,51 +46,40 @@
 
 @code {
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    public static List<Series> series = new List<Series>();
-
     private bool collapseNavMenu = true;
 
-    public static int orderBy { get; set; } = 1;
+    public static List<Series> ListOfSeries = new List<Series>();
+    public static string orderByString { get; set; } = "A-Z";
 
-    private string orderByString { get; set; } = "A-Z";
     private string serieToShow;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        await GetList();
-    }
+    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
+
+    protected override async Task OnInitializedAsync() => await GetList();
+
     protected async Task<List<Series>> GetList()
     {
-        series = await SeriesService.GetSeries(orderBy);
-        return series;
+        return ListOfSeries = await SeriesService.GetSeries(orderByString);
     }
-    public async Task OrderBy(int order)
+
+    public async Task OrderBy(string order)
     {
         switch (order)
         {
-            case 1:
+            case "A-Z":
                 orderByString = "A-Z";
-                orderBy = 1;
                 break;
-            case 2:
+            case "Z-A":
                 orderByString = "Z-A";
-                orderBy = 2;
                 break;
-            case 3:
+            case "Release date":
                 orderByString = "Release date";
-                orderBy = 3;
                 break;
             default:
                 break;
         }
         await GetList();
     }
-    void Home()
-    {
-        NavigationManager.NavigateTo("/", true);
-    }
+
+    private void Home() => NavigationManager.NavigateTo("/", true);
 }

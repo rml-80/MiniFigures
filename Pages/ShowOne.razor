@@ -13,17 +13,17 @@ else
 {
     <div class="cardBig" style="border-color:@Serie.SeriesColor">
         <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
-        <div><img class="imgBig" src="/images/@Serie.Name/@OneMiniFigures.Image" alt="Picture of @OneMiniFigures.Name" /></div>
-        <p>@OneMiniFigures.Name</p>
+        <div><img class="imgBig" src="/images/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" /></div>
+        <p>@OneMiniFigure.Name</p>
         <table class="cardTabel">
             <tr class="TableOne">
                 <td class="label">Number:</td>
-                <td>@OneMiniFigures.Number</td>
+                <td>@OneMiniFigure.Number</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">In display:</td>
                 <td>
-                    @if (!OneMiniFigures.Displayed)
+                    @if (!OneMiniFigure.Displayed)
                     {
                         <i class="fas fa-times fa-2x" style="color:red" />
                     }
@@ -35,24 +35,22 @@ else
             </tr>
             <tr class="TableOne">
                 <td class="label">Ownd openend:</td>
-                <td>@OneMiniFigures.CountOpened</td>
+                <td>@OneMiniFigure.CountOpened</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">Ownd sealed:</td>
-                <td>@OneMiniFigures.CountSealed</td>
+                <td>@OneMiniFigure.CountSealed</td>
             </tr>
             <tr class="TableOne">
                 <td class="label">Image:</td>
-                <td>@OneMiniFigures.Image</td>
+                <td>@OneMiniFigure.Image</td>
             </tr>
         </table>
     </div>
 }
 @code {
-    [Parameter]
-    public Series Serie { get; set; }
-    [Parameter]
-    public MiniFigure OneMiniFigures { get; set; }
+    [Parameter] public Series Serie { get; set; }
+    [Parameter] public MiniFigure OneMiniFigure { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {

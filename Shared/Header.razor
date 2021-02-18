@@ -1,51 +1,53 @@
-﻿@using MiniFigures.Models
-@using MiniFigures.Data
+﻿@using MiniFigures.Data
+@using MiniFigures.Models
 @using MiniFigures.Pages
-@inject IMiniFigureService Mini
-@inject ISeriesService SeriesService
 
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<style>
+@* Custom css because using SerieColor *@
+<style> 
     .btn.btn-outline-info{
-        color:@serie.SeriesColor;
-        border-color:@serie.SeriesColor;
+        color:@series.SeriesColor;
+        border-color:@series.SeriesColor;
         box-shadow:none !important;
         outline:none !important;
     }
         .btn.btn-outline-info:active:hover,
         .btn.btn-outline-info:hover {
-            background-color: @serie.SeriesColor;
+            background-color: @series.SeriesColor;
             color: white;
-            border-color: @serie.SeriesColor;
+            border-color: @series.SeriesColor;
             box-shadow: none !important;
             outline: none !important;
         }
 </style>
-<div class="headerCenter" style="background-color:@serie.SeriesColor">
+
+<div class="headerCenter" style="background-color:@series.SeriesColor">
     <h2>
-        @serie.DisplayName
+        @series.DisplayName
         <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
     </h2>
 </div>
-<div class="infoBlock" style="display:@HideShowInfo;border-color:@serie.SeriesColor">
+<div class="infoBlock" style="display:@HideShowInfo;border-color:@series.SeriesColor">
     <table class="biggerText tbl100">
         <tr style="height:45px">
             <td class="infoRow">Number:</td>
-            <td class="infoRow txtCenter">@serie.Number</td>
+            <td class="infoRow txtCenter">@series.Number</td>
             <td class="infoRow">Release date:</td>
-            <td class="infoRow txtCenter">@serie.ReleaseDate</td>
+            <td class="infoRow txtCenter">@series.ReleaseDate</td>
             <td class="txtRight"><input class="btn btn-outline-info" type="button" @onclick="ToEdit" value="Edit" /></td>
         </tr>
         <tr style="height:45px">
-            <td class="infoRow">Series color:</td>
-            <td class="infoRow txtCenter">@serie.SeriesColor</td>
+            <td class="infoRow">series color:</td>
+            <td class="infoRow txtCenter">@series.SeriesColor</td>
             <td class="infoRow">Number of figures:</td>
-            <td class="infoRow txtCenter">@serie.NumberOfFigures</td>
+            <td class="infoRow txtCenter">@series.NumberOfFigures</td>
             <td class="txtRight">
-                @if (ListOfFigures.Count != serie.NumberOfFigures)
+                @if (ListOfMiniFigures.Count != series.NumberOfFigures)
                 {
-                    <p>@ListOfFigures.Count of @serie.NumberOfFigures are added to the serie <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
+                    <p>@ListOfMiniFigures.Count of @series.NumberOfFigures are added to the series <input class="btn btn-outline-info" type="button" @onclick="ToAdd" value="Add figure" /></p>
                 }
                 else
                 {
@@ -64,14 +66,16 @@
         </tr>
     </table>
 </div>
-<NavBarSerie SerieToShow="@serie.Name" SerieColor="@serie.SeriesColor" />
+
+<NavBarSerie SerieToShow="@series.Name" SerieColor="@series.SeriesColor" />
+
 @if (ShowEdit)
 {
     <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="close">
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">
-                <EditSerie SerieToShow="@serie.Name" />
+                <EditSerie SerieToShow="@series.Name" />
             </div>
         </div>
     </div>
@@ -82,38 +86,34 @@
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">
-                <AddNewFigures serie="@serie.Name" />
+                <AddNewFigures series="@series.Name" />
             </div>
         </div>
     </div>
 }
 
 @code {
-    [Parameter]
-    public List<MiniFigure> ListOfFigures { get; set; }
-    [Parameter]
-    public Series serie { get; set; }
+    [Parameter] public List<MiniFigure> ListOfMiniFigures { get; set; }
+    [Parameter] public Series series { get; set; }
 
-    public string HideShowInfo { get; set; } = "none";
-    public string InfoIcon { get; set; } = "fas fa-chevron-down";
+    private string HideShowInfo { get; set; } = "none";
+    private string InfoIcon { get; set; } = "fas fa-chevron-down";
 
-    public static bool ShowAdd { get; set; }
-    bool ShowEdit { get; set; }
+    private bool ShowEdit { get; set; }
 
-    void ToEdit()
-    {
-        ShowEdit = true;
-    }
-    void ToAdd()
-    {
-        ShowAdd = true;
-    }
-    void close()
+    private bool ShowAdd { get; set; }
+
+    private void ToEdit() => ShowEdit = true;
+
+    private void ToAdd() => ShowAdd = true;
+
+    private void close()
     {
         ShowAdd = false;
         ShowEdit = false;
     }
-    public void ToggleInfo()
+
+    private void ToggleInfo()
     {
         if (HideShowInfo == "none")
         {
@@ -126,29 +126,30 @@
             InfoIcon = "fas fa-chevron-down";
         }
     }
-    protected void addFigures(int i)
+
+    private void addFigures(int i)
     {
         switch (i)
         {
             case 1:
-                foreach (var figure in ListOfFigures)
+                foreach (var figure in ListOfMiniFigures)
                 {
                     figure.CountSealed++;
-                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                    MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
             case 2:
-                foreach (var figure in ListOfFigures)
+                foreach (var figure in ListOfMiniFigures)
                 {
                     figure.CountOpened++;
-                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                    MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
             case 3:
-                foreach (var figure in ListOfFigures)
+                foreach (var figure in ListOfMiniFigures)
                 {
                     figure.Displayed = true;
-                    Mini.EditFigure(figure.ID, figure, serie.Name);
+                    MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
             default:

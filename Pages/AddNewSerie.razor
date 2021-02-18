@@ -50,14 +50,6 @@
                 <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
             </div>
         </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="SeriePicture">Path to picture: </label>
-            </div>
-            <div>
-                <input form="SeriePicture" @bind="@Serie.SeriePicture" />
-            </div>
-        </div>
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
             <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
@@ -67,22 +59,22 @@
 </div>
 
 @code {
-    protected List<Series> SeriesList = new List<Series>();
-    protected MiniFigure miniFigure = new MiniFigure();
-    protected Series Serie = new Series();
+    private List<Series> SeriesList = new List<Series>();
+    private Series Serie = new Series();
 
-    protected bool CanSave { get; set; }
-    protected bool Existing { get; set; }
+    private bool CanSave { get; set; }
+    private bool Existing { get; set; }
 
-    protected string Color { get; set; } = "lightgrey";
-    protected string CurrentNumber { get; set; }
-    protected string ShowWarningForNumber { get; set; } = "none";
+    private string Color { get; set; } = "lightgrey";
+    private string CurrentNumber { get; set; }
+    private string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
-        SeriesList = await SeriesService.GetSeries(1);
+        SeriesList = await SeriesService.GetSeries("A-Z");
     }
-    protected async Task AddSerie()
+
+    private async Task AddSerie()
     {
         if (CanSave)
         {
@@ -96,12 +88,14 @@
             NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
         }
     }
-    protected void ColorChange(ChangeEventArgs args)
+
+    private void ColorChange(ChangeEventArgs args)
     {
         Color = (string)args.Value;
         Serie.SeriesColor = Color;
     }
-    protected void isExist(string number)
+
+    private void isExist(string number)
     {
         foreach (var s in SeriesList)
         {
@@ -116,7 +110,8 @@
             }
         }
     }
-    protected void checkNumber(ChangeEventArgs args)
+
+    private void checkNumber(ChangeEventArgs args)
     {
         if (args != null)
         {
@@ -137,10 +132,6 @@
             }
         }
     }
-    protected void cancel()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-    //Add method to generate imageName
-    //Add method to rename serie
+
+    private void cancel() => NavigationManager.NavigateTo("/");
 }

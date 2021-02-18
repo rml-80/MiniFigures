@@ -13,28 +13,25 @@
     }
 </div>
 @code {
-    [Parameter]
-    public string SerieToShow { get; set; }
-    [Parameter]
-    public string SerieColor { get; set; }
+    [Parameter] public string SerieToShow { get; set; }
+    [Parameter] public string SerieColor { get; set; }
 
-    public int i { get; set; }
+    private int i { get; set; }
 
-    List<Series> ListOfSeries = NavMenu.series;
+    private List<Series> ListOfSeries = NavMenu.ListOfSeries;
 
-    protected override void OnParametersSet()
-    {
-        i = ListOfSeries.FindIndex(i => i.Name.Equals(SerieToShow));
-    }
-    void ToNextSerie(int i)
+    protected override void OnParametersSet() => i = ListOfSeries.FindIndex(i => i.Name.Equals(SerieToShow));
+
+    private void ToNextSerie(int i)
     {
         if (i != ListOfSeries.Count - 1)
         {
             var NextSerie = ListOfSeries[i + 1].Name;
-            NavigationManager.NavigateTo($"/{NextSerie}"); 
+            NavigationManager.NavigateTo($"/{NextSerie}");
         }
     }
-    void ToPreviousSerie(int i)
+
+    private void ToPreviousSerie(int i)
     {
         if (i != 0)
         {

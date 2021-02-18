@@ -1,7 +1,7 @@
 ﻿@page "/"
 
-@using MiniFigures.Models
 @using MiniFigures.Data
+@using MiniFigures.Models
 @using MiniFigures.Shared
 
 @inject ISeriesService SeriesService
@@ -31,34 +31,33 @@
     }
 </div>
 @code {
-    List<Series> ListOfSeries = new List<Series>();
-    List<MiniFigure> series = new List<MiniFigure>();
-    public int CompleteSeries { get; set; }
-    public int NumberOfSeries { get; set; }
-    public int OrderBy { get; set; }
-    public int TotalFigures { get; set; }
-    public int TotalFiguresOwned { get; set; }
+    private List<Series> ListOfSeries = new List<Series>();
+    private List<MiniFigure> ListOfFigures = new List<MiniFigure>();
+
+    private int CompleteSeries { get; set; }
+    private int NumberOfSeries { get; set; }
+    private int TotalFigures { get; set; }
+    private int TotalFiguresOwned { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await GetList();
         GetInfo();
     }
+
     protected override void OnAfterRender(bool firstRender)
     {
-        OrderBy = NavMenu.orderBy;
-        GetList();
+        GetList().GetAwaiter();
         StateHasChanged();
     }
-    public async Task<List<Series>> GetList()
+
+    private async Task<List<Series>> GetList()
     {
-        ListOfSeries = await SeriesService.GetSeries(NavMenu.orderBy);
-        return ListOfSeries;
+        return ListOfSeries = await SeriesService.GetSeries(NavMenu.orderByString);
     }
-    private void goTo(string serie)
-    {
-        NavigationManager.NavigateTo($"/{serie}");
-    }
+
+    private void goTo(string serie) => NavigationManager.NavigateTo($"/{serie}");
+
     private void GetInfo()
     {
         NumberOfSeries = ListOfSeries.Count();
@@ -72,13 +71,14 @@
         }
         GetOwned();
     }
+
     private void GetOwned()
     {
         TotalFiguresOwned = 0;
         foreach (var serie in ListOfSeries)
         {
-            series = MiniFigureService.GetMiniFigures(serie.Name).ToList();
-            foreach (var figure in series)
+            ListOfFigures = MiniFigureService.GetMiniFigures(serie.Name).ToList();
+            foreach (var figure in ListOfFigures)
             {
                 if (figure.CountSealed > 0 || figure.CountOpened > 0)
                 {
@@ -87,11 +87,12 @@
             }
         }
     }
+
     private int CountOwned(string name)
     {
         var i = 0;
-        series = MiniFigureService.GetMiniFigures(name).ToList();
-        foreach (var figure in series)
+        ListOfFigures = MiniFigureService.GetMiniFigures(name).ToList();
+        foreach (var figure in ListOfFigures)
         {
             if (figure.CountSealed > 0 || figure.CountOpened > 0)
             {

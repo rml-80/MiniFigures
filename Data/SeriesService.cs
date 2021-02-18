@@ -54,13 +54,15 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-        public async Task<bool> AddSerie(Series series)
+        public async Task<bool> AddSerie(Series serie)
         {
             try
             {
-                series.Name = series.DisplayName.Replace(" ", "_");
+                serie.SeriePicture = serie.Number + ".jpg";
+                serie.DisplayName = "Serie " + serie.DisplayName;
+                serie.Name = serie.DisplayName.Replace(" ", "_");
                 //Replace first letter with upper case or and Serie instead of writning it?
-                await _series.InsertOneAsync(series);
+                await _series.InsertOneAsync(serie);
                 return true;
             }
             catch
@@ -92,33 +94,27 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-        public async Task<List<Series>> GetSeries(int i)
+        public async Task<List<Series>> GetSeries(string i)
         {
             List<Series> list = new List<Series>();
             switch (i)
             {
-                case 1:
+                case "A-Z":
                     list = await _series.Find(series => true).SortBy(n => n.Name).ToListAsync();
-                    //orderBy = "A-Z";
-                    //series = series.OrderBy(n => n.Name).ToList();
+
                     break;
-                case 2:
+                case "Z-A":
                     list = await _series.Find(series => true).SortByDescending(n => n.Name).ToListAsync();
-                    //series = series.OrderByDescending(n => n.Name).ToList();
-                    //orderBy = "Z-A";
                     break;
-                case 3:
+                case "Release date":
                     list = await _series.Find(series => true).SortBy(n => n.ReleaseDate).ToListAsync();
-                    //series = series.OrderBy(n => n.ReleaseDate).ToList();
-                    //orderBy = "Release date";
                     break;
 
                 default:
                     break;
             }
             return list;
-                //.Find(series => true).SortBy(n => n.Number).ToListAsync();
-        }
+        }        
         public async Task<bool> DeleteSerie(string name)
         {
             try
@@ -131,6 +127,5 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿@page "/{SerieToShow}"
 
-@using MiniFigures.Models
 @using MiniFigures.Data
+@using MiniFigures.Models
 
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
@@ -13,7 +13,7 @@
 }
 else if (ListOfMiniFigures.Count == 0)
 {
-    <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
+    <Header series="Serie" ListOfMiniFigures="ListOfMiniFigures" />
     <div class="headerCenter">
         <h4 class="marginBig">No Figures in collection</h4>
         <input type="button" value="Add Figure" @onclick="ToAdd" /> <input type="button" value="Edit serie" @onclick="ToEdit" />
@@ -21,7 +21,7 @@ else if (ListOfMiniFigures.Count == 0)
 }
 else
 {
-    <Header serie="Serie" ListOfFigures="ListOfMiniFigures" />
+    <Header series="Serie" ListOfMiniFigures="ListOfMiniFigures" />
 
     <h4>
         You own @Owned of @Serie.NumberOfFigures
@@ -78,7 +78,7 @@ else
                 <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
                 <div class="modal-dialog" @onclick:stopPropagation="true">
                     <div class="modal-content" style="background-color:transparent; border:none">
-                        <CardFrameFlip SerieToShow="@SerieToShow" number="@NumberToShow" />
+                        <Card SerieToShow="@SerieToShow" number="@NumberToShow" />
                     </div>
                 </div>
             </div>
@@ -87,22 +87,19 @@ else
     <NavBarSerie SerieToShow="@SerieToShow" SerieColor="@Serie.SeriesColor" />
 }
 @code {
-    [Parameter]
-    public string SerieToShow { get; set; }
+    [Parameter] public string SerieToShow { get; set; }
 
-    List<MiniFigure> ListOfMiniFigures;
+    private List<MiniFigure> ListOfMiniFigures;
 
-    protected MiniFigure OneMiniFigures = new MiniFigure();
-    protected Series Serie { get; set; }
+    private MiniFigure OneMiniFigures = new MiniFigure();
+    private Series Serie { get; set; }
 
-    bool ShowCard = false;
-    protected int Owned { get; set; }
+    protected bool ShowCard = false;
+    private int Owned { get; set; }
     protected int NumberToShow { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
-        Serie = await SeriesService.GetOneSerie(SerieToShow);
-    }
+    protected override async Task OnInitializedAsync() => Serie = await SeriesService.GetOneSerie(SerieToShow);
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await GetSerie();
@@ -110,23 +107,20 @@ else
         GetOwned();
         StateHasChanged();
     }
-    private async Task GetSerie()
-    {
-        Serie = await SeriesService.GetOneSerie(SerieToShow);
-    }
-    private void GetFigures(string collectionName)
-    {
-        ListOfMiniFigures = MiniFigureService.GetMiniFigures(collectionName);
-    }
+
+    private async Task GetSerie() => Serie = await SeriesService.GetOneSerie(SerieToShow);
+
+    private void GetFigures(string collectionName) => ListOfMiniFigures = MiniFigureService.GetMiniFigures(collectionName);
+
     private void showCard(int number)
     {
         NumberToShow = number;
         ShowCard = true;
     }
-    public void HideCard()
-    {
-        ShowCard = false;
-    }
+
+    //Called from Card needs to be public
+    public void HideCard() => ShowCard = false;
+
     private async Task IncrementListOfMF(int number)
     {
         OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, number);
@@ -150,6 +144,7 @@ else
         await MiniFigureService.EditFigure(OneMiniFigures.ID, OneMiniFigures, SerieToShow);
         GetFigures(SerieToShow);
     }
+
     private void GetOwned()
     {
         Owned = 0;
@@ -170,14 +165,11 @@ else
         }
         SeriesService.EditSerie(Serie.Id, Serie);
     }
-    private void ToEdit()
-    {
-        NavigationManager.NavigateTo($"/{SerieToShow}/edit");
-    }
-    private void ToAdd()
-    {
-        NavigationManager.NavigateTo($"/addnew/figures/{SerieToShow}");
-    }
+
+    private void ToEdit() => NavigationManager.NavigateTo($"/{SerieToShow}/edit");
+
+    private void ToAdd() => NavigationManager.NavigateTo($"/addnew/figures/{SerieToShow}");
+
     private async Task add(int i, int number)
     {
         OneMiniFigures = await MiniFigureService.GetOneMiniFigure(SerieToShow, number);

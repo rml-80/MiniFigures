@@ -99,43 +99,46 @@
 </div>
 
 @code {
-    [Parameter]
-    public string SerieToShow { get; set; }
-
-    protected List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
-
-    protected Series Serie = new Series();
+    [Parameter] public string SerieToShow { get; set; }
 
     private bool ShowDelete = false;
+
+    private List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
+
+    private Series Serie = new Series();
 
     protected override async Task OnInitializedAsync()
     {
         Serie = await SeriesService.GetOneSerie(SerieToShow);
         ListOfMiniFigures = MiniFigureService.GetMiniFigures(SerieToShow);
     }
-    void saveSerie(Series Serie)
+
+    private void saveSerie(Series Serie)
     {
         SeriesService.EditSerie(Serie.Id, Serie);
         SeriesService.RenameCollection(SerieToShow, Serie.Name);
         NavigationManager.NavigateTo("/", true);
     }
-    public void deleteSerie()
+
+    private void deleteSerie()
     {
         NavigationManager.NavigateTo($"/delete/{SerieToShow}");
     }
+
     //change color on frame when adding color
-    void ColorChange(ChangeEventArgs args)
+    private void ColorChange(ChangeEventArgs args)
     {
         var Color = (string)args.Value;
         Serie.SeriesColor = Color;
     }
-    void cancel()
-    {
-        NavigationManager.NavigateTo($"/{SerieToShow}", true);
-    }
-    public void DeleteShow() => ShowDelete = true;
-    public void DeleteCancel() => ShowDelete = false;
-    void ResetAllFigures()
+
+    private void cancel() => NavigationManager.NavigateTo($"/{SerieToShow}", true);
+
+    private void DeleteShow() => ShowDelete = true;
+
+    private void DeleteCancel() => ShowDelete = false;
+
+    private void ResetAllFigures()
     {
         foreach (var item in ListOfMiniFigures)
         {

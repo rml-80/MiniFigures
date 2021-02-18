@@ -11,11 +11,10 @@ namespace MiniFigures.Data
         Task<bool> CreateNewCollection(string name);
         Task<bool> RenameCollection(string oldName, string newName);
         Task<bool> DeleteCollection(string name);
-        Task<List<Series>> GetSeries(int i);
+        Task<List<Series>> GetSeries(string i);
         Task<Series> GetOneSerie(string SerieName);
         Task<bool> AddSerie(Series series);
         Task<bool> EditSerie(string ID, Series series);
         Task<bool> DeleteSerie(string ID);
-
     }
 }

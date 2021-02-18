@@ -12,125 +12,69 @@
     <Loading />
 }
 else
-{<h3>Edit Figures Names</h3>
-<div class="card-deck">
-    @foreach (var figure in ListOfMF)
-    {
-        <div class="Card" style="border-color:@Color">
-            <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
-            <label for="Name">Enter name: </label>
-            <input tabindex="1" form="Name" class="txtCenter" @onchange="@AddNewFigure" />
-            <img src="/images/@serie/@figure.Image" alt="Picture of @figure.Name" style="margin-top:2rem" />
-        </div>
-    }
-</div>
-<div class="marginBig, txtRight">
-    <input class="btn btn-outline-dark" type="submit" @onclick="cancel" value="Cancel" />
-    @*<input class="btn btn-outline-success" tabindex="3" type="submit" @onclick="@AddNewFigure" value="Save" />*@
-</div>
+{
+    <div class="marginBig, txtRight" style="float:right">
+        <input class="btn btn-outline-dark" type="submit" @onclick="cancel" value="Cancel" />
+    </div>
+    <h3>Edit Figures Names</h3>
+    <div class="card-deck">
+        @foreach (var figure in ListOfMF)
+        {
+            <div class="Card" style="border-color:@Color">
+                <div class="txtLeftBold" style="color:@Serie.SeriesColor">@figure.Number</div>
+                <label for="Name">Enter name: </label>
+                <input tabindex="1" form="Name" class="txtCenter" @onchange="@EditNewFigureName" />
+                <img src="/images/@serie/@figure.Image" alt="Picture of @figure.Name" style="margin-top:2rem" />
+            </div>
+        }
+    </div>
 }
 
 @*Redo to check name instead*@
 
 @*<div style="display:@ShowWarningForNumber; color:red">
-        <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
+        <h4>Minifigure with Number: @OneMiniFigure.Number <br />already exists!</h4>
     </div>*@
 @code {
-    [Parameter]
-    public string serie { get; set; }
-    int i = 1;
-    protected MiniFigure OneMF = new MiniFigure();
-    protected Series series = new Series();
+    [Parameter] public string serie { get; set; }
 
-    protected List<Series> SeriesList = new List<Series>();
-    protected List<MiniFigure> ListOfMF = new List<MiniFigure>();
+    private int i = 1;
+    private MiniFigure OneMiniFigure = new MiniFigure();
+    private Series Serie = new Series();
 
-    //protected bool canSave { get; set; }
-    //protected bool Existing { get; set; }
+    private List<Series> SeriesList = new List<Series>();
+    private List<MiniFigure> ListOfMF = new List<MiniFigure>();
 
-    //protected int? currentNumber { get; set; }
+    private string Color { get; set; } = "lightgrey";
+    private string FigureNumber { get; set; }
 
-    protected string Color { get; set; } = "lightgrey";
-    protected string FigureNumber { get; set; }
-    protected string ShowWarningForNumber { get; set; } = "none";
+    //TODO: Not in use right now!
+    //protected string ShowWarningForNumber { get; set; } = "none";
 
     protected override async Task OnInitializedAsync()
     {
-        series = await SeriesService.GetOneSerie(serie);
-        Color = series.SeriesColor;
-        SeriesList = await SeriesService.GetSeries(1);
+        Serie = await SeriesService.GetOneSerie(serie);
+        Color = Serie.SeriesColor;
+        SeriesList = await SeriesService.GetSeries("A-Z");
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
     }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        series = await SeriesService.GetOneSerie(serie);
+        Serie = await SeriesService.GetOneSerie(serie);
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
-        //StateHasChanged();
+        StateHasChanged();
     }
-    protected async Task AddNewFigure(object sender)
+
+    private async Task EditNewFigureName(ChangeEventArgs args)
     {
-        //var Name = args.Value.ToString();
-        //if (canSave)
-        //{
+        OneMiniFigure = await MiniFigureService.GetOneMiniFigure(serie, i);
 
-        OneMF = await MiniFigureService.GetOneMiniFigure(serie, i);
+        OneMiniFigure.Name = args.Value.ToString();
 
-        //OneMF.Name = Name;
-        OneMF.CountOpened = 0;
-        OneMF.CountSealed = 0;
-        OneMF.Displayed = false;
-
-
-        await MiniFigureService.EditFigure( OneMF.ID, OneMF, serie);
-        //if (ListOfMF.Count != series.NumberOfFigures)
-        //{
-        //    NavigationManager.NavigateTo($"/{serie}", true);
-        //}
-        //}
+        await MiniFigureService.EditFigure(OneMiniFigure.ID, OneMiniFigure, serie);
         i++;
     }
-    //protected void SerieClicked(ChangeEventArgs args)
-    //{
-    //    serie = (string)args.Value;
-    //}
-    //protected void isExist(int? number)
-    //{
-    //    foreach (var figure in ListOfMF)
-    //    {
-    //        if (number == figure.Number)
-    //        {
-    //            Existing = true;
-    //            break;
-    //        }
-    //        else
-    //        {
-    //            Existing = false;
-    //        }
-    //    }
-    //}
-    //protected void checkNumber(ChangeEventArgs args)
-    //{
-    //    if (args != null)
-    //    {
-    //        currentNumber = Convert.ToInt32(args.Value);
-    //        isExist(currentNumber);
 
-    //        if (Existing || currentNumber == 0)
-    //        {
-    //            ShowWarningForNumber = "inline";
-    //            Existing = false;
-    //        }
-    //        else
-    //        {
-    //            ShowWarningForNumber = "none";
-    //            OneMF.Number = Convert.ToInt32(args.Value);
-    //            currentNumber = null;
-    //            canSave = true;
-    //        }
-    //    }
-    //}
-    protected void cancel()
-    {
-        NavigationManager.NavigateTo($"/{serie}", true);
-    }
+    protected void cancel() => NavigationManager.NavigateTo($"/{serie}", true);
 }
