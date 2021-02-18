@@ -1,0 +1,31 @@
+﻿@page "/delete/{serie}"
+@using MiniFigures.Data
+@using MiniFigures.Models
+@using MiniFigures.Shared
+
+@inject ISeriesService SeriesService
+@inject IMiniFigureService MiniFigureService
+@inject NavigationManager NavigationManager
+<h3>DeleteSerie</h3>
+<h4>Are you sure?</h4>
+<h4>This action can't be undon...</h4>
+<div class="txtCenter">
+    <input type="submit" value="No" @onclick="@Cancel" />
+    <input type="submit" value="Yes" @onclick="@Confirm" />
+</div>
+@code {
+    [Parameter]
+    public string serie { get; set; }
+
+    public void Confirm()
+    {
+        SeriesService.DeleteCollection(serie);
+        SeriesService.DeleteSerie(serie);
+        NavigationManager.NavigateTo("/", true);
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo($"/{serie}");
+    }
+
+}

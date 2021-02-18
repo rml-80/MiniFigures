@@ -14,6 +14,6 @@ namespace MiniFigures.Data
         Task<bool> AddFigure(MiniFigure miniFigure, string collectionName);
         Task<bool> EditFigure(string ID, MiniFigure miniFigure, string collectionName);
         Task<bool> DeleteFigure(string id);
-        Task<bool> AddFiguresToDb(int numberOfFigures,string collectionName);
+        Task<bool> AddFiguresToDb(int numberOfFigures,string collectionName, string collectionNumber);
     }
 }

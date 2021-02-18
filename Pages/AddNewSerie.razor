@@ -92,7 +92,7 @@
             }
             await SeriesService.AddSerie(Serie);
             await SeriesService.CreateNewCollection(Serie.Name);
-            await MiniFigureService.AddFiguresToDb(Serie.NumberOfFigures, Serie.Name);
+            await MiniFigureService.AddFiguresToDb(Serie.NumberOfFigures, Serie.Name, Serie.Number);
             NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
         }
     }

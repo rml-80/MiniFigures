@@ -101,21 +101,30 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-        public async Task<bool> AddFiguresToDb(int numberOfFigures, string collectionName)
+        public async Task<bool> AddFiguresToDb(int numberOfFigures, string collectionName, string collectionNumber)
         {
             var mini = _database.GetCollection<BsonDocument>(collectionName);
+            var Image = string.Empty;
             var bson = new List<BsonDocument>();
             for (int i = 1; i <= numberOfFigures; i++)
             {
+                if (i.ToString().Length > 1)
+                {
+                    Image = $"{collectionNumber}-{i}.jpg";
+                }
+                else
+                {
+                    Image = $"{collectionNumber}-0{i}.jpg";
+                }
                 var figure = new BsonDocument
                 {
-                    { "Name",""},
+                    { "Name",i.ToString()},
                     { "CountSealed",0},
                     { "CountOpened",0},
                     { "CountTotal",0},
                     { "Number",i},
                     { "Displayed",false},
-                    { "Image",""},
+                    { "Image",Image},
                 };
                 bson.Add(figure);
             }
