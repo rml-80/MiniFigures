@@ -6,7 +6,7 @@
 @inject NavigationManager NavigationManager
 
 <div class="top-row pl-4 navbar navbar-dark" style="margin-bottom: 1rem;margin-top:1rem">
-    <a href="" style="font-size:2rem;color:black;text-decoration:none">MiniFigures</a>
+    <a @onclick="@Home" style="font-size:2rem;color:black;text-decoration:none">MiniFigures</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,10 +51,10 @@
     private bool collapseNavMenu = true;
 
     public static int orderBy { get; set; } = 1;
-    
+
     private string orderByString { get; set; } = "A-Z";
     private string serieToShow;
-    
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
@@ -88,5 +88,9 @@
                 break;
         }
         await GetList();
+    }
+    void Home()
+    {
+        NavigationManager.NavigateTo("/", true);
     }
 }

@@ -19,8 +19,7 @@ else
         <div class="Card" style="border-color:@Color">
             <div class="txtLeftBold" style="color:@series.SeriesColor">@figure.Number</div>
             <label for="Name">Enter name: </label>
-            <input tabindex="1" form="Name" class="txtCenter" @onchange="@AddNewFigure" placeholder="@figure.Name" />
-
+            <input tabindex="1" form="Name" class="txtCenter" @onchange="@AddNewFigure" />
             <img src="/images/@serie/@figure.Image" alt="Picture of @figure.Name" style="margin-top:2rem" />
         </div>
     }
@@ -30,6 +29,9 @@ else
     @*<input class="btn btn-outline-success" tabindex="3" type="submit" @onclick="@AddNewFigure" value="Save" />*@
 </div>
 }
+
+@*Redo to check name instead*@
+
 @*<div style="display:@ShowWarningForNumber; color:red">
         <h4>Minifigure with Number: @OneMF.Number <br />already exists!</h4>
     </div>*@
@@ -63,17 +65,17 @@ else
     {
         series = await SeriesService.GetOneSerie(serie);
         ListOfMF = MiniFigureService.GetMiniFigures(serie);
-        StateHasChanged();
+        //StateHasChanged();
     }
-    protected async Task AddNewFigure(ChangeEventArgs args)
+    protected async Task AddNewFigure(object sender)
     {
-        var Name = args.Value.ToString();
+        //var Name = args.Value.ToString();
         //if (canSave)
         //{
 
         OneMF = await MiniFigureService.GetOneMiniFigure(serie, i);
 
-        OneMF.Name = Name;
+        //OneMF.Name = Name;
         OneMF.CountOpened = 0;
         OneMF.CountSealed = 0;
         OneMF.Displayed = false;
