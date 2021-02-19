@@ -47,6 +47,7 @@ namespace MiniFigures.Data
             try
             {
                 await _database.DropCollectionAsync(name);
+                await _series.DeleteOneAsync(i => i.Name == name);
                 return true;
             }
             catch
@@ -61,7 +62,6 @@ namespace MiniFigures.Data
                 serie.SeriePicture = serie.Number + ".jpg";
                 serie.DisplayName = "Serie " + serie.DisplayName;
                 serie.Name = serie.DisplayName.Replace(" ", "_");
-                //Replace first letter with upper case or and Serie instead of writning it?
                 await _series.InsertOneAsync(serie);
                 return true;
             }
@@ -115,17 +115,5 @@ namespace MiniFigures.Data
             }
             return list;
         }        
-        public async Task<bool> DeleteSerie(string name)
-        {
-            try
-            {
-                await _series.DeleteOneAsync(i => i.Name == name);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
     }
 }

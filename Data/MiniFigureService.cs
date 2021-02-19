@@ -17,21 +17,8 @@ namespace MiniFigures.Data
         {
             _client = new MongoClient(settings.ConnectionString);
             _database = _client.GetDatabase(settings.DatabaseName);
-            //_miniFigure = _database.GetCollection<MiniFigure>(settings.CollectionName);
         }
-        public async Task<List<string>> GetSeries()
-        {
-            try
-            {
-                List<string> series = await (new MongoClient()).GetDatabase("MiniFigures").ListCollectionNames().ToListAsync();
-                series.Reverse();
-                return series;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+
         public List<MiniFigure> GetMiniFigures(string collectionName)
         {
             try
@@ -58,20 +45,6 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-        public async Task<bool> AddFigure(MiniFigure miniFigure, string collectionName)
-        {
-            try
-            {
-                _miniFigure = _database.GetCollection<MiniFigure>(collectionName);
-                await _miniFigure.InsertOneAsync(miniFigure);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
         {
             try
