@@ -1,3 +1,10 @@
 ﻿//TODO
 
 Image upload within add serie
+
+Bag images to each serie
+
+when adding all displayed it should add all opened too
+
+AddNewSerie
+	make a form

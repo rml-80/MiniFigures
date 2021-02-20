@@ -11,10 +11,10 @@ namespace MiniFigures
     public class Startup
     {
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment _env)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            env = _env;
+  
         }
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment env { get; }

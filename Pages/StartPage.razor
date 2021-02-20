@@ -18,8 +18,9 @@
 <div class="card-deck">
     @foreach (var item in ListOfSeries)
     {
-    <div class="figCard" style="border-color: @item.SeriesColor; background-color:@item.SeriesColor">
-        <img class="indexImg" src="images/@item.Name/@item.SeriePicture" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+    <div class="figCard" >
+        <img class="indexImg" src="images/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+        <h5>@item.DisplayName</h5>
         <h6 style="margin-top:0.7rem">
             @CountOwned(item.Name) of @item.NumberOfFigures figures 
             @if (CountOwned(item.Name) == item.NumberOfFigures)

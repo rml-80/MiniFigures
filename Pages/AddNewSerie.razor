@@ -50,10 +50,9 @@
                 <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
             </div>
         </div>
-        @* Image upload here *@
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
+            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Next" />
         </div>
     </div>
     <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>
@@ -86,7 +85,7 @@
             await SeriesService.AddSerie(Serie);
             await SeriesService.CreateNewCollection(Serie.Name);
             await MiniFigureService.AddFiguresToDb(Serie.NumberOfFigures, Serie.Name, Serie.Number);
-            NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
+            NavigationManager.NavigateTo($"/fileupload/{Serie.Name}");
         }
     }
 

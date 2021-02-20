@@ -1,37 +1,68 @@
-﻿@page "/fileupload"
+﻿@page "/fileupload/{serie}"
 
 @using System.IO
+@using Microsoft.AspNetCore.Hosting
 
+@inject IWebHostEnvironment env
+@inject NavigationManager NavigationManager
 
-<h3>@Message</h3>
+<h5>@Message</h5>
 
-<form @onsubmit="OnSubmit">
+<form>
     <InputFile OnChange="OnInputFileChange" multiple />
-    <br /><br />
-    <button type="submit">Upload Selected File(s)</button>
+    <div class="btnRow">
+        <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
+        <input class="btn btn-outline-success" type="button" @onclick="@OnSubmit" value="Next" />
+    </div>
 </form>
 @code {
-    string Message = "No file(s) selected";
+    [Parameter] public string serie { get; set; }
+
+    string Message = "";
     IReadOnlyList<IBrowserFile> selectedFiles;
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
         selectedFiles = e.GetMultipleFiles();
-        Message = $"{selectedFiles.Count} file(s) selected";
         this.StateHasChanged();
     }
-    private async void OnSubmit()
+
+    private void OnSubmit()
+    {
+        if (Directory.Exists($"{env.WebRootPath}\\images\\{serie}"))
+        {
+            Upload();
+        }
+        else
+        {
+            Directory.CreateDirectory($"{env.WebRootPath}\\images\\{serie}");
+            Upload();
+        }
+    }
+
+    private async void Upload()
     {
         foreach (var file in selectedFiles)
         {
-            Stream stream = file.OpenReadStream();
-            var path = $"D:\\OneDrive\\development\\Blazor\\MiniFigures\\wwwroot\\images\\{file.Name}";
-            FileStream fs = File.Create(path);
-            await stream.CopyToAsync(fs);
-            stream.Close();
-            fs.Close();
+            var path = $"{env.WebRootPath}\\images\\{serie}\\{file.Name}";
+            if (File.Exists(path))
+            {
+                Message = $"File already exist";
+            }
+            else
+            {
+                Stream stream = file.OpenReadStream();
+                FileStream fs = File.Create(path);
+                await stream.CopyToAsync(fs);
+                stream.Close();
+                fs.Close();
+                Message = $"{selectedFiles.Count} file(s) uploaded on server";
+                NavigationManager.NavigateTo($"/addnew/figures/{serie}");
+            }
         }
-        Message = $"{selectedFiles.Count} file(s) uploaded on server";
         this.StateHasChanged();
     }
+
+    private void cancel() => NavigationManager.NavigateTo("/");
+
 }
