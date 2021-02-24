@@ -45,7 +45,28 @@ namespace MiniFigures.Data
                 return null;
             }
         }
-        public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
+        public async Task<bool> AddFigure(MiniFigure miniFigure, string collectionName, string collectionNumber)
+        {
+            try
+            {
+                _miniFigure = _database.GetCollection<MiniFigure>(collectionName);
+                if (miniFigure.Number.ToString().Length > 1)
+                {
+                    miniFigure.Image = $"{collectionNumber}-{miniFigure.Number}.jpg";
+                }
+                else
+                {
+                    miniFigure.Image = $"{collectionNumber}-0{miniFigure.Number}.jpg";
+                }
+
+                await _miniFigure.InsertOneAsync(miniFigure) ;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }        public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
         {
             try
             {
@@ -72,7 +93,7 @@ namespace MiniFigures.Data
         }
         public async Task<bool> AddFiguresToDb(int numberOfFigures, string collectionName, string collectionNumber)
         {
-            var mini = _database.GetCollection<BsonDocument>(collectionName);
+            var miniFigure = _database.GetCollection<BsonDocument>(collectionName);
             var Image = string.Empty;
             var bson = new List<BsonDocument>();
             for (int i = 1; i <= numberOfFigures; i++)
@@ -97,7 +118,7 @@ namespace MiniFigures.Data
                 };
                 bson.Add(figure);
             }
-            await mini.InsertManyAsync(bson);
+            await miniFigure.InsertManyAsync(bson);
             return true;
         }
     }

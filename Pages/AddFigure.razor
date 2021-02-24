@@ -10,20 +10,35 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<div class="addCard" style="border-color:@Color">
+<div class="addCard" style="border-color:@color">
     @*<div class="txtLeftBold" style="color:@serie.SeriesColor">@figure.Number</div>*@
     <label for="Number">Number?</label>
-    <input tabindex="1" form="Number" class="txtCenter" />
+    <input tabindex="1" form="Number" @bind="@miniFigure.Number" class="txtCenter" />
     <label for="Name">Name? </label>
-    <input tabindex="2" form="Name" class="txtCenter" />
+    <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
     <div class="btnRow">
         <FileUpload serie="@serie" />
+    </div>
+    <div>
+        <input type="button" value="Save" @onclick="@Add" />
     </div>
 </div>
 
 @code {
 
     [Parameter] public string serie { get; set; }
+    [Parameter] public string number { get; set; }
+    [Parameter] public string color { get; set; }
+
+    public int Number { get; set; }
+    public int Name { get; set; }
+
+    private MiniFigure miniFigure = new MiniFigure();
 
     private string Color { get; set; } = "lightgrey";
+
+    private async Task Add()
+    {
+        await MiniFigureService.AddFigure(miniFigure, serie, number );
+    }
 }

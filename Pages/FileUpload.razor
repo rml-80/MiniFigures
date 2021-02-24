@@ -12,9 +12,12 @@
 
     @* TODO: Display images, when selected *@
     <div class="btnRow">
-    <InputFile OnChange="OnInputFileChange" multiple />
-
-        <input class="btn btn-outline-success" type="button" @onclick="@OnSubmit" value="Upload" />
+        <div>
+            <InputFile OnChange="OnInputFileChange" multiple />
+        </div>
+        <div class="txtRight">
+            <input class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit" value="Upload" />
+        </div>
     </div>
 </form>
 @code {

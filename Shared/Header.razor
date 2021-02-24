@@ -86,7 +86,7 @@
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">
-                <AddFigure serie="@series.Name" />
+                <AddFigure serie="@series.Name" color="@series.SeriesColor" number="@series.Number" />
             </div>
         </div>
     </div>
