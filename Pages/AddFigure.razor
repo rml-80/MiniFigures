@@ -1,0 +1,29 @@
+﻿@page "/addFigure/{serie}"
+
+@using MiniFigures.Data
+@using MiniFigures.Models
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
+
+@inject IWebHostEnvironment env
+@inject IMiniFigureService MiniFigureService
+@inject ISeriesService SeriesService
+@inject NavigationManager NavigationManager
+
+<div class="addCard" style="border-color:@Color">
+    @*<div class="txtLeftBold" style="color:@serie.SeriesColor">@figure.Number</div>*@
+    <label for="Number">Number?</label>
+    <input tabindex="1" form="Number" class="txtCenter" />
+    <label for="Name">Name? </label>
+    <input tabindex="2" form="Name" class="txtCenter" />
+    <div class="btnRow">
+        <FileUpload serie="@serie" />
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public string serie { get; set; }
+
+    private string Color { get; set; } = "lightgrey";
+}

@@ -55,9 +55,9 @@
                         <input type="button" class="btn btn-light" value="More" />
                         <div class="dropdown-content dropRight">
                             <div class="btn-group-vertical">
-                                <input class="btn btn-outline-secondary" type="button" value="Add all sealed" @onclick="() => addFigures(1)" />
-                                <input class="btn btn-outline-secondary" type="button" value="Add all opened" @onclick="() => addFigures(2)">
-                                <input class="btn btn-outline-secondary" type="button" value="Add all displayed" @onclick="() => addFigures(3)">
+                                <input class="btn btn-outline-secondary" type="button" value="Add all sealed" @onclick='() => addFigures("Sealed")' />
+                                <input class="btn btn-outline-secondary" type="button" value="Add all opened" @onclick='() => addFigures("Opened")'>
+                                <input class="btn btn-outline-secondary" type="button" value="Add all displayed" @onclick='() => addFigures("Displayed")'>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">
-                <AddNewFigures series="@series.Name" />
+                <AddFigure serie="@series.Name" />
             </div>
         </div>
     </div>
@@ -127,28 +127,29 @@
         }
     }
 
-    private void addFigures(int i)
+    private void addFigures(string i)
     {
         switch (i)
         {
-            case 1:
+            case "Sealed":
                 foreach (var figure in ListOfMiniFigures)
                 {
                     figure.CountSealed++;
                     MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
-            case 2:
+            case "Opened":
                 foreach (var figure in ListOfMiniFigures)
                 {
                     figure.CountOpened++;
                     MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
-            case 3:
+            case "Displayed":
                 foreach (var figure in ListOfMiniFigures)
                 {
                     figure.Displayed = true;
+                    figure.CountOpened++;
                     MiniFigureService.EditFigure(figure.ID, figure, series.Name);
                 }
                 break;
