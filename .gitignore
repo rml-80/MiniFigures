@@ -340,5 +340,12 @@ ASALocalRun/
 healthchecksdb
 
 # ignore images folder
-/wwwroot/images
+/wwwroot/images/series
 /MongoData
+/wwwroot/images/Serie_1
+/wwwroot/images/Serie_2
+/wwwroot/images/Serie_3
+/wwwroot/images/Serie_4
+/wwwroot/images/Serie_5
+/wwwroot/images/Serie_6
+/wwwroot/images/Serie_7

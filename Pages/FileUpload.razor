@@ -9,10 +9,12 @@
 <h5>@Message</h5>
 
 <form>
-    <InputFile OnChange="OnInputFileChange" multiple />
+
+    @* TODO: Display images, when selected *@
     <div class="btnRow">
-        <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-        <input class="btn btn-outline-success" type="button" @onclick="@OnSubmit" value="Next" />
+    <InputFile OnChange="OnInputFileChange" multiple />
+
+        <input class="btn btn-outline-success" type="button" @onclick="@OnSubmit" value="Upload" />
     </div>
 </form>
 @code {
@@ -23,28 +25,25 @@
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
-        selectedFiles = e.GetMultipleFiles();
+
+        selectedFiles = e.GetMultipleFiles(25);
         this.StateHasChanged();
     }
 
     private void OnSubmit()
     {
-        if (Directory.Exists($"{env.WebRootPath}\\images\\{serie}"))
+        if (!Directory.Exists($"{env.WebRootPath}\\images\\Series\\{serie}"))
         {
-            Upload();
+            Directory.CreateDirectory($"{env.WebRootPath}\\images\\Series\\{serie}");
         }
-        else
-        {
-            Directory.CreateDirectory($"{env.WebRootPath}\\images\\{serie}");
-            Upload();
-        }
+        Upload();
     }
 
     private async void Upload()
     {
         foreach (var file in selectedFiles)
         {
-            var path = $"{env.WebRootPath}\\images\\{serie}\\{file.Name}";
+            var path = $"{env.WebRootPath}\\images\\Series\\{serie}\\{file.Name}";
             if (File.Exists(path))
             {
                 Message = $"File already exist";
@@ -57,12 +56,12 @@
                 stream.Close();
                 fs.Close();
                 Message = $"{selectedFiles.Count} file(s) uploaded on server";
-                NavigationManager.NavigateTo($"/addnew/figures/{serie}");
+                NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
             }
         }
         this.StateHasChanged();
     }
 
-    private void cancel() => NavigationManager.NavigateTo("/");
+    private void cancel() => NavigationManager.NavigateTo("/", true);
 
 }

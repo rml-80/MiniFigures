@@ -52,7 +52,8 @@
         </div>
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Next" />
+            @*<input class="btn btn-outline-warning" type="button" @onclick="@AddPictures" value="Add pictures" />*@
+            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
         </div>
     </div>
     <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>
@@ -73,7 +74,16 @@
     {
         SeriesList = await SeriesService.GetSeries("A-Z");
     }
-
+    //private async Task Save()
+    //{
+    //    await AddSerie();
+    //    NavigationManager.NavigateTo("/", true);
+    //}
+    //private async Task AddPictures()
+    //{
+    //    await AddSerie();
+    //    NavigationManager.NavigateTo($"/fileupload/{Serie.Name}");
+    //}
     private async Task AddSerie()
     {
         if (CanSave)
@@ -85,9 +95,15 @@
             await SeriesService.AddSerie(Serie);
             await SeriesService.CreateNewCollection(Serie.Name);
             await MiniFigureService.AddFiguresToDb(Serie.NumberOfFigures, Serie.Name, Serie.Number);
-            NavigationManager.NavigateTo($"/fileupload/{Serie.Name}");
+            NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}");
         }
     }
+
+    //private void SetName(ChangeEventArgs args)
+    //{
+    //    Serie.DisplayName = "Serie " + args.Value.ToString();
+    //    Serie.Name = Serie.DisplayName.Replace(" ", "_");
+    //}
 
     private void ColorChange(ChangeEventArgs args)
     {

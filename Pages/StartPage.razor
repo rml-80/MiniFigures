@@ -15,11 +15,11 @@
     </div>
 </div>
 
-<div class="card-deck">
+<div class="card-deck" style="background-image: url)">
     @foreach (var item in ListOfSeries)
     {
     <div class="figCard" >
-        <img class="indexImg" src="images/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+        <img class="indexImg" src="images/Series/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
         <h5>@item.DisplayName</h5>
         <h6 style="margin-top:0.7rem">
             @CountOwned(item.Name) of @item.NumberOfFigures figures 

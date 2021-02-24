@@ -1,6 +1,6 @@
 ﻿//TODO
 
-Image upload within add serie
+prehaps a folder for bags? WAIT WITH THIS
 
 Bag images to each serie
 
@@ -8,3 +8,14 @@ when adding all displayed it should add all opened too
 
 AddNewSerie
 	make a form
+
+refresh navMenu when added a new serie
+
+a random series picture as background for all pages // not going to look good
+
+button to edit all figures in edit more dropdown
+
+NavMenu fix design
+
+Remove Picture from Edit
+	Add fileUpload for Bag Image instead...

@@ -29,7 +29,7 @@
         </li>
         @foreach (var serie in ListOfSeries)
         {
-            <li class="nav-item px-3" style="padding-top: 0; background-image:url(images/@serie.Name/@serie.SeriePicture)">
+            <li class="nav-item px-3" style="padding-top: 0; background-color:@serie.SeriesColor">
                 <NavLink class="nav-link" href="@serie.Name">
                     <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie.DisplayName
                 </NavLink>

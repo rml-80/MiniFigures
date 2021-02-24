@@ -13,7 +13,9 @@ else
 {
     <div class="cardBig" style="border-color:@Serie.SeriesColor">
         <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
-        <div><img class="imgBig" src="/images/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" /></div>
+
+        @*TODO: IF Image dosen't exist *@
+        <div><img class="imgBig" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" /></div>
         <p>@OneMiniFigure.Name</p>
         <table class="cardTabel">
             <tr class="TableOne">

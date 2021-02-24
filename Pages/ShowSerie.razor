@@ -2,7 +2,10 @@
 
 @using MiniFigures.Data
 @using MiniFigures.Models
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
 
+@inject IWebHostEnvironment env
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
@@ -36,7 +39,15 @@ else
             <div class="Card" style="border-color:@Serie.SeriesColor">
                 <div style="height:22rem">
                     <div class="txtLeftBold" style="color:@Serie.SeriesColor">@figure.Number</div>
-                    <img src="/images/@SerieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => showCard(figure.Number))" />
+                    @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\{SerieToShow}\\{figure.Image}"))
+                    {
+                        <img src="/images/placeholder.jpg" alt="Picture" @onclick="(() => showCard(figure.Number))" />
+
+                    }
+                    else
+                    {
+                        <img src="/images/Series/@SerieToShow/@figure.Image" alt="Picture of @figure.Name" @onclick="(() => showCard(figure.Number))" />
+                    }
                     <table>
                         <tr>
                             <td colspan="3">

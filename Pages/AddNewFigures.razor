@@ -2,7 +2,10 @@
 
 @using MiniFigures.Data
 @using MiniFigures.Models
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
 
+@inject IWebHostEnvironment env
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
@@ -16,7 +19,8 @@ else
     <div class="marginBig, txtRight" style="float:right">
         <input class="btn btn-outline-dark" type="submit" @onclick="cancel" value="Cancel" />
     </div>
-    <h3>Edit Figures Names</h3>
+    <h3>Edit Figures</h3>
+    <FileUpload serie="@serie" />
     <div class="card-deck">
         @foreach (var figure in ListOfMF)
         {
@@ -24,7 +28,14 @@ else
                 <div class="txtLeftBold" style="color:@Serie.SeriesColor">@figure.Number</div>
                 <label for="Name">Enter name: </label>
                 <input tabindex="1" form="Name" class="txtCenter" @onchange="@EditNewFigureName" />
-                <img src="/images/@serie/@figure.Image" alt="Picture of @figure.Name" style="margin-top:2rem" />
+                @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\{serie}\\{figure.Image}"))
+                {
+                    <FileUpload serie="@serie" />
+                }
+                else
+                {
+                    <img src="/images/Series/@serie/@figure.Image" alt="Picture of @figure.Name" style="margin-top:2rem" />
+                }
             </div>
         }
     </div>
