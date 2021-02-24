@@ -1,5 +1,6 @@
 ﻿@using MiniFigures.Data
 @using MiniFigures.Models
+@using System.IO
 
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
@@ -41,18 +42,20 @@
                 <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Serie.SeriesColor; margin-left:1rem" />
             </td>
         </tr>
-        <tr>
-            <td class="label">Image:</td>
-            <td>
-                <input for="Name" class="form-control infotable txtCenter" @bind="@OneMiniFigure.Image" />
-            </td>
-        </tr>
+        @*<tr>
+                <td class="label">Image:</td>
+                <td>@OneMiniFigure.Image</td>
+            </tr>*@
         <tr>
             <td colspan="2">
-
-                @*TODO: IF Image dosen't Exist *@
-                <img class="imgSmall" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" />
-
+                @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}\\{@OneMiniFigure.Image}"))
+                {
+                    <img class="imgSmall" src="/images/placeholder.jpg" alt="Picture of placeholder picture" style="margin-top:2rem" />
+                }
+                else
+                {
+                    <img class="imgSmall" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" />
+                }
             </td>
         </tr>
     </table>
@@ -147,7 +150,8 @@
 
     private void deleteFigure(string id)
     {
-        MiniFigureService.DeleteFigure(id);
+
+        MiniFigureService.DeleteFigure(id, Serie.Name, OneMiniFigure.Image);
         NavigationManager.NavigateTo($"/{Serie.Name}", true);
     }
 

@@ -3,20 +3,25 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
 
 namespace MiniFigures.Data
 {
     public class SeriesService : ISeriesService
     {
+        private readonly IWebHostEnvironment env;
+
         private IMongoCollection<Series> _series;
         private readonly IMongoClient _client;
         private readonly IMongoDatabase _database;
-        public SeriesService(IMongoDBSettings settings)
+        public SeriesService(IMongoDBSettings settings, IWebHostEnvironment _env)
         {
             _client = new MongoClient(settings.ConnectionString);
             _database = _client.GetDatabase(settings.DatabaseName);
             _series = _database.GetCollection<Series>(settings.CollectionName);
+            env = _env;
         }
         public async Task<bool> CreateNewCollection(string name)
         {
@@ -48,6 +53,10 @@ namespace MiniFigures.Data
             {
                 await _database.DropCollectionAsync(name);
                 await _series.DeleteOneAsync(i => i.Name == name);
+                if (Directory.Exists($"{env.WebRootPath}\\images\\Series\\{name}"))
+                {
+                    Directory.Delete($"{env.WebRootPath}\\images\\Series\\{name}", true);
+                }
                 return true;
             }
             catch
@@ -63,6 +72,10 @@ namespace MiniFigures.Data
                 serie.DisplayName = "Serie " + serie.DisplayName;
                 serie.Name = serie.DisplayName.Replace(" ", "_");
                 await _series.InsertOneAsync(serie);
+                if (!Directory.Exists($"{env.WebRootPath}\\images\\Series\\{serie.Name}"))
+                {
+                    Directory.CreateDirectory($"{env.WebRootPath}\\images\\Series\\{serie.Name}");
+                }
                 return true;
             }
             catch
@@ -114,6 +127,6 @@ namespace MiniFigures.Data
                     break;
             }
             return list;
-        }        
+        }
     }
 }

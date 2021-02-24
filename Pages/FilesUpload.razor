@@ -1,4 +1,4 @@
-﻿@page "/fileupload/{serie}"
+﻿@page "/filesupload/{serie}"
 
 @using System.IO
 @using Microsoft.AspNetCore.Hosting
@@ -6,7 +6,7 @@
 @inject IWebHostEnvironment env
 @inject NavigationManager NavigationManager
 
-<h5>@Message</h5>
+<h6 style="margin-top:2rem">@Message</h6>
 
 <form>
 
@@ -14,42 +14,32 @@
     <div class="btnRow">
         <div>
             <InputFile OnChange="OnInputFileChange" multiple />
-        </div>
-        <div class="txtRight">
-            <input class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit" value="Upload" />
+            <button class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit">Upload</button>
         </div>
     </div>
 </form>
 @code {
     [Parameter] public string serie { get; set; }
+    [Parameter] public string from { get; set; }
 
     string Message = "";
     IReadOnlyList<IBrowserFile> selectedFiles;
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
-
         selectedFiles = e.GetMultipleFiles(25);
         this.StateHasChanged();
     }
 
-    private void OnSubmit()
-    {
-        if (!Directory.Exists($"{env.WebRootPath}\\images\\Series\\{serie}"))
-        {
-            Directory.CreateDirectory($"{env.WebRootPath}\\images\\Series\\{serie}");
-        }
-        Upload();
-    }
-
-    private async void Upload()
+    private async void OnSubmit()
     {
         foreach (var file in selectedFiles)
         {
             var path = $"{env.WebRootPath}\\images\\Series\\{serie}\\{file.Name}";
             if (File.Exists(path))
             {
-                Message = $"File already exist";
+                //TODO: add modal ask if wanting to overwrite file
+                break;
             }
             else
             {
@@ -59,7 +49,10 @@
                 stream.Close();
                 fs.Close();
                 Message = $"{selectedFiles.Count} file(s) uploaded on server";
-                NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
+                if (from == null)
+                {
+                    NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
+                }
             }
         }
         this.StateHasChanged();
@@ -67,4 +60,5 @@
 
     private void cancel() => NavigationManager.NavigateTo("/", true);
 
+    // TODO: Display images, when selected 
 }

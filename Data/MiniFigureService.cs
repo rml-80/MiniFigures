@@ -1,7 +1,7 @@
 ﻿using MiniFigures.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +66,8 @@ namespace MiniFigures.Data
             {
                 return false;
             }
-        }        public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
+        }        
+        public async Task<bool> EditFigure(string Id, MiniFigure miniFigure, string collectionName)
         {
             try
             {
@@ -79,11 +80,15 @@ namespace MiniFigures.Data
                 return false;
             }
         }
-        public async Task<bool> DeleteFigure(string id)
+        public async Task<bool> DeleteFigure(string id, string serie, string image)
         {
             try
             {
                 await _miniFigure.DeleteOneAsync(i => i.ID == id);
+                if (File.Exists($"wwwroot\\images\\Series\\{serie}\\{image}"))
+                {
+                    File.Delete($"wwwroot\\images\\Series\\{serie}\\{image}");
+                }
                 return true;
             }
             catch

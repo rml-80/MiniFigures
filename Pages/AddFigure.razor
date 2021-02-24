@@ -17,7 +17,7 @@
     <label for="Name">Name? </label>
     <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
     <div class="btnRow">
-        <FileUpload serie="@serie" />
+        <FilesUpload serie="@serie" />
     </div>
     <div>
         <input type="button" value="Save" @onclick="@Add" />
@@ -40,5 +40,6 @@
     private async Task Add()
     {
         await MiniFigureService.AddFigure(miniFigure, serie, number );
+        NavigationManager.NavigateTo($"/{serie}", true);
     }
 }

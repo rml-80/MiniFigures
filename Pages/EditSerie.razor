@@ -52,13 +52,14 @@
                     <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
                 </div>
             </div>
-            <div class="row">
-                <div class="labelEditSerie">
+            <div class="txtCenter">
+                    <FilesUpload serie="@Serie.Name" from="EditSerie"/>
+                @*<div class="labelEditSerie">
                     <label for="SeriePicture">Picture: </label>
                 </div>
                 <div>
                     <input form="SeriePicture" @bind="@Serie.SeriePicture" />
-                </div>
+                </div>*@
             </div>
             <div class="btnRow">
                 <div class="dropdown">

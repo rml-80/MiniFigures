@@ -20,7 +20,7 @@ else
         <input class="btn btn-outline-dark" type="submit" @onclick="cancel" value="Cancel" />
     </div>
     <h3>Edit Figures</h3>
-    <FileUpload serie="@serie" />
+    <FilesUpload serie="@serie" />
     <div class="card-deck">
         @foreach (var figure in ListOfMF)
         {
@@ -30,7 +30,7 @@ else
                 <input tabindex="1" form="Name" class="txtCenter" @onchange="@EditNewFigureName" />
                 @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\{serie}\\{figure.Image}"))
                 {
-                    <FileUpload serie="@serie" />
+                    <img src="/images/placeholder.jpg" alt="Picture of placeholder picture" style="margin-top:2rem" />
                 }
                 else
                 {

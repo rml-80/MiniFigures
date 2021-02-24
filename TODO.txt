@@ -1,9 +1,9 @@
 ﻿//TODO
 
+Somethinmg wrong in FilesUpload
+	not all files gets uploaded...
 
 Bag images to each serie
-
-when adding all displayed it should add all opened too
 
 AddNewSerie
 	make a form
@@ -16,5 +16,9 @@ NavMenu fix design
 
 Remove Picture from Edit
 	Add fileUpload for Bag Image instead...
+
+Year and month on release date 
+
+Prompt if to remove image when removing figure
 
 prehaps a folder for bags? WAIT WITH THIS

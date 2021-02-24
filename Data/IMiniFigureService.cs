@@ -12,7 +12,7 @@ namespace MiniFigures.Data
         Task<MiniFigure> GetOneMiniFigure(string collectionName, int number);
         Task<bool> AddFigure(MiniFigure miniFigure, string collectionName, string collectionNumber);
         Task<bool> EditFigure(string ID, MiniFigure miniFigure, string collectionName);
-        Task<bool> DeleteFigure(string id);
+        Task<bool> DeleteFigure(string id, string serie, string image);
         Task<bool> AddFiguresToDb(int numberOfFigures,string collectionName, string collectionNumber);
     }
 }

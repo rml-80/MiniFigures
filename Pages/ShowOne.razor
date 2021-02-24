@@ -1,5 +1,6 @@
 ﻿@using MiniFigures.Data
 @using MiniFigures.Models
+@using System.IO
 
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
@@ -11,11 +12,17 @@
 }
 else
 {
-    <div class="cardBig" style="border-color:@Serie.SeriesColor">
-        <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
+<div class="cardBig" style="border-color:@Serie.SeriesColor">
+    <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
 
-        @*TODO: IF Image dosen't exist *@
+    @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}/{@OneMiniFigure.Image}"))
+    {
+        <img src="/images/placeholder.jpg" alt="Picture of placeholder picture" style="margin-top:2rem" />
+    }
+    else
+    {
         <div><img class="imgBig" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" /></div>
+    }
         <p>@OneMiniFigure.Name</p>
         <table class="cardTabel">
             <tr class="TableOne">
@@ -43,10 +50,10 @@ else
                 <td class="label">Ownd sealed:</td>
                 <td>@OneMiniFigure.CountSealed</td>
             </tr>
-            <tr class="TableOne">
+            @*<tr class="TableOne">
                 <td class="label">Image:</td>
                 <td>@OneMiniFigure.Image</td>
-            </tr>
+            </tr>*@
         </table>
     </div>
 }
