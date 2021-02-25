@@ -1,24 +1,46 @@
 ﻿//TODO
 
-Somethinmg wrong in FilesUpload
-	not all files gets uploaded...
 
-Bag images to each serie
 
-AddNewSerie
-	make a form
 
-refresh navMenu when added a new serie
+TODO:
+	Startpage
+		NavMenu 
+			design
+			refresh navMenu when added a new serie
 
-button to edit all figures in edit more dropdown
+		Header 
+			design
+			Add figure text size
+			show infopanel onclick?
 
-NavMenu fix design
+	ShowSerie
+		Release date, Year and month => AddNewSerie
 
-Remove Picture from Edit
-	Add fileUpload for Bag Image instead...
+	Card
+		Back / EditOne
+			Possibility to change picture
+			Prompt if to remove image when removing figure
+			Background color Confirm Delete
+		
+	EditSerie
+		Design
+		button to edit all figures in edit more dropdown
+		Remove Picture from Edit
+			Add fileUpload for Bag Image instead...
 
-Year and month on release date 
+	AddFigure
+		Design
 
-Prompt if to remove image when removing figure
+	AddNewSerie
+		Year-Month release date
+		Tabindex
+		make a form
 
-prehaps a folder for bags? WAIT WITH THIS
+	EditFigures
+		Show message when uploaded pictures
+
+	General
+		Bag images to each serie
+		Change file name on upload?
+		prehaps a folder for bags? WAIT WITH THIS

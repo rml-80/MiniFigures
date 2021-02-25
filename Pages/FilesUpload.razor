@@ -31,34 +31,26 @@
         this.StateHasChanged();
     }
 
-    private async void OnSubmit()
+    private async Task OnSubmit()
     {
         foreach (var file in selectedFiles)
         {
+            Stream stream = file.OpenReadStream();
             var path = $"{env.WebRootPath}\\images\\Series\\{serie}\\{file.Name}";
-            if (File.Exists(path))
-            {
-                //TODO: add modal ask if wanting to overwrite file
-                break;
-            }
-            else
-            {
-                Stream stream = file.OpenReadStream();
-                FileStream fs = File.Create(path);
-                await stream.CopyToAsync(fs);
-                stream.Close();
-                fs.Close();
-                Message = $"{selectedFiles.Count} file(s) uploaded on server";
-                if (from == null)
-                {
-                    NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
-                }
-            }
+            FileStream fs = File.Create(path);
+            await stream.CopyToAsync(fs);
+            stream.Close();
+            fs.Close();
+        }
+        Message = $"{selectedFiles.Count} file(s) uploaded on server";
+        if (from == null)
+        {
+            NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);
         }
         this.StateHasChanged();
     }
 
     private void cancel() => NavigationManager.NavigateTo("/", true);
 
-    // TODO: Display images, when selected 
+    // TODO: Display images, when selected
 }

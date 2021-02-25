@@ -17,7 +17,7 @@
     <label for="Name">Name? </label>
     <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
     <div class="btnRow">
-        <FilesUpload serie="@serie" />
+        <FilesUpload serie="@serie" from="AddFigure" />
     </div>
     <div>
         <input type="button" value="Save" @onclick="@Add" />
