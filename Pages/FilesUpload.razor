@@ -6,15 +6,17 @@
 @inject IWebHostEnvironment env
 @inject NavigationManager NavigationManager
 
-<h6 style="margin-top:2rem">@Message</h6>
 
 <form>
 
     @* TODO: Display images, when selected *@
-    <div class="btnRow">
-        <div>
-            <InputFile OnChange="OnInputFileChange" multiple />
-            <button class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit">Upload</button>
+        @*<h6 style="margin-top:2rem">@Message</h6>*@
+    <div>
+        <div class="row justify-content-center">
+            <div>
+                <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" />
+            </div>
+            <button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit">Upload</button>
         </div>
     </div>
 </form>
@@ -22,13 +24,24 @@
     [Parameter] public string serie { get; set; }
     [Parameter] public string from { get; set; }
 
-    string Message = "";
+    private bool IsDisabled { get; set; } = true;
+
+    //string Message = "Test";
     IReadOnlyList<IBrowserFile> selectedFiles;
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
         selectedFiles = e.GetMultipleFiles(25);
         this.StateHasChanged();
+
+        if (selectedFiles == null)
+        {
+            IsDisabled = true;
+        }
+        else
+        {
+            IsDisabled = false;
+        }
     }
 
     private async Task OnSubmit()
@@ -42,7 +55,7 @@
             stream.Close();
             fs.Close();
         }
-        Message = $"{selectedFiles.Count} file(s) uploaded on server";
+        //Message = $"{selectedFiles.Count} file(s) uploaded on server";
         if (from == null)
         {
             NavigationManager.NavigateTo($"/addnew/figures/{serie}", true);

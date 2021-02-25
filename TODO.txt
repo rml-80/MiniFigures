@@ -16,6 +16,7 @@ TODO:
 
 	ShowSerie
 		Release date, Year and month => AddNewSerie
+		Modal AddFigure close on click outside
 
 	Card
 		Back / EditOne
@@ -30,7 +31,8 @@ TODO:
 			Add fileUpload for Bag Image instead...
 
 	AddFigure
-		Design
+		Design, make card big
+		Show image when uploaded
 
 	AddNewSerie
 		Year-Month release date
@@ -38,6 +40,7 @@ TODO:
 		make a form
 
 	EditFigures
+		Rename Cancel button to Done, make success
 		Show message when uploaded pictures
 
 	General
