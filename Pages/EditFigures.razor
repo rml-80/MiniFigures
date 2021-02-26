@@ -17,7 +17,7 @@
 else
 {
     <div class="marginBig, txtRight" style="float:right">
-        <input class="btn btn-outline-dark" type="submit" @onclick="cancel" value="Cancel" />
+        <input class="btn btn-outline-success" type="submit" @onclick="done" value="Done" />
     </div>
     <h3>Edit Figures</h3>
     <FilesUpload serie="@serie" />
@@ -87,5 +87,5 @@ else
         i++;
     }
 
-    protected void cancel() => NavigationManager.NavigateTo($"/{serie}", true);
+    protected void done() => NavigationManager.NavigateTo($"/{serie}", true);
 }

@@ -15,7 +15,7 @@
                 <label for="SeriesColor">Color code: </label>
             </div>
             <div>
-                <input form="SeriesColor" @onchange="@ColorChange" />
+                <input form="SeriesColor" @onchange="@ColorChange" tabindex="1"/>
             </div>
         </div>
         <div class="row">
@@ -23,7 +23,7 @@
                 <label for="ReleaseDate">Release Date: </label>
             </div>
             <div>
-                <input form="ReleaseDate" @bind="@Serie.ReleaseDate" placeholder="YYYY-MM" />
+                <input form="ReleaseDate" @bind="@Serie.ReleaseDate" placeholder="YYYY-MM"  tabindex="2" />
             </div>
         </div>
         <div class="row">
@@ -31,7 +31,7 @@
                 <label for="Number">Number: </label>
             </div>
             <div>
-                <input form="Number" @onchange="@checkNumber" />
+                <input form="Number" @onchange="@checkNumber" tabindex="3" />
             </div>
         </div>
         <div class="row">
@@ -39,7 +39,7 @@
                 <label for="Name">Name/Number: </label>
             </div>
             <div>
-                <input form="Name" @bind="@Serie.DisplayName" />
+                <input form="Name" @bind="@Serie.DisplayName" tabindex="4" />
             </div>
         </div>
         <div class="row">
@@ -47,12 +47,12 @@
                 <label for="NumberOfFiguers">Number of figures: </label>
             </div>
             <div>
-                <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
+                <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" tabindex="5" />
             </div>
         </div>
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" />
+            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" tabindex="6" />
         </div>
     </div>
     <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>

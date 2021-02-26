@@ -24,10 +24,10 @@
         }
 </style>
 
-<div class="headerCenter" style="background-color:@series.SeriesColor">
+<div class="headerCenter" style="background-color:@series.SeriesColor" @onclick="() => ToggleInfo()">
     <h2>
         @series.DisplayName
-        <a @onclick="() => ToggleInfo()" class="@InfoIcon SerieInfobutton"></a>
+        <a  class="@InfoIcon SerieInfobutton"></a>
     </h2>
 </div>
 <div class="infoBlock" style="display:@HideShowInfo;border-color:@series.SeriesColor">
@@ -82,7 +82,7 @@
 }
 @if (ShowAdd)
 {
-    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog">
+    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="close">
         <i class="fas fa-times fa-2x closeBtn" @onclick="close" />
         <div class="modal-dialog" @onclick:stopPropagation="true" style="width:37rem">
             <div class="modal-content" style="background-color:transparent; border:none">

@@ -5,22 +5,18 @@
 			refresh navMenu when added a new serie
 
 		Header 
-			design
-			show infopanel onclick?
+			design infopanel
 
 	ShowSerie
-		Release date, Year and month => AddNewSerie
-		Modal AddFigure close on click outside
 
 	Card
 		Back / EditOne
 			Possibility to change picture
 			Prompt if to remove image when removing figure
-			Background color Confirm Delete
 		
 	EditSerie
 		Design
-		button to edit all figures in edit more dropdown
+		make to a form
 		Remove Picture from Edit
 			Add fileUpload for Bag Image instead...
 
@@ -29,10 +25,9 @@
 
 	AddNewSerie
 		Tabindex
-		make a form
+		make to a form
 
 	EditFigures
-		Rename Cancel button to Done, make success style
 		Show message when uploaded pictures?
 
 	General
