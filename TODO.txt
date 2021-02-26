@@ -1,9 +1,4 @@
 ﻿//TODO
-
-
-
-
-TODO:
 	Startpage
 		NavMenu 
 			design
@@ -11,7 +6,6 @@ TODO:
 
 		Header 
 			design
-			Add figure text size
 			show infopanel onclick?
 
 	ShowSerie
@@ -31,17 +25,15 @@ TODO:
 			Add fileUpload for Bag Image instead...
 
 	AddFigure
-		Design, make card big
 		Show image when uploaded
 
 	AddNewSerie
-		Year-Month release date
 		Tabindex
 		make a form
 
 	EditFigures
-		Rename Cancel button to Done, make success
-		Show message when uploaded pictures
+		Rename Cancel button to Done, make success style
+		Show message when uploaded pictures?
 
 	General
 		Bag images to each serie
