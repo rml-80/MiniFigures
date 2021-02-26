@@ -10,13 +10,15 @@
 <form>
 
     @* TODO: Display images, when selected *@
-        @*<h6 style="margin-top:2rem">@Message</h6>*@
+    @*<h6 style="margin-top:2rem">@Message</h6>*@
     <div>
         <div class="row justify-content-center">
             <div>
-                <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" />
+                <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" style=" margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
             </div>
-            <button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" @onclick="@OnSubmit">Upload</button>
+            <button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
+                Upload
+            </button>
         </div>
     </div>
 </form>

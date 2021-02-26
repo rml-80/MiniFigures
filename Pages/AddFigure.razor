@@ -12,15 +12,16 @@
 
 <div class="addCard" style="border-color:@color">
     @*<div class="txtLeftBold" style="color:@serie.SeriesColor">@figure.Number</div>*@
-    <label for="Number">Number?</label>
+    <label for="Number" style="margin-bottom:0px;padding-top:2rem">Number?</label>
     <input tabindex="1" form="Number" @bind="@miniFigure.Number" class="txtCenter" />
-    <label for="Name">Name? </label>
+    <br />
+    <label for="Name" style="margin-bottom:0px">Name? </label>
     <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
     <div class="btnRow">
         <FilesUpload serie="@serie" from="AddFigure" />
     </div>
-    <div>
-        <input type="button" value="Save" @onclick="@Add" />
+    <div class="txtCenter" style="position:absolute; bottom:1rem; width:44%">
+            <input type="button" value="Save" @onclick="@Add" />
     </div>
 </div>
 
