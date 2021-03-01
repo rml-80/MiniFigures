@@ -1,11 +1,7 @@
 ﻿//TODO
 	Startpage
 		NavMenu 
-			design
 			refresh navMenu when added a new serie
-
-		Header 
-			design infopanel
 
 	ShowSerie
 
@@ -21,14 +17,14 @@
 			Add fileUpload for Bag Image instead...
 
 	AddFigure
-		Show image when uploaded
+		Show image when uploaded, replace fileupload with img
 
 	AddNewSerie
-		Tabindex
+		Tabindex...DONE
 		make to a form
 
 	EditFigures
-		Show message when uploaded pictures?
+		Show message when uploaded pictures? No. They show up on Cards
 
 	General
 		Bag images to each serie

@@ -14,22 +14,23 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li>
+        <li style="margin-left: 1rem;font-size: 0.8rem">
             Order By:
             <div class="dropdown">
-                <button class="btn btn-light" style="width:120px">@orderByString</button>
+                <button class="btn btn-light" style="width: 100px; font-size:0.8rem">@orderByString</button>
                 <div class="dropdown-content">
                     <div class="btn-group-vertical">
-                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:120px" @onclick='() => OrderBy("A-Z")' />
-                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="width:120px" @onclick='() => OrderBy("Z-A")'>
-                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width:120px" @onclick='() => OrderBy("Release date")'>
+                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:100px; font-size:0.8rem" @onclick='() => OrderBy("A-Z")' />
+                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="  width: 100px; font-size: 0.8rem" @onclick='() => OrderBy("Z-A")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width: 100px;font-size: 0.8rem
+" @onclick='() => OrderBy("Release date")'>
                     </div>
                 </div>
             </div>
         </li>
         @foreach (var serie in ListOfSeries)
         {
-            <li class="nav-item px-3" style="padding-top: 0; background-color:@serie.SeriesColor">
+            <li class="nav-item px-3" style="background-color:@serie.SeriesColor">
                 <NavLink class="nav-link" href="@serie.Name">
                     <span class="fas fa-list mr-2" aria-hidden="true"></span>@serie.DisplayName
                 </NavLink>
