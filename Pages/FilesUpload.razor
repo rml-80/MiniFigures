@@ -14,7 +14,15 @@
     <div>
         <div class="row justify-content-center">
             <div>
-                <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" style=" margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
+                @if (from == null)
+                {
+                    <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" style="margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
+                }
+                else
+                {
+                    //for single file selection
+                    <InputFile OnChange="OnInputFileChange" class="form-control-file" style="margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
+                }
             </div>
             <button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
                 Upload
@@ -25,6 +33,7 @@
 @code {
     [Parameter] public string serie { get; set; }
     [Parameter] public string from { get; set; }
+    [Parameter] public EventCallback<string> onSubmit { get; set; }
 
     private bool IsDisabled { get; set; } = true;
 
@@ -44,6 +53,7 @@
         {
             IsDisabled = false;
         }
+        onSubmit.InvokeAsync(e.File.Name);
     }
 
     private async Task OnSubmit()

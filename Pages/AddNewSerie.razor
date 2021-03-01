@@ -89,7 +89,7 @@
         {
             if (Serie.DisplayName == null)
             {
-                Serie.DisplayName = "Rename serie";
+                Serie.DisplayName = "Rename serie";     //TODO: Require this
             }
             await SeriesService.AddSerie(Serie);
             await SeriesService.CreateNewCollection(Serie.Name);

@@ -96,6 +96,7 @@ namespace MiniFigures.Data
                 return false;
             }
         }
+        //Adding x number of figures to Collection in MongoDB
         public async Task<bool> AddFiguresToDb(int numberOfFigures, string collectionName, string collectionNumber)
         {
             var miniFigure = _database.GetCollection<BsonDocument>(collectionName);
@@ -103,6 +104,8 @@ namespace MiniFigures.Data
             var bson = new List<BsonDocument>();
             for (int i = 1; i <= numberOfFigures; i++)
             {
+                //adding image name to each file
+                //useful if images are named properly
                 if (i.ToString().Length > 1)
                 {
                     Image = $"{collectionNumber}-{i}.jpg";
@@ -113,6 +116,7 @@ namespace MiniFigures.Data
                 }
                 var figure = new BsonDocument
                 {
+                    //namning figures to number of figure
                     { "Name",i.ToString()},
                     { "CountSealed",0},
                     { "CountOpened",0},

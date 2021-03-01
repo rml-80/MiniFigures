@@ -18,6 +18,7 @@ namespace MiniFigures.Models
         public int NumberOfFigures { get; set; }
         public string SeriesColor { get; set; }
         public string SeriePicture { get; set; }
+        public string BagImage { get; set; }
         public string DisplayName { get; set; }
         public string ReleaseDate { get; set; }
         public bool isComplete { get; set; }

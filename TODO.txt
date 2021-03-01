@@ -2,6 +2,7 @@
 	Startpage
 		NavMenu 
 			refresh navMenu when added a new serie
+		Cards not align properly
 
 	ShowSerie
 
@@ -20,13 +21,25 @@
 		Show image when uploaded, replace fileupload with img
 
 	AddNewSerie
-		Tabindex...DONE
+		Tabindex...can't tab to save
 		make to a form
 
 	EditFigures
 		Show message when uploaded pictures? No. They show up on Cards
+		If no image show , select dropdown for each file in folder, if there is any else choose files to upload to folder.
 
 	General
 		Bag images to each serie
 		Change file name on upload?
 		prehaps a folder for bags? WAIT WITH THIS
+		add leading 0(zero) to series 1 - 9 for sorting purposes
+
+
+BackEnd
+
+
+
+
+
+EventCallBack link
+https://chrissainty.com/3-ways-to-communicate-between-components-in-blazor/

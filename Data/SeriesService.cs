@@ -23,6 +23,7 @@ namespace MiniFigures.Data
             _series = _database.GetCollection<Series>(settings.CollectionName);
             env = _env;
         }
+        //Creating New Collection in MongoDB
         public async Task<bool> CreateNewCollection(string name)
         {
             try
@@ -64,11 +65,14 @@ namespace MiniFigures.Data
                 return false;
             }
         }
+        //Adding "Serie " to DisplayName
+        //Generating Name by replacing " "(space) with "_"
+        //inserting it to MongoDB
+        //Checking if series folder exists, if not creating it
         public async Task<bool> AddSerie(Series serie)
         {
             try
             {
-                serie.SeriePicture = serie.Number + ".jpg";
                 serie.DisplayName = "Serie " + serie.DisplayName;
                 serie.Name = serie.DisplayName.Replace(" ", "_");
                 await _series.InsertOneAsync(serie);
