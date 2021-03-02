@@ -14,8 +14,6 @@
 	EditSerie
 		Design
 		make to a form
-		Remove Picture from Edit
-			Add fileUpload for Bag Image instead...
 
 	AddFigure
 		Show image when uploaded, replace fileupload with img
@@ -32,7 +30,7 @@
 		Bag images to each serie
 		Change file name on upload?
 		prehaps a folder for bags? WAIT WITH THIS
-		add leading 0(zero) to series 1 - 9 for sorting purposes
+		add leading 0(zero) to series 1 - 9 for sorting purposes. Or sort by number
 
 
 BackEnd

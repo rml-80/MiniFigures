@@ -169,12 +169,12 @@ else
         if (Owned == Serie.NumberOfFigures)
         {
             Serie.isComplete = true;
+            SeriesService.EditSerie(Serie.Id, Serie);
         }
         else
         {
             Serie.isComplete = false;
         }
-        SeriesService.EditSerie(Serie.Id, Serie);
     }
 
     private void ToEdit() => NavigationManager.NavigateTo($"/{SerieToShow}/edit");

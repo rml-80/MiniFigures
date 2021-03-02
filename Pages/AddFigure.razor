@@ -12,16 +12,38 @@
 
 <div class="addCard" style="border-color:@color">
     @*<div class="txtLeftBold" style="color:@serie.SeriesColor">@figure.Number</div>*@
-    <label for="Number" style="margin-bottom:0px;padding-top:2rem">Number?</label>
-    <input tabindex="1" form="Number" @bind="@miniFigure.Number" class="txtCenter" />
-    <br />
-    <label for="Name" style="margin-bottom:0px">Name? </label>
-    <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
-    <div class="btnRow">
-        <FilesUpload serie="@serie" from="AddFigure" />
-    </div>
-    <div class="txtCenter" style="position:absolute; bottom:1rem; width:44%">
-            <input type="button" value="Save" @onclick="@Add" />
+    <table>
+        <tr>
+            <td style="width:55%; text-align:right"> 
+                <label for="Number" style="display:inline">Number?</label>
+            </td>
+            <td>
+                <input tabindex="1" form="Number" @bind-value="@miniFigure.Number" class="txtCenter" />
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width:55%; text-align:right">
+                <label for="Name" style="display:inline">Name? </label>
+
+            </td>
+            <td>
+
+                <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
+            </td>
+        </tr>
+        <tr >
+            <td colspan="2" style="width:55%; text-align:right">
+                <FilesUpload serie="@serie" from="AddFigure" />
+                </td>
+        </tr>
+
+    </table>
+
+    @*<div class="btnRow" style="margin:auto">
+        </div>*@
+    <div>
+        <input type="button" value="Save" @onclick="@Add" />
     </div>
 </div>
 

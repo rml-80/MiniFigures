@@ -24,11 +24,11 @@
         </table>
 </div>
 
-<div class="card-deck" style="background-image: url)">
+<div class="card-deck">
     @foreach (var item in ListOfSeries)
     {
     <div class="figCard" >
-        <img class="indexImg" src="images/Series/@item.Name/@item.BagImage" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+        <img class="indexImg" src="images/series/@item.Name/@item.BagImage" @onclick="() => goTo(item.Name)" alt="@item.Name" />
         <h5>@item.DisplayName</h5>
         <h6 style="margin-top:0.7rem">
             @CountOwned(item.Name) of @item.NumberOfFigures figures 
@@ -54,7 +54,7 @@
         await GetList();
         GetInfo();
     }
-
+    // Needed for ordering cards when changing order by
     protected override void OnAfterRender(bool firstRender)
     {
         GetList().GetAwaiter();

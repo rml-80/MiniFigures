@@ -11,7 +11,7 @@
 
     @* TODO: Display images, when selected *@
     @*<h6 style="margin-top:2rem">@Message</h6>*@
-    <div>
+
         <div class="row justify-content-center">
             <div>
                 @if (from == null)
@@ -21,24 +21,28 @@
                 else
                 {
                     //for single file selection
-                    <InputFile OnChange="OnInputFileChange" class="form-control-file" style="margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
+
+                    <InputFile OnChange="OnInputSingleFileChange" class="form-control-file" />
                 }
             </div>
-            <button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
+            @*<button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
                 Upload
-            </button>
+            </button>*@
         </div>
-    </div>
+
 </form>
 @code {
-    [Parameter] public string serie { get; set; }
-    [Parameter] public string from { get; set; }
-    [Parameter] public EventCallback<string> onSubmit { get; set; }
+        [Parameter] public string serie { get; set; }
+        [Parameter] public string bagImg { get; set; }
+        [Parameter] public string from { get; set; }
+        [Parameter] public EventCallback<string> onSubmit { get; set; }
 
     private bool IsDisabled { get; set; } = true;
+    string ImgURL { get; set; } = string.Empty;
 
     //string Message = "Test";
     IReadOnlyList<IBrowserFile> selectedFiles;
+    IBrowserFile file;
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
@@ -53,12 +57,29 @@
         {
             IsDisabled = false;
         }
+        OnSubmit().GetAwaiter();
+        onSubmit.InvokeAsync(e.File.Name);
+    }
+    private void OnInputSingleFileChange(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+        this.StateHasChanged();
+
+        if (selectedFiles == null)
+        {
+            IsDisabled = true;
+        }
+        else
+        {
+            IsDisabled = false;
+        }
+        OnSubmit().GetAwaiter();
         onSubmit.InvokeAsync(e.File.Name);
     }
 
     private async Task OnSubmit()
     {
-        foreach (var file in selectedFiles)
+        if (selectedFiles == null)
         {
             Stream stream = file.OpenReadStream();
             var path = $"{env.WebRootPath}\\images\\Series\\{serie}\\{file.Name}";
@@ -66,6 +87,18 @@
             await stream.CopyToAsync(fs);
             stream.Close();
             fs.Close();
+        }
+        else
+        {
+            foreach (var file in selectedFiles)
+            {
+                Stream stream = file.OpenReadStream();
+                var path = $"{env.WebRootPath}\\images\\Series\\{serie}\\{file.Name}";
+                FileStream fs = File.Create(path);
+                await stream.CopyToAsync(fs);
+                stream.Close();
+                fs.Close();
+            }
         }
         //Message = $"{selectedFiles.Count} file(s) uploaded on server";
         if (from == null)

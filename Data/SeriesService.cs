@@ -73,6 +73,8 @@ namespace MiniFigures.Data
         {
             try
             {
+                serie.BagImage = string.Empty;
+                serie.SeriePicture = string.Empty;
                 serie.DisplayName = "Serie " + serie.DisplayName;
                 serie.Name = serie.DisplayName.Replace(" ", "_");
                 await _series.InsertOneAsync(serie);

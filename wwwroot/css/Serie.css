@@ -38,8 +38,8 @@ table {
 }
 .addCard {
     text-align: center;
-    width: 16rem;
-    height: 26em;
+    width: 26rem;
+    height: 16em;
     border: solid 0.6rem;
     border-radius: 1rem;
     margin: 10rem auto 0 auto;
@@ -163,6 +163,7 @@ table {
     text-align: right;
     width: 50%;
     height:3rem;
+    display: block;
 }
 .labelEditSerie{
     text-align:right;
@@ -183,7 +184,7 @@ table {
     margin-bottom: 3rem;
 }
 .row {
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
 }
 .SerieInfobutton {
     float: right;

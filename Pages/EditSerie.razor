@@ -52,23 +52,29 @@
                     <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
                 </div>
             </div>
-            <div class="txtCenter">
-                    <FilesUpload serie="@Serie.Name" from="editSerie" onSubmit="setImg"/>
+
+            <div class="row" style="margin-top:0px">
+            <div style="margin: auto -200px auto auto">
+                <img class="indexImg" src="images/series/@Serie.Name/@imgURL" alt="@Serie.Name bag" style="height:50px" />
+            </div>
+            <div style="margin-left:auto;margin-right:0px">
+                <FilesUpload serie="@Serie.Name" from="editSerie" onSubmit="setImg" />
+            </div>
                 @*<div class="labelEditSerie">
-                    <label for="SeriePicture">Picture: </label>
-                </div>
-                <div>
-                    <input form="SeriePicture" @bind="@Serie.SeriePicture" />
-                </div>*@
+                <label for="SeriePicture">Picture: </label>
+            </div>
+            <div>
+                <input form="SeriePicture" @bind="@Serie.SeriePicture" />
+            </div>*@
             </div>
             <div class="btnRow">
                 <div class="dropdown">
                     <input type="button" class="btn btn-light" value="More" />
                     <div class="dropdown-content">
-                        <div class="btn-group-vertical" >
+                        <div class="btn-group-vertical">
                             <input class="btn btn-outline-dark" style="border:solid 0.5px grey" type="button" @onclick='() => NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}")' value="Edit all Figures" />
-                            <input class="btn btn-outline-warning"style="border:solid 0.5px grey" type="button" @onclick="ResetAllFigures" value="Reset all Figures" />
-                            <input class="btn btn-outline-danger"style="border:solid 0.5px grey" type="button" @onclick="DeleteShow" value="Delete Serie" />
+                            <input class="btn btn-outline-warning" style="border:solid 0.5px grey" type="button" @onclick="ResetAllFigures" value="Reset all Figures" />
+                            <input class="btn btn-outline-danger" style="border:solid 0.5px grey" type="button" @onclick="DeleteShow" value="Delete Serie" />
                         </div>
                     </div>
                 </div>
@@ -104,6 +110,7 @@
     [Parameter] public string SerieToShow { get; set; }
 
     private bool ShowDelete = false;
+    private string imgURL { get; set; }
 
     private List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
 
@@ -113,16 +120,17 @@
     {
         Serie = await SeriesService.GetOneSerie(SerieToShow);
         ListOfMiniFigures = MiniFigureService.GetMiniFigures(SerieToShow);
+        imgURL = Serie.BagImage;
     }
 
-    void setImg(string Message)
+    protected void setImg(string Message)
     {
         Serie.BagImage = Message;
+        imgURL = Message;
     }
 
     private void saveSerie(Series Serie)
     {
-
         SeriesService.EditSerie(Serie.Id, Serie);
         SeriesService.RenameCollection(SerieToShow, Serie.Name);
         NavigationManager.NavigateTo("/", true);
