@@ -2,29 +2,42 @@
 	Startpage
 		NavMenu 
 			refresh navMenu when added a new serie
+			Order by: Number of figures & Number
 		Cards not align properly
 
 	ShowSerie
 
 	Card
 		Back / EditOne
-			Possibility to change picture
-			Prompt if to remove image when removing figure
+
+
+			If edit from not displayed to displayed, add one to owned opened if 0(zero)
+			Text vertical-align
+				LATER Possibility to change picture
+				LATER Prompt if to remove image when removing figure
 		
 	EditSerie
-		Design
 		make to a form
+		Design
+		
+			LATER Disable fileupload
 
 	AddFigure
-		Show image when uploaded, replace fileupload with img
+		disable fileupload
+		design
+			
+			LATER Show image when uploaded, replace fileupload with img
 
 	AddNewSerie
 		Tabindex...can't tab to save
 		make to a form
+		add fileupload, for all images to the serie. must be renamed before uploading, manually
 
 	EditFigures
-		Show message when uploaded pictures? No. They show up on Cards
+		
 		If no image show , select dropdown for each file in folder, if there is any else choose files to upload to folder.
+		Disable fileupload, move to addSerie
+			Disable fileupload on each card, work on this later, only show placeholder image
 
 	General
 		Bag images to each serie

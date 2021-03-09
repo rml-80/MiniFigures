@@ -32,10 +32,10 @@
 
 </form>
 @code {
-        [Parameter] public string serie { get; set; }
-        [Parameter] public string bagImg { get; set; }
-        [Parameter] public string from { get; set; }
-        [Parameter] public EventCallback<string> onSubmit { get; set; }
+    [Parameter] public string serie { get; set; }
+    [Parameter] public string bagImg { get; set; }
+    [Parameter] public string from { get; set; }
+    [Parameter] public EventCallback<string> onSubmit { get; set; }
 
     private bool IsDisabled { get; set; } = true;
     string ImgURL { get; set; } = string.Empty;
@@ -58,7 +58,7 @@
             IsDisabled = false;
         }
         OnSubmit().GetAwaiter();
-        onSubmit.InvokeAsync(e.File.Name);
+        //onSubmit.InvokeAsync(e.File.Name);
     }
     private void OnInputSingleFileChange(InputFileChangeEventArgs e)
     {
@@ -74,7 +74,7 @@
             IsDisabled = false;
         }
         OnSubmit().GetAwaiter();
-        onSubmit.InvokeAsync(e.File.Name);
+        //onSubmit.InvokeAsync(e.File.Name);
     }
 
     private async Task OnSubmit()

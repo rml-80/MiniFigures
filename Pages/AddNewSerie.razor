@@ -6,50 +6,60 @@
 @inject IMiniFigureService MiniFigureService
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
-
+<style>
+    .txtCenter {
+        text-align: center;
+    }
+    .addSeriesCard {
+        width: 35rem;
+        /*height: 21rem;*/
+        border: solid 0.6rem;
+        border-radius: 10px;
+        margin: 1rem auto 1rem auto;
+        padding-top: 1rem;
+    }
+    .labelAddSerie {
+        text-align: right;
+        width: 30%;
+        height: 2rem;
+    }
+    .btnRow {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+</style>
 <h3>Add Serie</h3>
 <div class="txtCenter">
     <div class="addSeriesCard" style="border-color:@Color">
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="SeriesColor">Color code: </label>
-            </div>
-            <div>
-                <input form="SeriesColor" @onchange="@ColorChange" tabindex="1"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="ReleaseDate">Release Date: </label>
-            </div>
-            <div>
-                <input form="ReleaseDate" @bind="@Serie.ReleaseDate" placeholder="YYYY-MM"  tabindex="2" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="Number">Number: </label>
-            </div>
-            <div>
-                <input form="Number" @onchange="@checkNumber" tabindex="3" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="Name">Name/Number: </label>
-            </div>
-            <div>
-                <input form="Name" @bind="@Serie.DisplayName" tabindex="4" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="labelEditSerie">
-                <label for="NumberOfFiguers">Number of figures: </label>
-            </div>
-            <div>
-                <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" tabindex="5" />
-            </div>
-        </div>
+        <EditForm Model="@Serie">
+            <label class="labelAddSerie">
+                Color code:
+            </label>
+            <input form="SeriesColor" @onchange="@ColorChange" tabindex="1" />
+            <br/>
+            <label class="labelAddSerie">
+                Realese Date:
+            </label>
+            <input form="ReleaseDate" @bind="@Serie.ReleaseDate" placeholder="YYYY-MM" tabindex="2" />
+            <br />
+            <label class="labelAddSerie">
+                Number:
+            </label>
+            <input form="Number" @onchange="@checkNumber" tabindex="3" />
+            <br />
+            <label class="labelAddSerie">
+                Name/Number:
+            </label>
+            <input form="Name" @bind="@Serie.DisplayName" tabindex="4" />
+            <br />
+            <label class="labelAddSerie" for="NumberOfFiguers">
+                Number of figures:
+            </label>
+            <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" tabindex="5" />
+
+        </EditForm>
+
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
             <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" tabindex="6" />
@@ -57,7 +67,7 @@
     </div>
     <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>
 </div>
- 
+
 @code {
     private List<Series> SeriesList = new List<Series>();
     private Series Serie = new Series();

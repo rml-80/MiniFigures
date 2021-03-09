@@ -6,238 +6,247 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
-<div class="cardBig" style="border-color:@Serie.SeriesColor;margin-left:auto;margin-right:auto">
-    <h3 style="color:@Serie.SeriesColor">@Serie.DisplayName</h3>
-    <table class="cardTable TableOne">
-        <tr>
-            <td class="label">Name:</td>
-            <td>
-                <input for="Name" class="form-control txtCenter" @bind="@OneMiniFigure.Name" />
-            </td>
-        </tr>
-        <tr>
-            <td class="label">Number:</td>
-            <td><input for="Number" class="form-control txtCenter" style="margin-left:auto ;margin-right:auto" @onchange="@checkNumber" placeholder="@OneMiniFigure.Number" /></td>
-        </tr>
-        <tr>
-            <td class="label">In display:</td>
-            <td>
-                <input class="display" type="button" style="@isTrue" @onclick="changeTrueFalse" value="Yes" />
-                <input class="display" type="button" style="@isFalse" @onclick=" changeTrueFalse" value="No" />
-            </td>
-        </tr>
-        <tr>
-            <td class="label">Ownd openend:</td>
-            <td>
-                <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Serie.SeriesColor; margin-right:1rem" />
-                @OneMiniFigure.CountOpened
-                <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Serie.SeriesColor; margin-left:1rem" />
-            </td>
-        </tr>
-        <tr>
-            <td class="label">Ownd sealed:</td>
-            <td>
-                <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Serie.SeriesColor; margin-right:1rem" />
-                @OneMiniFigure.CountSealed
-                <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Serie.SeriesColor; margin-left:1rem" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button class="btn btn-sm" style="background-color:@Serie.SeriesColor; float:right">Change image</button>
-            </td>
-        </tr>
-        @*<tr>
-                <td class="label">Image:</td>
-                <td>@OneMiniFigure.Image</td>
-            </tr>*@
-        <tr>
-            <td colspan="2">
-                @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}\\{@OneMiniFigure.Image}"))
+    <style>
+        .bigCard {
+            width: 35rem;
+            height: 55rem;
+            border: solid 1rem;
+            border-radius: 1rem;
+            margin: 1rem auto;
+            padding: 0.5rem;
+            background-color: white;
+        }
+        .labelOnEditOne {
+            text-align: right;
+            width: 30%;
+            height: 2rem;
+        }
+        .dataLblOnEditOne{
+            width:45%;
+        }
+    </style>
+
+    <div class="bigCard" style="border-color:@Serie.SeriesColor">
+        <h3 style="color:@Serie.SeriesColor">@Serie.DisplayName</h3>
+    <EditForm Model="@OneMiniFigure">
+        <label class="labelOnEditOne">
+            Name:
+        </label>
+        <input class="dataLblOnEditOne" form="Name" @bind="@OneMiniFigure.Name" />
+        <br />
+        <label class="labelOnEditOne">
+            Number:
+        </label>
+        <input class="dataLblOnEditOne" form="Number" @onchange="@checkNumber" placeholder="@OneMiniFigure.Number" />
+        <br />
+        <label class="labelOnEditOne">
+            In display:
+        </label>
+        <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="Yes" />
+        <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="No" />
+        <br />
+        <label class="labelOnEditOne">
+            Owned openend:
+        </label>
+        <div class="dataLblOnEditOne">
+            <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Serie.SeriesColor; margin-right:1rem" />
+            @OneMiniFigure.CountOpened
+            <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Serie.SeriesColor; margin-left:1rem" />
+        </div>
+        <br />
+        <label class="labelOnEditOne">
+            Owned sealed:
+        </label>
+        <div class="dataLblOnEditOne">
+            <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Serie.SeriesColor; margin-right:1rem" />
+            @OneMiniFigure.CountSealed
+            <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Serie.SeriesColor; margin-left:1rem" />
+        </div>
+    </EditForm>
+
+                    @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}\\{@OneMiniFigure.Image}"))
+                    {
+                        <img class="imgSmall" src="/images/placeholder.jpg" alt="Picture of placeholder picture" style="margin-top:2rem" />
+                    }
+                    else
+                    {
+                        <img class="imgSmall" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" />
+                    }
+
+        <div id="bottom">
+            <div style="float:right; margin-right:0px">
+                <div class="dropdown">
+                    <input type="button" class="btn btn-light" value="More" />
+                    <div class="dropdown-content">
+                        <div class="btn-group-vertical">
+                            <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset Figure" />
+                            <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete Figure">
+                        </div>
+                    </div>
+                </div>
+                <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneMiniFigure.Number)" />
+            </div>
+        </div>
+        @if (ShowDelete)
+        {
+            <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
+                <div class="modal-dialog" @onclick:stopPropagation="true" style="margin-top:50%;width:80%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Confirm Delete</h4>
+                            <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete:</p>
+                            <h3>ID: @OneMiniFigure.Number</h3>
+                            <h3>Name: @OneMiniFigure.Name</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel" value="Cancel" />
+                            <input type="button" class="btn btn-danger" @onclick="() => deleteFigure(OneMiniFigure.ID)" value="Delete" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div style="display:@ShowWarningForNumber;margin-top:10rem ; color:red">
+        Minifigure with Number: @CurrentNumber <br />already exists!
+    </div>
+
+    @code {
+        [Parameter] public int Number { get; set; }
+        [Parameter] public MiniFigure OneMiniFigure { get; set; }
+        [Parameter] public Series Serie { get; set; }
+
+        List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
+
+        private bool CanSave { get; set; }
+        private bool Existing { get; set; }
+        private bool ShowDelete { get; set; } = false;
+
+        private int? CurrentNumber { get; set; }
+
+        private string isFalse { get; set; }
+        private string isTrue { get; set; }
+        private string ShowWarningForNumber { get; set; } = "none";
+
+        protected override void OnParametersSet()
+        {
+            trueOrFalse();
+            ListOfMiniFigures = MiniFigureService.GetMiniFigures(Serie.Name);
+        }
+
+        private void DeleteShow() => ShowDelete = true;
+
+        private void DeleteCancel() => ShowDelete = false;
+
+        //calculations
+        private void IncrementOpen() => OneMiniFigure.CountOpened++;
+
+        private void DecrementOpen()
+        {
+            if (OneMiniFigure.CountOpened != 0)
+            {
+                OneMiniFigure.CountOpened--;
+            }
+        }
+
+        private void IncrementSealed() => OneMiniFigure.CountSealed++;
+
+        private void DecrementSealed()
+        {
+            if (OneMiniFigure.CountSealed != 0)
+            {
+                OneMiniFigure.CountSealed--;
+            }
+        }
+
+        private void deleteFigure(string id)
+        {
+
+            MiniFigureService.DeleteFigure(id, Serie.Name, OneMiniFigure.Image);
+            NavigationManager.NavigateTo($"/{Serie.Name}", true);
+        }
+
+        private void resetfigure()
+        {
+            OneMiniFigure.Displayed = false;
+            OneMiniFigure.CountOpened = 0;
+            OneMiniFigure.CountSealed = 0;
+            trueOrFalse();
+        }
+
+        private async Task Save(int Number) => await MiniFigureService.EditFigure(OneMiniFigure.ID, OneMiniFigure, Serie.Name);
+
+        private void goBack() => NavigationManager.NavigateTo($"/{Serie.Name}/{OneMiniFigure.Number}", true);
+
+        // check if Number is existing in db
+        private void isExist(int? Number) //combine with checkNumber????
+        {
+            foreach (var fig in ListOfMiniFigures)
+            {
+                if (Number == fig.Number)
                 {
-                    <img class="imgSmall" src="/images/placeholder.jpg" alt="Picture of placeholder picture" style="margin-top:2rem" />
+                    Existing = true;
+                    break;
                 }
                 else
                 {
-                    <img class="imgSmall" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" />
+                    Existing = false;
                 }
-            </td>
-        </tr>
-    </table>
-    <div id="bottom">
-        <div style="float:right; margin-right:0px">
-            <div class="dropdown">
-                <input type="button" class="btn btn-light" value="More" />
-                <div class="dropdown-content">
-                    <div class="btn-group-vertical">
-                        <input class="btn btn-outline-warning" type="button" @onclick="resetfigure" value="Reset Figure" />
-                        <input class="btn btn-outline-danger" type="button" @onclick="DeleteShow" value="Delete Figure">
-                    </div>
-                </div>
-            </div>
-            <input type="button" class="btn btn btn-outline-success" value="Save" @onclick="() => Save(OneMiniFigure.Number)" />
-        </div>
-    </div>
-    @if (ShowDelete)
-    {
-        <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
-            <div class="modal-dialog" @onclick:stopPropagation="true" style="margin-top:50%;width:80%">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Confirm Delete</h4>
-                        <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete:</p>
-                        <h3>ID: @OneMiniFigure.Number</h3>
-                        <h3>Name: @OneMiniFigure.Name</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel" value="Cancel" />
-                        <input type="button" class="btn btn-danger" @onclick="() => deleteFigure(OneMiniFigure.ID)" value="Delete" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-<div style="display:@ShowWarningForNumber;margin-top:10rem ; color:red">
-    Minifigure with Number: @CurrentNumber <br />already exists!
-</div>
-
-@code {
-    [Parameter] public int Number { get; set; }
-    [Parameter] public MiniFigure OneMiniFigure { get; set; }
-    [Parameter] public Series Serie { get; set; }
-
-    List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
-
-    private bool CanSave { get; set; }
-    private bool Existing { get; set; }
-    private bool ShowDelete { get; set; } = false;
-
-    private int? CurrentNumber { get; set; }
-
-    private string isFalse { get; set; }
-    private string isTrue { get; set; }
-    private string ShowWarningForNumber { get; set; } = "none";
-
-    protected override void OnParametersSet()
-    {
-        trueOrFalse();
-        ListOfMiniFigures = MiniFigureService.GetMiniFigures(Serie.Name);
-    }
-
-    private void DeleteShow() => ShowDelete = true;
-
-    private void DeleteCancel() => ShowDelete = false;
-
-    //calculations
-    private void IncrementOpen() => OneMiniFigure.CountOpened++;
-
-    private void DecrementOpen()
-    {
-        if (OneMiniFigure.CountOpened != 0)
-        {
-            OneMiniFigure.CountOpened--;
+            }
         }
-    }
 
-    private void IncrementSealed() => OneMiniFigure.CountSealed++;
-
-    private void DecrementSealed()
-    {
-        if (OneMiniFigure.CountSealed != 0)
+        private void checkNumber(ChangeEventArgs args)
         {
-            OneMiniFigure.CountSealed--;
-        }
-    }
-
-    private void deleteFigure(string id)
-    {
-
-        MiniFigureService.DeleteFigure(id, Serie.Name, OneMiniFigure.Image);
-        NavigationManager.NavigateTo($"/{Serie.Name}", true);
-    }
-
-    private void resetfigure()
-    {
-        OneMiniFigure.Displayed = false;
-        OneMiniFigure.CountOpened = 0;
-        OneMiniFigure.CountSealed = 0;
-        trueOrFalse();
-    }
-
-    private async Task Save(int Number) => await MiniFigureService.EditFigure(OneMiniFigure.ID, OneMiniFigure, Serie.Name);
-
-    private void goBack() => NavigationManager.NavigateTo($"/{Serie.Name}/{OneMiniFigure.Number}", true);
-
-    // check if Number is existing in db
-    private void isExist(int? Number) //combine with checkNumber????
-    {
-        foreach (var fig in ListOfMiniFigures)
-        {
-            if (Number == fig.Number)
+            if (args != null)
             {
-                Existing = true;
-                break;
+                CurrentNumber = Convert.ToInt32(args.Value);
+                isExist(CurrentNumber);
+
+                if (Existing || CurrentNumber == 0)
+                {
+                    ShowWarningForNumber = "inline";
+                    Existing = false;
+                }
+                else
+                {
+                    ShowWarningForNumber = "none";
+                    OneMiniFigure.Number = Convert.ToInt32(args.Value);
+                    CurrentNumber = null;
+                    CanSave = true;
+                }
+            }
+        }
+
+        private void trueOrFalse()
+        {
+            if (OneMiniFigure.Displayed)
+            {
+                isTrue = "color:green";
+                isFalse = "color: grey";
             }
             else
             {
-                Existing = false;
+                isTrue = "color: grey";
+                isFalse = "color:red";
             }
         }
-    }
 
-    private void checkNumber(ChangeEventArgs args)
-    {
-        if (args != null)
+        private void changeTrueFalse()
         {
-            CurrentNumber = Convert.ToInt32(args.Value);
-            isExist(CurrentNumber);
-
-            if (Existing || CurrentNumber == 0)
+            if (OneMiniFigure.Displayed)
             {
-                ShowWarningForNumber = "inline";
-                Existing = false;
+                isTrue = "color: grey";
+                isFalse = "color:red";
+                OneMiniFigure.Displayed = false;
             }
             else
             {
-                ShowWarningForNumber = "none";
-                OneMiniFigure.Number = Convert.ToInt32(args.Value);
-                CurrentNumber = null;
-                CanSave = true;
+                isTrue = "color:green";
+                isFalse = "color: grey";
+                OneMiniFigure.Displayed = true;
             }
         }
     }
-
-    private void trueOrFalse()
-    {
-        if (OneMiniFigure.Displayed)
-        {
-            isTrue = "color:green";
-            isFalse = "color: grey";
-        }
-        else
-        {
-            isTrue = "color: grey";
-            isFalse = "color:red";
-        }
-    }
-
-    private void changeTrueFalse()
-    {
-        if (OneMiniFigure.Displayed)
-        {
-            isTrue = "color: grey";
-            isFalse = "color:red";
-            OneMiniFigure.Displayed = false;
-        }
-        else
-        {
-            isTrue = "color:green";
-            isFalse = "color: grey";
-            OneMiniFigure.Displayed = true;
-        }
-    }
-}

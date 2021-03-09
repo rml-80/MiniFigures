@@ -6,14 +6,52 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
+<style>
+    .bigCard {
+        width: 35rem;
+        height: 55rem;
+        border: solid 1rem;
+        border-radius: 1rem;
+        margin: 1rem auto;
+        padding: 0.5rem;
+        background-color: white;
+    }
+/*    .txtLeft {
+        text-align: left;
+    }*/
+    .imgOnBigCard {
+        display: block;
+        max-width: 100%;
+        height: 34rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .tblOnShowOneCard {
+        font-size: 1.25rem;
+        height: 3rem;
+    }
+    .labelOnShowOneCard {
+        text-align: right;
+        width: 50%;
+        height: 3rem;
+    }
+    .nameLabel {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .dataLabel {
+        padding-right: 5rem;
+    }
+</style>
+
 @if (Serie == null)
 {
     <Loading />
 }
 else
 {
-<div class="cardBig" style="border-color:@Serie.SeriesColor">
-    <div class="txtLeft" style="color:@Serie.SeriesColor">@Serie.DisplayName</div>
+<div class="bigCard" style="border-color:@Serie.SeriesColor">
+    <div style="text-align:left; color:@Serie.SeriesColor">@Serie.DisplayName</div>
 
     @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}/{@OneMiniFigure.Image}"))
     {
@@ -21,17 +59,17 @@ else
     }
     else
     {
-        <div><img class="imgBig" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" /></div>
+        <img class="imgOnBigCard" src="/images/Series/@Serie.Name/@OneMiniFigure.Image" alt="Picture of @OneMiniFigure.Name" />
     }
-        <p>@OneMiniFigure.Name</p>
-        <table class="cardTabel">
-            <tr class="TableOne">
-                <td class="label">Number:</td>
-                <td>@OneMiniFigure.Number</td>
+        <p class="nameLabel">@OneMiniFigure.Name</p>
+        <table class="tblOnShowOneCard">
+            <tr>
+                <td class="labelOnShowOneCard">Number:</td>
+                <td class="dataLabel">@OneMiniFigure.Number</td>
             </tr>
-            <tr class="TableOne">
-                <td class="label">In display:</td>
-                <td>
+            <tr>
+                <td class="labelOnShowOneCard">In display:</td>
+                <td class="dataLabel">
                     @if (!OneMiniFigure.Displayed)
                     {
                         <i class="fas fa-times fa-2x" style="color:red" />
@@ -42,13 +80,13 @@ else
                     }
                 </td>
             </tr>
-            <tr class="TableOne">
-                <td class="label">Ownd openend:</td>
-                <td>@OneMiniFigure.CountOpened</td>
+            <tr>
+                <td class="labelOnShowOneCard">Ownd openend:</td>
+                <td class="dataLabel">@OneMiniFigure.CountOpened</td>
             </tr>
-            <tr class="TableOne">
-                <td class="label">Ownd sealed:</td>
-                <td>@OneMiniFigure.CountSealed</td>
+            <tr>
+                <td class="labelOnShowOneCard">Ownd sealed:</td>
+                <td class="dataLabel">@OneMiniFigure.CountSealed</td>
             </tr>
             @*<tr class="TableOne">
                 <td class="label">Image:</td>
