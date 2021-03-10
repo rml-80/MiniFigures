@@ -10,40 +10,55 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
+    <style>
+        .addCard {
+            text-align: center;
+            width: 26rem;
+            height: 16em;
+            border: solid 0.6rem;
+            border-radius: 1rem;
+            margin: 10rem auto 0 auto;
+            padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+            background-color: white;
+        }
+        .txtCenter {
+            text-align: center;
+        }
+        .formAddFigure{
+            padding-top: 1rem; 
+        }
+        label{
+            margin-bottom:0rem;
+            margin-top:0.5rem;
+        }
+        .btnRow {
+            margin-top: 2rem;
+            text-align: center;
+        }
+    </style>
+
 <div class="addCard" style="border-color:@color">
     @*<div class="txtLeftBold" style="color:@serie.SeriesColor">@figure.Number</div>*@
-    <table>
-        <tr>
-            <td style="width:55%; text-align:right"> 
-                <label for="Number" style="display:inline">Number?</label>
-            </td>
-            <td>
-                <input tabindex="1" form="Number" @bind-value="@miniFigure.Number" class="txtCenter" />
+    <EditForm Model="@miniFigure" class="formAddFigure">
+        <label>
+            Number?
+        </label>
+        <br />
 
-            </td>
-        </tr>
-        <tr>
-            <td style="width:55%; text-align:right">
-                <label for="Name" style="display:inline">Name? </label>
-
-            </td>
-            <td>
-
-                <input tabindex="2" form="Name" @bind="@miniFigure.Name" class="txtCenter" />
-            </td>
-        </tr>
-        <tr >
-            <td colspan="2" style="width:55%; text-align:right">
-                <FilesUpload serie="@serie" from="AddFigure" />
-                </td>
-        </tr>
-
-    </table>
+        <input type="text" @bind-value="@miniFigure.Number" class="txtCenter" />
+        <br />
+        <label>
+            Name?
+        </label>
+        <br />
+        <input type="text" @bind-value="@miniFigure.Name" class="txtCenter" />
+    </EditForm>
+    
 
     @*<div class="btnRow" style="margin:auto">
         </div>*@
     <div>
-        <input type="button" value="Save" @onclick="@Add" />
+        <input type="button" class="btn btn-outline-success btnRow" value="Save" @onclick="@Add" />
     </div>
 </div>
 

@@ -12,7 +12,7 @@
             height: 55rem;
             border: solid 1rem;
             border-radius: 1rem;
-            margin: 1rem auto;
+
             padding: 0.5rem;
             background-color: white;
         }
@@ -24,45 +24,66 @@
         .dataLblOnEditOne{
             width:45%;
         }
+        .form{
+            width:70%;
+            margin:auto;
+        }
+        label{
+            text-align:start;
+            margin-top:0.5rem;
+            margin-bottom:0rem;
+            font-weight:bold
+        }
+        .imgSmall {
+            display: block;
+            max-width: 100%;
+            height: 26rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+        }
     </style>
 
     <div class="bigCard" style="border-color:@Serie.SeriesColor">
         <h3 style="color:@Serie.SeriesColor">@Serie.DisplayName</h3>
-    <EditForm Model="@OneMiniFigure">
-        <label class="labelOnEditOne">
-            Name:
-        </label>
-        <input class="dataLblOnEditOne" form="Name" @bind="@OneMiniFigure.Name" />
-        <br />
-        <label class="labelOnEditOne">
-            Number:
-        </label>
-        <input class="dataLblOnEditOne" form="Number" @onchange="@checkNumber" placeholder="@OneMiniFigure.Number" />
-        <br />
-        <label class="labelOnEditOne">
-            In display:
-        </label>
-        <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="Yes" />
-        <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="No" />
-        <br />
-        <label class="labelOnEditOne">
-            Owned openend:
-        </label>
-        <div class="dataLblOnEditOne">
-            <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Serie.SeriesColor; margin-right:1rem" />
-            @OneMiniFigure.CountOpened
-            <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Serie.SeriesColor; margin-left:1rem" />
-        </div>
-        <br />
-        <label class="labelOnEditOne">
-            Owned sealed:
-        </label>
-        <div class="dataLblOnEditOne">
-            <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Serie.SeriesColor; margin-right:1rem" />
-            @OneMiniFigure.CountSealed
-            <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Serie.SeriesColor; margin-left:1rem" />
-        </div>
-    </EditForm>
+
+            <EditForm Model="@OneMiniFigure" class="form">
+                <label>
+                    Name:
+                </label>
+                <br />
+                <input style="text-align:center" @bind="@OneMiniFigure.Name" />
+                <br />
+                <label>
+                    Number:
+                </label>
+                <br />
+                <input style="text-align:center" @onchange="@checkNumber" placeholder="@OneMiniFigure.Number" />
+                <br />
+                <label>
+                    In display:
+                </label>
+                <br />
+                <input type="button" style="@isTrue" @onclick="changeTrueFalse" value="Yes" />
+                <input type="button" style="@isFalse" @onclick=" changeTrueFalse" value="No" />
+                <br />
+                <label>
+                    Owned openend:
+                </label>
+                <br />
+                <a class="fas fa-minus-square" @onclick="DecrementOpen" style="color:@Serie.SeriesColor; margin-right:1rem" />
+                @OneMiniFigure.CountOpened
+                <a class="fas fa-plus-square" @onclick="IncrementOpen" style="color:@Serie.SeriesColor; margin-left:1rem" />
+                <br />
+                <label>
+                    Owned sealed:
+                </label>
+                <br />
+                <a class="fas fa-minus-square" @onclick="DecrementSealed" style="color:@Serie.SeriesColor; margin-right:1rem" />
+                @OneMiniFigure.CountSealed
+                <a class="fas fa-plus-square" @onclick="IncrementSealed" style="color:@Serie.SeriesColor; margin-left:1rem" />
+            </EditForm>
+
 
                     @if (!File.Exists($"wwwroot\\images\\Series\\{@Serie.Name}\\{@OneMiniFigure.Image}"))
                     {

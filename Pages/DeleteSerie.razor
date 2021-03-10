@@ -6,23 +6,29 @@
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
-<h3>DeleteSerie</h3>
-<h4>Are you sure?</h4>
-<h4>This action can't be undon...</h4>
-<div class="txtCenter">
-    <input type="submit" value="No" @onclick="@Cancel" />
-    <input type="submit" value="Yes" @onclick="@Confirm" />
-</div>
+    <style>
+        .txtCenter {
+            text-align: center;
+        }
+    </style>
 
-@code {
-    [Parameter] public string serie { get; set; }
+    <h3>DeleteSerie</h3>
+    <h4>Are you sure?</h4>
+    <h4>This action can't be undon...</h4>
+    <div class="txtCenter">
+        <input type="submit" value="No" @onclick="@Cancel" />
+        <input type="submit" value="Yes" @onclick="@Confirm" />
+    </div>
 
-    private void Confirm()
-    {
-        SeriesService.DeleteCollection(serie);
-        //SeriesService.DeleteSerie(serie);
-        NavigationManager.NavigateTo("/", true);
+    @code {
+        [Parameter] public string serie { get; set; }
+
+        private void Confirm()
+        {
+            SeriesService.DeleteCollection(serie);
+            //SeriesService.DeleteSerie(serie);
+            NavigationManager.NavigateTo("/", true);
+        }
+
+        private void Cancel() => NavigationManager.NavigateTo($"/{serie}");
     }
-
-    private void Cancel() => NavigationManager.NavigateTo($"/{serie}");
-}

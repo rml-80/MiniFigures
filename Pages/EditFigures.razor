@@ -10,6 +10,40 @@
 @inject ISeriesService SeriesService
 @inject NavigationManager NavigationManager
 
+<style>
+    img {
+        display: inline;
+        max-width: 100%;
+        height: 57%;
+    }
+    .marginBig {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+    .txtRight {
+        text-align: right;
+    }
+    .Card {
+        text-align: center;
+        width: 15rem;
+        height: 26rem;
+        border: solid 0.6rem;
+        border-radius: 1rem;
+        margin: 0.5rem;
+        padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+    }
+    .card-deck {
+        justify-content: center;
+    }
+    .txtLeftBold {
+        text-align: left;
+        font-weight: bolder;
+    }
+    .txtCenter {
+        text-align: center;
+    }
+</style>
+
 @if (ListOfMF == null)
 {
     <Loading />

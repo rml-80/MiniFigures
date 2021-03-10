@@ -1,15 +1,15 @@
-html, body {
+/*html, body {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 h2 {
     text-align:center;
     font-weight:bold;
     color:floralwhite;
-}
-table{
+}*/
+/*table{
     width:100%;
-}
-.biggerText {
+}*/
+/*.biggerText {
     font-size: 1.25rem;
 }
 .headerCenter {
@@ -18,8 +18,8 @@ table{
     padding-top: 1.5rem;
     border-radius: 2rem;
     margin-bottom: 1.5rem;
-}
-.infoRow {
+}*/
+/*.infoRow {
     width: 12rem;
     text-align: right;
 }
@@ -33,15 +33,15 @@ table{
 .SerieInfobutton {
     float: right;
     margin-right: 2rem;
-}
-.txtCenter{
+}*/
+/*.txtCenter{
     text-align:center;
 }
 .txtRight{
     text-align:right;
-}
+}*/
 
-.headerInfo {
+/*.headerInfo {
     font-size:large;
     width:55%;
 }
@@ -51,8 +51,8 @@ table{
     padding-top: 1.5rem;
     border-radius: 2rem;
     margin-bottom: 1.5rem;
-}
-@media (max-width: 1600px) {
+}*/
+/*@media (max-width: 1600px) {
     .headerInfo {
         font-size: large;
         width: 100%;
@@ -60,8 +60,8 @@ table{
 }
 @media (max-width: 1000px){
     .headerInfo {
-        /*font-size: large;*/
-        /*width: 100%;*/
+        font-size: large;
+        width: 100%;
         display:none;
     }
 }
@@ -69,4 +69,4 @@ table{
     .headerCenterStart {
         display: none;
     }
-}
+}*/

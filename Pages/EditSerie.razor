@@ -8,6 +8,39 @@
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
+<style>
+    .CardEdit {
+        text-align: center;
+        width: 35rem;
+        height: 21em;
+        border: solid 0.6rem;
+        border-radius: 1rem;
+        margin: 0.5rem;
+        padding: 0.5rem 0.6rem 0.5rem 0.6rem;
+        background-color: white;
+    }
+
+    .Center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .labelEditSerie {
+        text-align: right;
+        width: 50%;
+    }
+
+    .btnRow {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .row {
+        margin-top: 1rem;
+    }
+</style>
+
 <h3>Edit Serie</h3>
 <div>
     <div>
@@ -53,20 +86,20 @@
                 </div>
             </div>
 
-            <div class="row" style="margin-top:0px">
-            <div style="margin: auto -200px auto auto">
-                <img class="indexImg" src="images/series/@Serie.Name/@imgURL" alt="@Serie.Name bag" style="height:50px" />
-            </div>
-            <div style="margin-left:auto;margin-right:0px">
-                <FilesUpload serie="@Serie.Name" from="editSerie" onSubmit="setImg" />
-            </div>
-                @*<div class="labelEditSerie">
-                <label for="SeriePicture">Picture: </label>
-            </div>
-            <div>
-                <input form="SeriePicture" @bind="@Serie.SeriePicture" />
-            </div>*@
-            </div>
+            <!--<div class="row" style="margin-top:0px">
+                <div style="margin: auto -200px auto auto">
+                    <img class="indexImg" src="images/series/@Serie.Name/@imgURL" alt="@Serie.Name bag" style="height:50px" />
+                </div>
+                <div style="margin-left:auto;margin-right:0px">
+                    <FilesUpload serie="@Serie.Name" from="editSerie" onSubmit="setImg" />
+                </div>-->
+            @*<div class="labelEditSerie">
+                    <label for="SeriePicture">Picture: </label>
+                </div>
+                <div>
+                    <input form="SeriePicture" @bind="@Serie.SeriePicture" />
+                </div>*@
+            <!--</div>-->
             <div class="btnRow">
                 <div class="dropdown">
                     <input type="button" class="btn btn-light" value="More" />

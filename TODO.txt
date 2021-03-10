@@ -7,6 +7,9 @@
 
 	ShowSerie
 
+	NavBarSeries
+		Center text moves when no previous or next serie
+
 	Card
 		Back / EditOne
 

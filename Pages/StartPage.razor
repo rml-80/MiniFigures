@@ -8,36 +8,102 @@
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
 
-<div class="headerCenterStart" style="border:2px solid black; height:8rem">
-        <h1>My MiniFigure Collection</h1>
+<style>
+    .indexImg {
+        height: 100%;
+    }
+
+    .txtRight {
+        text-align: right;
+    }
+
+    .txtLeft {
+        text-align: left;
+    }
+
+    .headerInfo {
+        font-size: large;
+        width: 40%;
+        margin: auto;
+    }
+
+    .headerCenterStart {
+        text-align: center;
+        padding: 1.5rem ;
+        border-radius: 2rem;
+        margin-bottom: 1.5rem;
+        border: solid 1px black;
+    }
+
+    .infoBlock {
+        border: solid 0.6rem;
+        width: 98%;
+        margin: -2rem auto 1rem auto;
+        border-bottom-left-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+    }
+
+    .SerieInfobutton {
+        float: right;
+        margin-right: 2rem;
+    }
+
+    .infoRow {
+        width: 12rem;
+        text-align: right;
+    }
+
+    .biggerText {
+        font-size: 1.25rem;
+    }
+
+    .headerCenter {
+        text-align: center;
+        height: auto;
+        padding-top: 1.5rem;
+        border-radius: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-deck {
+        text-align: center;
+    }
+
+    .bagCard {
+        width: 15rem;
+        height: 15rem;
+        margin: 2rem 2rem 4rem 2rem;
+    }
+</style>
+
+<div class="headerCenterStart" >
+    <h1>My MiniFigure Collection</h1>
     <table class="headerInfo">
-            <tr>
-                <td class="txtRight">Series to Collect:</td>
-                <td class="txtLeft">@NumberOfSeries</td>
-                <td class="txtRight">Total number of figures:</td>
-                <td class="txtLeft">@TotalFigures</td>
-                <td class="txtRight">You own: </td>
-                <td class="txtLeft">@CompleteSeries competed series</td>
-                <td class="txtRight">You have:</td>
-                <td class="txtLeft">@TotalFiguresOwned figures</td>
-            </tr>
-        </table>
+        <tr>
+            <td>Series to Collect: @NumberOfSeries</td>
+            <td>Total number of figures: @TotalFigures</td>
+        </tr>
+        <tr>
+            <td>You own: @CompleteSeries competed series</td>
+            <td>You have: @TotalFiguresOwned figures</td>
+        </tr>
+    </table>
 </div>
 
 <div class="card-deck">
     @foreach (var item in ListOfSeries)
     {
-    <div class="figCard" >
-        <img class="indexImg" src="images/series/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
-        <h5>@item.DisplayName</h5>
-        <h6 style="margin-top:0.7rem">
-            @CountOwned(item.Name) of @item.NumberOfFigures figures 
-            @if (CountOwned(item.Name) == item.NumberOfFigures)
-            {
-                <i class="fas fa-star" style="color:@item.SeriesColor" />
-            }
-        </h6>
-    </div>
+        <div class="bagCard">
+            <img class="indexImg" src="images/series/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+            <h5>@item.DisplayName</h5>
+            <h6 style="margin-top:0.7rem">
+                @CountOwned(item.Name) of @item.NumberOfFigures figures
+                @if (CountOwned(item.Name) == item.NumberOfFigures)
+                {
+                    <i class="fas fa-star" style="color:@item.SeriesColor" />
+                }
+            </h6>
+        </div>
     }
 </div>
 @code {
