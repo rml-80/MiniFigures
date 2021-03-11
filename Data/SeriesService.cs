@@ -76,7 +76,16 @@ namespace MiniFigures.Data
                 serie.BagImage = string.Empty;
                 serie.SeriePicture = string.Empty;
                 serie.DisplayName = "Serie " + serie.DisplayName;
-                serie.Name = serie.DisplayName.Replace(" ", "_");
+                if (serie.DisplayName.Length == 7)
+                {
+                serie.Name = serie.DisplayName.Replace(" ", "_0");
+
+                }
+                else
+                {
+                    serie.Name = serie.DisplayName.Replace(" ", "_");
+
+                }
                 await _series.InsertOneAsync(serie);
                 if (!Directory.Exists($"{env.WebRootPath}\\images\\Series\\{serie.Name}"))
                 {
@@ -120,7 +129,6 @@ namespace MiniFigures.Data
             {
                 case "A-Z":
                     list = await _series.Find(series => true).SortBy(n => n.Name).ToListAsync();
-
                     break;
                 case "Z-A":
                     list = await _series.Find(series => true).SortByDescending(n => n.Name).ToListAsync();

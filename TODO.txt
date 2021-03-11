@@ -4,6 +4,7 @@
 			refresh navMenu when added a new serie
 
 	ShowSerie
+		placeholder for bags \\ HAVE ADDED CODE, MUST BE CHECKED IF IT WORKS
 
 	NavBarSeries
 

@@ -3,7 +3,10 @@
 @using MiniFigures.Data
 @using MiniFigures.Models
 @using MiniFigures.Shared
+@using System.IO
+@using Microsoft.AspNetCore.Hosting
 
+@inject IWebHostEnvironment env
 @inject ISeriesService SeriesService
 @inject IMiniFigureService MiniFigureService
 @inject NavigationManager NavigationManager
@@ -29,7 +32,7 @@
 
     .headerCenterStart {
         text-align: center;
-        padding: 1.5rem ;
+        padding: 1.5rem;
         border-radius: 2rem;
         margin-bottom: 1.5rem;
         border: solid 1px black;
@@ -76,7 +79,7 @@
     }
 </style>
 
-<div class="headerCenterStart" >
+<div class="headerCenterStart">
     <h1>My MiniFigure Collection</h1>
     <table class="headerInfo">
         <tr>
@@ -89,23 +92,39 @@
         </tr>
     </table>
 </div>
-
-<div class="card-deck">
-    @foreach (var item in ListOfSeries)
-    {
-        <div class="bagCard">
-            <img class="indexImg" src="images/series/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
-            <h5>@item.DisplayName</h5>
-            <h6 style="margin-top:0.7rem">
-                @CountOwned(item.Name) of @item.NumberOfFigures figures
-                @if (CountOwned(item.Name) == item.NumberOfFigures)
+@if (ListOfSeries.Count == 0)
+{
+    <div style="text-align:center">
+        <h3>Ooops....</h3>
+        <h4>Nothing here</h4>
+    </div>
+}
+else
+{
+    <div class="card-deck">
+        @foreach (var item in ListOfSeries)
+        {
+            <div class="bagCard">
+                @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\@item.Name\\Bag.jpg"))
                 {
-                    <i class="fas fa-star" style="color:@item.SeriesColor" />
+                    <img src="/images/placeholder.jpg" alt="@item.Name" @onclick="() => goTo(item.Name)" />
                 }
-            </h6>
-        </div>
-    }
-</div>
+                else
+                {
+                <img class="indexImg" src="images/series/@item.Name/Bag.jpg" @onclick="() => goTo(item.Name)" alt="@item.Name" />
+                }
+                <h5>@item.DisplayName</h5>
+                <h6 style="margin-top:0.7rem">
+                    @CountOwned(item.Name) of @item.NumberOfFigures figures
+                    @if (CountOwned(item.Name) == item.NumberOfFigures)
+                    {
+                        <i class="fas fa-star" style="color:@item.SeriesColor" />
+                    }
+                </h6>
+            </div>
+        }
+    </div>
+}
 @code {
     private List<Series> ListOfSeries = new List<Series>();
     private List<MiniFigure> ListOfFigures = new List<MiniFigure>();
