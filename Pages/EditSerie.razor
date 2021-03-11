@@ -11,8 +11,8 @@
 <style>
     .CardEdit {
         text-align: center;
-        width: 35rem;
-        height: 21em;
+        width: 21rem;
+        height: 35em;
         border: solid 0.6rem;
         border-radius: 1rem;
         margin: 0.5rem;
@@ -39,110 +39,128 @@
     .row {
         margin-top: 1rem;
     }
-</style>
 
+    label {
+        margin-top:1rem;
+        margin-bottom: 0px;
+    }
+    .cardContent{
+        text-align:start;
+        margin-left:3rem;
+        margin-top:3rem;
+    }
+</style>
 <h3>Edit Serie</h3>
 <div>
     <div>
         <div class="CardEdit Center" style="border-color:@Serie.SeriesColor">
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="SeriesColor">Color code: </label>
-                </div>
-                <div>
+            <div class="cardContent">
+                <EditForm Model="@Serie">
+                    <label>
+                        Color code:
+                    </label>
+                    <br />
+
                     <input form="SeriesColor" placeholder="@Serie.SeriesColor" @onchange="@ColorChange" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="ReleaseDate">Release Date: </label>
-                </div>
-                <div>
+                    <br />
+                    <label>
+                        Release date:
+                    </label>
+                    <br />
+
                     <input form="ReleaseDate" @bind="@Serie.ReleaseDate" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="Number">Number: </label>
-                </div>
-                <div>
+                    <br />
+
+                    <label>
+                        Number:
+                    </label>
+                    <br />
+
                     <input form="Number" @bind="@Serie.Number" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="Name">Name: </label>
-                </div>
-                <div>
+                    <br />
+                    <label>
+                        Name:
+                    </label>
+                    <br />
+
                     <input form="Name" @bind="@Serie.DisplayName" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="labelEditSerie">
-                    <label for="NumberOfFiguers">Number of figures: </label>
-                </div>
-                <div>
+                    <br />
+                    <label>
+                        Number of figures:
+                    </label>
+                    <br />
                     <input form="NumberOfFigures" @bind="@Serie.NumberOfFigures" />
-                </div>
+                </EditForm>
             </div>
 
-            <!--<div class="row" style="margin-top:0px">
-                <div style="margin: auto -200px auto auto">
-                    <img class="indexImg" src="images/series/@Serie.Name/@imgURL" alt="@Serie.Name bag" style="height:50px" />
-                </div>
-                <div style="margin-left:auto;margin-right:0px">
-                    <FilesUpload serie="@Serie.Name" from="editSerie" onSubmit="setImg" />
-                </div>-->
-            @*<div class="labelEditSerie">
-                    <label for="SeriePicture">Picture: </label>
-                </div>
-                <div>
-                    <input form="SeriePicture" @bind="@Serie.SeriePicture" />
-                </div>*@
-            <!--</div>-->
-            <div class="btnRow">
-                <div class="dropdown">
-                    <input type="button" class="btn btn-light" value="More" />
-                    <div class="dropdown-content">
-                        <div class="btn-group-vertical">
-                            <input class="btn btn-outline-dark" style="border:solid 0.5px grey" type="button" @onclick='() => NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}")' value="Edit all Figures" />
-                            <input class="btn btn-outline-warning" style="border:solid 0.5px grey" type="button" @onclick="ResetAllFigures" value="Reset all Figures" />
-                            <input class="btn btn-outline-danger" style="border:solid 0.5px grey" type="button" @onclick="DeleteShow" value="Delete Serie" />
-                        </div>
+
+
+        <div class="btnRow">
+            <div class="dropdown">
+                <input type="button" class="btn btn-light" value="More" />
+                <div class="dropdown-content">
+                    <div class="btn-group-vertical">
+                        <input class="btn btn-outline-dark" style="border:solid 0.5px grey" type="button" @onclick='() => NavigationManager.NavigateTo($"/addnew/figures/{Serie.Name}")' value="Edit all Figures" />
+                        <input class="btn btn-outline-warning" style="border:solid 0.5px grey" type="button" @onclick="ResetShow" value="Reset all Figures" />
+                        <input class="btn btn-outline-danger" style="border:solid 0.5px grey" type="button" @onclick="DeleteShow" value="Delete Serie" />
                     </div>
                 </div>
-                <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
-                <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(Serie)" value="Save" />
+            </div>
+            <input class="btn btn-outline-dark" type="button" @onclick="cancel" value="Cancel" />
+            <input class="btn btn-outline-success" type="button" @onclick="() => saveSerie(Serie)" value="Save" />
+        </div>
+        </div>
+    </div>
+
+    @if (ShowReset)
+    {
+        <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@ResetCancel">
+            <div class="modal-dialog" @onclick:stopPropagation="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirm Delete</h4>
+                        <button type="button" class="close" @onclick="@ResetCancel">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to reset all figures in:</p>
+                        <h3>@Serie.DisplayName</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" @onclick="@ResetCancel">Cancel</button>
+                        <button type="button" class="btn btn-danger" @onclick="@ResetAllFigures">Reset</button>
+                    </div>
+                </div>
             </div>
         </div>
-        @if (ShowDelete)
-        {
-            <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
-                <div class="modal-dialog" @onclick:stopPropagation="true">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4>Confirm Delete</h4>
-                            <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete:</p>
-                            <h3>@Serie.DisplayName</h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel">Cancel</button>
-                            <button type="button" class="btn btn-danger" @onclick="@deleteSerie">Delete</button>
-                        </div>
+    }
+    @if (ShowDelete)
+    {
+        <div class="modal fade show" style="display:block;background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog" @onclick="@DeleteCancel">
+            <div class="modal-dialog" @onclick:stopPropagation="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirm Delete</h4>
+                        <button type="button" class="close" @onclick="@DeleteCancel">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete:</p>
+                        <h3>@Serie.DisplayName</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" @onclick="@DeleteCancel">Cancel</button>
+                        <button type="button" class="btn btn-danger" @onclick="@deleteSerie">Delete</button>
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
 
 @code {
     [Parameter] public string SerieToShow { get; set; }
 
     private bool ShowDelete = false;
+    private bool ShowReset = false;
     private string imgURL { get; set; }
 
     private List<MiniFigure> ListOfMiniFigures = new List<MiniFigure>();
@@ -184,8 +202,10 @@
     private void cancel() => NavigationManager.NavigateTo($"/{SerieToShow}", true);
 
     private void DeleteShow() => ShowDelete = true;
+    private void ResetShow() => ShowReset = true;
 
     private void DeleteCancel() => ShowDelete = false;
+    private void ResetCancel() => ShowDelete = false;
 
     private void ResetAllFigures()
     {

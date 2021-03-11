@@ -125,10 +125,18 @@ namespace MiniFigures.Data
                 case "Z-A":
                     list = await _series.Find(series => true).SortByDescending(n => n.Name).ToListAsync();
                     break;
-                case "Release date":
+                case "Oldest":
                     list = await _series.Find(series => true).SortBy(n => n.ReleaseDate).ToListAsync();
                     break;
-
+                case "Latest":
+                    list = await _series.Find(series => true).SortByDescending(n => n.ReleaseDate).ToListAsync();
+                    break;
+                case "Least figures":
+                    list = await _series.Find(series => true).SortBy(n => n.NumberOfFigures).ToListAsync();
+                    break;
+                case "Most figures":
+                    list = await _series.Find(series => true).SortByDescending(n => n.NumberOfFigures).ToListAsync();
+                    break;
                 default:
                     break;
             }

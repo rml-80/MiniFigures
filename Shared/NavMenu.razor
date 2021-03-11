@@ -17,13 +17,20 @@
         <li style="margin-left: 1rem;font-size: 0.8rem">
             Order By:
             <div class="dropdown">
-                <button class="btn btn-light" style="width: 100px; font-size:0.8rem">@orderByString</button>
+                <button class="btn btn-light" style="width: 120px; font-size:0.8rem">@orderByString</button>
                 <div class="dropdown-content">
                     <div class="btn-group-vertical">
-                        <input class="btn btn-outline-secondary" type="button" value="A-Z" style="width:100px; font-size:0.8rem" @onclick='() => OrderBy("A-Z")' />
-                        <input class="btn btn-outline-secondary" type="button" value="Z-A" style="  width: 100px; font-size: 0.8rem" @onclick='() => OrderBy("Z-A")'>
-                        <input class="btn btn-outline-secondary" type="button" value="Release date" style="width: 100px;font-size: 0.8rem
-" @onclick='() => OrderBy("Release date")'>
+
+                            <input class="btn btn-outline-secondary" type="button" value="A-Z" style="font-size:0.8rem" @onclick='() => OrderBy("A-Z")' />
+                            <input class="btn btn-outline-secondary" type="button" value="Z-A" style="  font-size: 0.8rem" @onclick='() => OrderBy("Z-A")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Oldest" style="width: 120px;font-size: 0.8rem
+" @onclick='() => OrderBy("Oldest")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Latest" style="width: 120px;font-size: 0.8rem
+" @onclick='() => OrderBy("Latest")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Most figures" style="width: 120px;font-size: 0.8rem
+" @onclick='() => OrderBy("Most figures")'>
+                        <input class="btn btn-outline-secondary" type="button" value="Least figures" style="width: 120px;font-size: 0.8rem
+" @onclick='() => OrderBy("Least figures")'>
                     </div>
                 </div>
             </div>
@@ -73,8 +80,17 @@
             case "Z-A":
                 orderByString = "Z-A";
                 break;
-            case "Release date":
-                orderByString = "Release date";
+            case "Oldest":
+                orderByString = "Oldest";
+                break;
+            case "Latest":
+                orderByString = "Latest";
+                break;
+            case "Least figures":
+                orderByString = "Least figures";
+                break;
+            case "Most figures":
+                orderByString = "Most figures";
                 break;
             default:
                 break;

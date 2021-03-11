@@ -2,51 +2,41 @@
 	Startpage
 		NavMenu 
 			refresh navMenu when added a new serie
-			Order by: Number of figures & Number
-		Cards not align properly
 
 	ShowSerie
 
 	NavBarSeries
-		Center text moves when no previous or next serie
 
 	Card
 		Back / EditOne
 
-
-			If edit from not displayed to displayed, add one to owned opened if 0(zero)
-			Text vertical-align
 				LATER Possibility to change picture
 				LATER Prompt if to remove image when removing figure
 		
 	EditSerie
-		make to a form
-		Design
-		
-			LATER Disable fileupload
+
+				LATER Design
+				LATER fileupload
 
 	AddFigure
-		disable fileupload
-		design
-			
-			LATER Show image when uploaded, replace fileupload with img
+				LATER fileupload
+				LATER Show image when uploaded, replace fileupload with img
 
 	AddNewSerie
-		Tabindex...can't tab to save
-		make to a form
-		add fileupload, for all images to the serie. must be renamed before uploading, manually
+		Highlight save on tab
 
 	EditFigures
-		
-		If no image show , select dropdown for each file in folder, if there is any else choose files to upload to folder.
-		Disable fileupload, move to addSerie
-			Disable fileupload on each card, work on this later, only show placeholder image
+		information about how to name image files, for all images to the serie. must be renamed before uploading, manually
+
+				LATER If no image show , dropdown for each file in folder, if there is any else choose files to upload to folder.
+				LATER fileupload on each card
 
 	General
-		Bag images to each serie
-		Change file name on upload?
-		prehaps a folder for bags? WAIT WITH THIS
+		YES Bag images to each serie, in Series folder, namned Bag.jpg. TOGETHER WITH LINE 29
 		add leading 0(zero) to series 1 - 9 for sorting purposes. Or sort by number
+
+				LATER Change file name on upload?
+				LATER prehaps a folder for bags?
 
 
 BackEnd

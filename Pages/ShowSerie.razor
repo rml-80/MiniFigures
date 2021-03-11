@@ -60,6 +60,11 @@
         margin-right: 5rem;
         margin-top: 1rem;
     }
+    .owned{
+        width:80%;
+        margin-left:auto;
+        margin-right:auto;
+    }
 </style>
 @if (ListOfMiniFigures == null)
 {
@@ -77,13 +82,15 @@ else
 {
     <Header series="Serie" ListOfMiniFigures="ListOfMiniFigures" />
 
-    <h4>
-        You own @Owned of @Serie.NumberOfFigures
-        @if (Owned == Serie.NumberOfFigures)
-        {
-            <i class="fas fa-star" style="color:@Serie.SeriesColor" />
-        }
-    </h4>
+    <div class="owned">
+        <h4>
+            You own @Owned of @Serie.NumberOfFigures
+            @if (Owned == Serie.NumberOfFigures)
+            {
+                <i class="fas fa-star" style="color:@Serie.SeriesColor" />
+            }
+        </h4>
+    </div>
     <div class="card-deck">
         @foreach (var figure in ListOfMiniFigures)
         {
