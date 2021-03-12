@@ -105,9 +105,9 @@ else
         @foreach (var item in ListOfSeries)
         {
             <div class="bagCard">
-                @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\@item.Name\\Bag.jpg"))
+                @if (!File.Exists($"{env.WebRootPath}\\images\\Series\\{item.Name}\\Bag.jpg"))
                 {
-                    <img src="/images/placeholder.jpg" alt="@item.Name" @onclick="() => goTo(item.Name)" />
+                    <img class="indexImg" src="/images/placeholder.jpg" alt="@item.Name" @onclick="() => goTo(item.Name)" />
                 }
                 else
                 {

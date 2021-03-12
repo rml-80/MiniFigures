@@ -28,6 +28,8 @@
         margin-bottom: 1rem;
         text-align: center;
     }
+
+    
 </style>
 <h3>Add Serie</h3>
 <div class="txtCenter">
@@ -62,7 +64,8 @@
 
         <div class="btnRow">
             <input class="btn btn-outline-dark" type="button" @onclick="@cancel" value="Cancel" />
-            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" tabindex="6" />
+            <input class="btn btn-outline-success" type="button" @onclick="@AddSerie" value="Save" tabindex="6"  />
+
         </div>
     </div>
     <h3 style="display:@ShowWarningForNumber; text-align:center; color:red ">Number already exists!</h3>

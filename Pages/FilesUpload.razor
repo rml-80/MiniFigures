@@ -5,18 +5,30 @@
 
 @inject IWebHostEnvironment env
 @inject NavigationManager NavigationManager
-
+    <style>
+        .closeBtn {
+            float: right;
+            margin-right: 5rem;
+            margin-top: 1rem;
+        }
+        .info{
+            width:2rem;
+            text-align:center;
+            cursor:help;
+        }
+    </style>
 
 <form>
 
     @* TODO: Display images, when selected *@
     @*<h6 style="margin-top:2rem">@Message</h6>*@
 
-        <div class="row justify-content-center">
+    <div class="row justify-content-center">
+        <div class="row">
             <div>
                 @if (from == null)
                 {
-                    <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" style="margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem" />
+                    <InputFile OnChange="OnInputFileChange" multiple class="form-control-file" style="margin-left: 1.4rem; margin-top:1rem; margin-bottom:1rem;cursor:pointer" />
                 }
                 else
                 {
@@ -25,12 +37,27 @@
                     <InputFile OnChange="OnInputSingleFileChange" class="form-control-file" />
                 }
             </div>
-            @*<button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
+            <div class="info" @onmouseover="@showCard" @onmousemove="@HideCard" @onclick="() => showCard()"><a class="fas fa-question" style="margin-top:1.5rem"></a></div>
+        </div>
+        @*<button disabled="@IsDisabled" class="btn btn-outline-success btn-sm" type="button" style="margin-top: 1rem; margin-bottom: 1rem" @onclick="@OnSubmit">
                 Upload
             </button>*@
-        </div>
+    </div>
 
 </form>
+@if (ShowCard)
+{
+    <div class="modal fade show" style="display:block;background-color: rgba(255,255,255,.8);" aria-modal="true" role="dialog" @onclick="HideCard" @onmousemove="@HideCard">
+        <i class="fas fa-times fa-2x closeBtn" @onclick="HideCard" />
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content" style="background-color:transparent; border:none">
+                <ImageInformation/>
+            </div>
+        </div>
+    </div>
+}
+
+
 @code {
     [Parameter] public string serie { get; set; }
     [Parameter] public string bagImg { get; set; }
@@ -39,6 +66,7 @@
 
     private bool IsDisabled { get; set; } = true;
     string ImgURL { get; set; } = string.Empty;
+    bool ShowCard = false;
 
     //string Message = "Test";
     IReadOnlyList<IBrowserFile> selectedFiles;
@@ -110,5 +138,11 @@
 
     private void cancel() => NavigationManager.NavigateTo("/", true);
 
+    private void showCard() => ShowCard = true;
+
+    private void HideCard()
+    {
+        ShowCard = false;
+    }
     // TODO: Display images, when selected
 }
